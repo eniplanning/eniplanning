@@ -13,7 +13,7 @@ class PlanningController extends Controller
      */
     public function index()
     {
-        //
+        //Test
     }
 
     /**
