@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCtrDisponibilitiesTable extends Migration
+class CreateCtrExemptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateCtrDisponibilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ctr_disponibilities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->date('date_start');
-            $table->date('date_end');
-            $table->boolean('is_available');
-            $table->index('id_planning');
+        Schema::create('ctr_exemptions', function (Blueprint $table) {
+            $table->integer('planning_id')->unsigned();
+            $table->integer('module_id')->unsigned();
+            $table->integer('num_week');
             $table->timestamps();
+            $table->primary(['planning_id', 'module_id'], 'exemption_id');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateCtrDisponibilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ctr_disponibilities');
+        Schema::dropIfExists('ctr_exemptions');
     }
 }

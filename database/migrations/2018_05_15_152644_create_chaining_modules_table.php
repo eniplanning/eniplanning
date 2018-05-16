@@ -14,8 +14,12 @@ class CreateChainingModulesTable extends Migration
     public function up()
     {
         Schema::create('chaining_modules', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('module_id')->unsigned();
+            $table->integer('previous_module_id')->unsigned();
+            $table->boolean('is_required');
+            $table->char('formation_id');
             $table->timestamps();
+            $table->primary(['module_id', 'previous_module_id'], 'chaining_module_id');
         });
     }
 

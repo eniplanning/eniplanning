@@ -19,7 +19,7 @@ class CreateComplementaryCoursesTable extends Migration
             $table->dateTime('date_end');
             $table->time('real_duration');
             $table->boolean('date_to_be_defined');
-            $table->index('id_complementary_module');
+            $table->integer('complementary_module_id')->unsigned();
             $table->timestamps();
         });
     }

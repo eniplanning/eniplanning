@@ -25,13 +25,13 @@ class CreatePlanningsTable extends Migration
             $table->integer('nb_weeks_enterprise');
             $table->integer('limit_day_formation');
             $table->integer('num_version');
-            $table->integer('state');
+            $table->integer('status');
             $table->boolean('is_archived');
             $table->boolean('is_model');
-            $table->index('id_planning_ref');
-            $table->index('id_stagiaire');
-            $table->index('id_formation');
-            $table->index('id_user');
+            $table->integer('planning_id')->unsigned();
+            $table->integer('stagiaire_id')->unsigned();
+            $table->char('formation_id');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }
