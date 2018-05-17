@@ -1,2 +1,3 @@
 <?php
-echo 'ceci est une test';
+echo 'ceci est un test';
+echo 'ceci est un second test';
