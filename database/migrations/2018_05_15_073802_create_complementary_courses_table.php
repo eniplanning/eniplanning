@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateComplementaryCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('complementary_courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('name');
-            $table->string('firstname');
-            $table->boolean('is_active');
-            $table->unsignedInteger('role_id');
-            $table->rememberToken();
+            $table->dateTime('date_start');
+            $table->dateTime('date_end');
+            $table->time('real_duration');
+            $table->boolean('date_to_be_defined');
+            $table->integer('complementary_module_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('complementary_courses');
     }
 }
