@@ -13,17 +13,7 @@ class ComplementaryCourseController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return ComplementaryCourse::all()->toJson();
     }
 
     /**
@@ -34,7 +24,7 @@ class ComplementaryCourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ComplementaryCourse::create($request->all());
     }
 
     /**
@@ -43,20 +33,9 @@ class ComplementaryCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ComplementaryCourse $complementaryCourse)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $complementaryCourse;
     }
 
     /**
@@ -66,9 +45,9 @@ class ComplementaryCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ComplementaryCourse $complementaryCourse)
     {
-        //
+        $complementaryCourse->update($request->all());
     }
 
     /**
@@ -77,8 +56,8 @@ class ComplementaryCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ComplementaryCourse $complementaryCourse)
     {
-        //
+        $complementaryCourse->delete();
     }
 }
