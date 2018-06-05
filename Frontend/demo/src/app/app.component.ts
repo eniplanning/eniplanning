@@ -7,11 +7,11 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 })
 export class AppComponent {
   
-  displayPanelInformation: boolean = true;
+  	displayPanelInformation: boolean = true;
 	calendarDisplayRange: string = '12';
 	@ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any>;
 
-  months = [
+  	months = [
 		{year: 2018, month: 1},
 		{year: 2018, month: 2},
 		{year: 2018, month: 3},
@@ -28,7 +28,7 @@ export class AppComponent {
 	
 	data = {}
 
-  constructor() {
+  	constructor() {
 		this.calendarDisplayRange = "12";
 
 		//fetch data from server
@@ -49,37 +49,48 @@ export class AppComponent {
 		}
 	}
   
-  togglePanelInformation() {
-    this.displayPanelInformation = this.displayPanelInformation ? false : true;
-  }
+  	togglePanelInformation() {
+    	this.displayPanelInformation = this.displayPanelInformation ? false : true;
+  	}
 
-  generateDate(year, month, day) {
+  	generateDate(year, month, day) {
 		if(typeof day === "undefined") {
 	        day = 1;
 	    }
 	    //new Date() is 0-based for months. Our data is 1-based. So we decrease by 1
 	    return new Date(year, month-1, day);
-  }
+  	}
   
-  generateDaysOfMonth(year, month) {
+  	generateDaysOfMonth(year, month) {
 		let l = []
 		//We do not decrease by 1 because we take the next month's day number 0 (= our month last day)
 		//Because the variable month is already 1 higher, we can use it as-is
 		for (let i = 1; i <= new Date(year, month, 0).getDate(); i++) {
 			l.push(i);
-    }
+    	}
 		return l;
-  }
+  	}
   
-  isWeekEnd(year, month, day) {
+  	isWeekEnd(year, month, day) {
 		//new Date() is 0-based for months. Our data is 1-based. So we decrease by 1
 		let d = new Date(year, month-1, day).getDay();
 		return d == 6 || d == 0;
-  }
+  	}
   
-  formatCellId(year, month, day) {
+  	formatCellId(year, month, day) {
 		month = month > 9 ? month : '0' + month;
 		day = day > 9 ? day : '0' + day;
 		return '' + year + month + day;
+	}
+
+
+
+	stagiaires: Object[] = [];
+	ngOnInit() {
+	    this.stagiaires = [
+	    	{ name: "Jean", id: 1 },
+	    	{ name: "Romain", id: 2 },
+	    	{ name: "Sylvie", id: 3 }
+	    ]
 	}
 }

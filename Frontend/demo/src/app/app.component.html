@@ -48,6 +48,12 @@
           <input type="text" class="form-control" placeholder="Username" aria-label="Username">
         </div>
 
+        <div class="panel md-form">
+          <ng-select class="custom" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+          </ng-select>
+        </div>
+        {{ selectedStagiaire }}
+
         <div class="panel">
             <div class="panel-header">
                 <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Information</button>

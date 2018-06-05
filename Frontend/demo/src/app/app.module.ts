@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { MDBBootstrapModule } from '../../../src';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgSelectModule, NG_SELECT_DEFAULT_CONFIG } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,10 +19,20 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     BrowserModule,
     RouterModule.forRoot([]),
     MDBBootstrapModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    NgSelectModule,
+    FormsModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
-  providers: [NavbarService],
+  providers: [
+    NavbarService,
+    {
+        provide: NG_SELECT_DEFAULT_CONFIG,
+        useValue: {
+            notFoundText: 'Aucun stagiaire trouvé'
+        }
+    }
+  ],
   bootstrap: [AppComponent],
   exports: [ NavbarComponent, LinksComponent, LogoComponent],
 })
