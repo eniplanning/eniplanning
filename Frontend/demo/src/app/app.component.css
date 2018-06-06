@@ -41,6 +41,10 @@
     margin-bottom: 4px;
 }
 
+.panel.md-form {
+    margin: 15px 0 8px 0;
+}
+
 .panel-header button {
     margin : 0;
 }
@@ -106,6 +110,11 @@ ul {
 
 .display-range .btn {
     padding: 7px 12px;
+}
+
+.display-range .btn.active {
+    color: white !important; 
+    background-color: #4285f4 !important;
 }
 
 /* CALENDAR */

@@ -1,5 +1,5 @@
 <!-- Header -->
-<mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar ie-nav" [containerInside]="false">
+<mdb-navbar SideClass="navbar static-top navbar-expand-lg navbar-light white scrolling-navbar ie-nav" [containerInside]="false">
   <logo>
       <img src="../assets/logo-eni.png" height="40" class="d-inline-block align-top mr-3" alt="">
       <a class="logo navbar-brand" href="#"><strong>ENI PLANNING</strong></a>
@@ -38,10 +38,10 @@
 
 <!-- Main -->
 <main>
-  <div class="container navbar-positionning"></div>
   <div class="container-fluid">
     <div class="row page">
 
+      <!-- LEFT PANEL -->
       <div class="leftpanel col-12 col-lg-3">
         <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
@@ -119,18 +119,20 @@
 
       </div>
 
+
+      <!-- RIGHT PANEL -->
       <div class="rightpanel col-12 col-lg-9">
         <div class="row planning-informations">
             <div class="col-3 display-heures text-center">TOTAL : <span>0</span> H</div>
             <div class="col-8 display-range text-right">
                 <div class="btn-group">
-                    <label class="btn btn-outline-primary waves-light" [(ngModel)]="calendarDisplayRange" mdbRadio="12" mdbWavesEffect (click)="calendarDisplayRange = 12">
+                    <label class="btn btn-outline-primary waves-light" mdbWavesEffect (click)="setCalendarDisplayRange(12)" [ngClass]="{'active': calendarDisplayRange==12}">
                         12 mois
                     </label>
-                    <label class="btn btn-outline-primary waves-light" [(ngModel)]="calendarDisplayRange" mdbRadio="6" mdbWavesEffect (click)="calendarDisplayRange = 6">
+                    <label class="btn btn-outline-primary waves-light" mdbWavesEffect (click)="setCalendarDisplayRange(6)" [ngClass]="{'active': calendarDisplayRange==6}">
                         6 mois
                     </label>
-                    <label class="btn btn-outline-primary waves-light" [(ngModel)]="calendarDisplayRange" mdbRadio="4" mdbWavesEffect (click)="calendarDisplayRange = 4">
+                    <label class="btn btn-outline-primary waves-light" mdbWavesEffect (click)="setCalendarDisplayRange(4)" [ngClass]="{'active': calendarDisplayRange==4}">
                         4 mois
                     </label>
                 </div>
@@ -138,7 +140,6 @@
         </div>
 
         <div class="col-11 col-lg-12 table-container" #scroll (mousewheel)="wheeled($event)">
-            <!-- <img src="../assets/calendar.png"> -->
             <div *ngFor="let month of months" class="display-month" [style.width.%]="100/calendarDisplayRange">
                 <table class="table">
                     <thead>

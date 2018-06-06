@@ -6,9 +6,10 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+  	public calendarDisplayRange: string;
+
   	displayPanelInformation: boolean = true;
-	calendarDisplayRange: string = '12';
+	
 	@ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any>;
 
   	months = [
@@ -37,6 +38,10 @@ export class AppComponent {
 			{dateDebut: '2018-04-09', dateFin: '2018-04-20', libelle: 'Java2'},
 			{dateDebut: '2018-05-25', dateFin: '2018-05-21', libelle: 'PHP'}
 		]
+	}
+
+	setCalendarDisplayRange(months) {
+		this.calendarDisplayRange = months;
 	}
 	
 	wheeled(event) {
@@ -82,6 +87,8 @@ export class AppComponent {
 		day = day > 9 ? day : '0' + day;
 		return '' + year + month + day;
 	}
+
+
 
 
 
