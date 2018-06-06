@@ -44,15 +44,11 @@
 
       <div class="leftpanel col-12 col-lg-3">
         <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
-        <div class="panel md-form">
-          <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-        </div>
 
         <div class="panel md-form">
           <ng-select class="custom" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
           </ng-select>
         </div>
-        {{ selectedStagiaire }}
 
         <div class="panel">
             <div class="panel-header">
