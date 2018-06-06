@@ -216,13 +216,12 @@ td.day-first-letter {
 }
 
 /* ng-select */
-.ng-select.custom {
+.ng-select.customInput {
     border:0px;
-    padding: 0;
     min-height: 0px;
     border-radius: 0;
 }
-.ng-select.custom .ng-select-container  {            
+.ng-select.customInput .ng-select-container  {            
     min-height: 0px;
     border-radius: 0;
 }

@@ -46,7 +46,7 @@
         <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
         <div class="panel md-form">
-          <ng-select class="custom" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+          <ng-select class="customInput" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire()" [virtualScroll]>
           </ng-select>
         </div>
 

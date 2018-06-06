@@ -6,6 +6,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+	selectedStagiaire: string;
   	public calendarDisplayRange: string;
 
   	displayPanelInformation: boolean = true;
@@ -42,6 +43,11 @@ export class AppComponent {
 
 	setCalendarDisplayRange(months) {
 		this.calendarDisplayRange = months;
+	}
+
+	public onChangeSelectedStagiaire() {
+		// request data from backend here
+		console.log('ID du stagiaire : ' + this.selectedStagiaire);
 	}
 	
 	wheeled(event) {
