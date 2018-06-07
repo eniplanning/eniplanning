@@ -106,4 +106,21 @@ export class AppComponent {
 	    	{ name: "Sylvie", id: 3 }
 	    ]
 	}
+
+
+
+	// Expansion Panels
+	step = 0;
+
+  	setStep(index: number) {
+    	this.step = index;
+  	}
+
+  	nextStep() {
+    	this.step++;
+  	}
+
+  	prevStep() {
+    	this.step--;
+  	}
 }

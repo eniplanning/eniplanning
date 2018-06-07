@@ -106,25 +106,25 @@
         </div>
 
         <div class="panel">
-                <div class="panel-header">
-                    <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="modulescompl.toggle()" mdbWavesEffect>Modules complémentaires</button>
-                </div>
-                <div class="panel-content modules-complementaires" [mdbCollapse]="isCollapsed" #modulescompl="bs-collapse">
-                    <div class="content-title">Title</div>
-                    <div class="content-body">
-                       Content
-                    </div>
+            <div class="panel-header">
+                <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="modulescompl.toggle()" mdbWavesEffect>Modules complémentaires</button>
+            </div>
+            <div class="panel-content modules-complementaires" [mdbCollapse]="isCollapsed" #modulescompl="bs-collapse">
+                <div class="content-title">Title</div>
+                <div class="content-body">
+                   Content
                 </div>
             </div>
+        </div>
 
       </div>
 
 
       <!-- RIGHT PANEL -->
       <div class="rightpanel col-12 col-lg-9">
-        <div class="row planning-informations">
-            <div class="col-3 display-heures text-center">TOTAL : <span>0</span> H</div>
-            <div class="col-8 display-range text-right">
+        <div class="col-11 col-lg-12 row planning-informations">
+            <div class="col-4 display-heures text-center">TOTAL : <span>0</span> H</div>
+            <div class="col-7 display-range text-right">
                 <div class="btn-group">
                     <label class="btn btn-outline-primary waves-light" mdbWavesEffect (click)="setCalendarDisplayRange(12)" [ngClass]="{'active': calendarDisplayRange==12}">
                         12 mois
@@ -155,6 +155,11 @@
                 </table>
             </div>
         </div>
+
+        <div class="col-11 col-lg-12 planning-tabs">
+          
+        </div>
+
       </div>
 
     </div>

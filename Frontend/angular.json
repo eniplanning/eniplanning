@@ -28,13 +28,15 @@
               }
             ],
             "styles": [
-              {"input": "node_modules/font-awesome/scss/font-awesome.scss"},
-              {"input": "src/scss/bootstrap/bootstrap.scss"},
-              {"input": "src/scss/mdb-free.scss"},
-              {"input": "demo/src/styles.scss"},
-              {"input": "node_modules/font-awesome/css/font-awesome.css"}
+              { "input": "node_modules/font-awesome/scss/font-awesome.scss" },
+              { "input": "src/scss/bootstrap/bootstrap.scss" },
+              { "input": "src/scss/mdb-free.scss" },
+              { "input": "demo/src/styles.scss" },
+              { "input": "node_modules/font-awesome/css/font-awesome.css" }
             ],
-            "scripts": []
+            "scripts": [
+              {"input": "node_modules/bootstrap/dist/js/bootstrap.min.js"}
+            ]
           },
           "configurations": {
             "production": {

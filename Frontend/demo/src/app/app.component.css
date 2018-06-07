@@ -55,6 +55,24 @@
     padding-bottom: 2px;
 }
 
+
+/* ng-select */
+.ng-select.customInput {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.customInput .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0;
+}
+
+ng-select.ng-invalid.ng-touched .ng-select-container {
+    border-color: #dc3545;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
+}
+/***********/
+
 .content-title {
     font-size: 14px;
     font-weight: 600;
@@ -215,18 +233,25 @@ td.day-first-letter {
 	border-bottom-right-radius: 5px;
 }
 
-/* ng-select */
-.ng-select.customInput {
-    border:0px;
-    min-height: 0px;
-    border-radius: 0;
-}
-.ng-select.customInput .ng-select-container  {            
-    min-height: 0px;
-    border-radius: 0;
+/* TABS */
+.planning-tabs {
+    padding-top: 15px;
 }
 
-ng-select.ng-invalid.ng-touched .ng-select-container {
-    border-color: #dc3545;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;
+.demo-tab-group {
+  border: 1px solid #e8e8e8;
+}
+
+.demo-tab-content {
+  padding: 16px;
+}
+
+/* EXPANSION PANELS */
+.example-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  align-items: left;
 }
