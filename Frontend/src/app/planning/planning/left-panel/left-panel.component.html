@@ -1,0 +1,73 @@
+<!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
+
+<div class="panel md-form">
+  <ng-select class="customInput" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire()" [virtualScroll]>
+  </ng-select>
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Information</button>
+    </div>
+    <div class="panel-content informations" [mdbCollapse]="isCollapsed" #informations="bs-collapse">
+        <div class="content-title">Informations</div>
+        <div class="content-body">
+            <p>Stagiaire : Mélanie Fracquin</p>
+            <p>Entreprise : Orange France</p>
+        </div>
+        <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
+        <div class="content-body">
+            <ul>
+                <li><span>Nom du planning 1</span> - <span>CDI</span></li>
+                <li><span>Nom du planning 2</span> - <span>CDI</span></li>
+                <li><span>Nom du planning 3</span> - <span>DL</span></li>
+            </ul>
+        </div>
+    </div>     
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="plannings.toggle()" mdbWavesEffect>Planning</button>
+    </div>
+    <div class="panel-content plannings" [mdbCollapse]="isCollapsed" #plannings="bs-collapse">
+        <div class="content-body">
+            <ul class="module-list">
+                <li class="module"><fa name="minus"></fa><span>Java de base</span>
+                    <ul class="cours-list">
+                        <li class="cours"><fa name="plus"></fa> 03/04/2018 - 13/04/2018</li>
+                        <li class="cours"><fa name="plus"></fa> 11/06/2018 - 22/06/2018</li>
+                    </ul>
+                </li>
+                <li class="module"><fa name="plus"></fa><span>Java avancé</span>
+                </li>
+                <li class="module"><fa name="plus"></fa><span>PHP Symfony</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="formationseni.toggle()" mdbWavesEffect>Formations ENI</button>
+    </div>
+    <div class="panel-content formations-eni" [mdbCollapse]="isCollapsed" #formationseni="bs-collapse">
+        <div class="content-title">Title</div>
+        <div class="content-body">
+           Content
+        </div>
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-header">
+        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="modulescompl.toggle()" mdbWavesEffect>Modules complémentaires</button>
+    </div>
+    <div class="panel-content modules-complementaires" [mdbCollapse]="isCollapsed" #modulescompl="bs-collapse">
+        <div class="content-title">Title</div>
+        <div class="content-body">
+           Content
+        </div>
+    </div>
+</div>
