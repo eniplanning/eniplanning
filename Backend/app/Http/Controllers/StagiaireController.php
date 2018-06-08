@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use App\Http\Middleware;
 
 
-class StagiaireConstroller extends Controller
+class StagiaireController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      * url : .../Backend/public/stagiaire

@@ -18,8 +18,8 @@ class SetFk extends Migration
                 ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
             ");
             $table->foreign('planning_id')->references('id')->on('plannings');
-            $table->foreign('stagiaire_id')->references('CodeStagiaire')->on('Stagiaire');
-            $table->foreign('formation_id')->references('CodeFormation')->on('Formation');
+            $table->foreign('stagiaire_id')->references('CodeStagiaire')->on('stagiaires');
+            $table->foreign('formation_id')->references('CodeFormation')->on('formations');
             $table->foreign('user_id')->references('id')->on('users');
         });
 
