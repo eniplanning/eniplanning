@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ export class AngularMaterialModule {}
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     MDBBootstrapModule.forRoot(),
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
