@@ -9,10 +9,10 @@ import { map } from 'rxjs/operators';
   	styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent implements OnInit {
-	stagiaires: Object[] = [];
-	selectedStagiaire: string;
+	  stagiaires: Object[] = [];
+	  selectedStagiaire: string;
 
-	restStagiaires: any;
+	  restStagiaires: any;
   	restStagiairesUrl = 'http://localhost:80/eniplanning_cg/eniplanning/Backend/public/stagiaire';
 
   	constructor(private http: HttpClient) {}
