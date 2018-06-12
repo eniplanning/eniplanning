@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ENIconfig } from '../../../ENIConfig';
 
 
 @Component({
@@ -9,41 +10,34 @@ import { map } from 'rxjs/operators';
   	styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent implements OnInit {
-	  stagiaires: Object[] = [];
-	  selectedStagiaire: string;
+	  
+	selectedStagiaire: string;
 
-	  restStagiaires: any;
-  	restStagiairesUrl = 'http://localhost:80/eniplanning_cg/eniplanning/Backend/public/stagiaire';
+  	restStagiaires: any;
+	restStagiairesUrl = ENIconfig.stagiairesAPI;
+	constructor(private http: HttpClient) {}
 
-  	constructor(private http: HttpClient) {}
+	ngOnInit() {
+		this.getRestStagiaires();
+	}
 
-  	ngOnInit() {
-  		this.getRestStagiaires();
+	// Read all REST Stagiaires
+	getRestStagiaires(): void {
+		this.restStagiairesServiceGetRestItems()
+			.subscribe(
+				restStagiaires => {
+					this.restStagiaires = restStagiaires;
+					console.log(this.restStagiaires);
+				}
+			)
+	}
 
-  		this.stagiaires = [
-	    	{ name: "Jean", id: 1 },
-	    	{ name: "Romain", id: 2 },
-	    	{ name: "Sylvie", id: 3 }
-	    ]
-  	}
-
-  	// Read all REST Stagiaires
-    getRestStagiaires(): void {
-        this.restStagiairesServiceGetRestItems()
-            .subscribe(
-                restStagiaires => {
-                    this.restStagiaires = restStagiaires;
-                    console.log(this.restStagiaires);
-                }
-            )
-    }
-
-    // Rest Items Service: Read all REST Items
-    restStagiairesServiceGetRestItems() {
-        return this.http
-            .get<any[]>(this.restStagiairesUrl)
-            .pipe(map(data => data));
-    }
+	// Rest Items Service: Read all REST Items
+	restStagiairesServiceGetRestItems() {
+		return this.http
+			.get<any[]>(this.restStagiairesUrl)
+			.pipe(map(data => data));
+	}
 
 	public onChangeSelectedStagiaire() {
 		// fired when the user clicks on a stagiaire
