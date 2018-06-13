@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Module;
 
 class ModuleController extends Controller
 {
@@ -24,6 +25,6 @@ class ModuleController extends Controller
      */
     public function show(Module $module)
     {
-        return $module;
+        return $module->toJson();
     }
 }

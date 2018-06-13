@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CtrExemption;
 
 class CtrExemptionController extends Controller
 {
@@ -35,7 +36,7 @@ class CtrExemptionController extends Controller
      */
     public function show(CtrExemption $ctrExemption)
     {
-        return $ctrExemption;
+        return $ctrExemption->toJson();
     }
 
     /**

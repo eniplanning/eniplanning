@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PlanningCourse;
+use App\Models\User;
 
-class PlanningCourseController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class PlanningCourseController extends Controller
      */
     public function index()
     {
-        return PlanningCourse::all()->toJson();
+        return User::all()->toJson();
     }
 
     /**
@@ -25,7 +25,7 @@ class PlanningCourseController extends Controller
      */
     public function store(Request $request)
     {
-        PlanningCourse::create($request->all());
+        User::create($request->all());
     }
 
     /**
@@ -34,9 +34,9 @@ class PlanningCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PlanningCourse $planningCourse)
+    public function show(User $user)
     {
-        return $planningCourse->toJson();
+        return $user->toJson();
     }
 
     /**
@@ -46,9 +46,9 @@ class PlanningCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PlanningCourse $planningCourse)
+    public function update(Request $request, User $user)
     {
-        $planningCourse->update($request->all());
+        $user->update($request->all());
     }
 
     /**
@@ -57,8 +57,8 @@ class PlanningCourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlanningCourse $planningCourse)
+    public function destroy(User $user)
     {
-        $planningCourse->delete();
+        $user->delete();
     }
 }

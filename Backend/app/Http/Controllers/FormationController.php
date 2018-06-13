@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Formation;
 
 class FormationController extends Controller
 {
@@ -24,6 +25,6 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        return $formation;
+        return $formation->toJson();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Planning;
 
 class PlanningController extends Controller
 {
@@ -13,17 +14,7 @@ class PlanningController extends Controller
      */
     public function index()
     {
-        //Test
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        Planning::all()->toJson();
     }
 
     /**
@@ -34,7 +25,7 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Planning::create($request->all());
     }
 
     /**
@@ -43,20 +34,9 @@ class PlanningController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Planning $planning)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $planning->toJson();
     }
 
     /**
@@ -66,9 +46,9 @@ class PlanningController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Planning $planning)
     {
-        //
+        $planning->update($request->all());
     }
 
     /**
@@ -77,8 +57,8 @@ class PlanningController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Planning $planning)
     {
-        //
+        $planning->delete();
     }
 }
