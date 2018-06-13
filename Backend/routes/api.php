@@ -18,17 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->group(function(){
-    Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
-    Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
-    Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
-    Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
-    Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
-    Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
-    Route::resource('ctrPrioritization', 'CtrPrioritizationController', ['except' => ['create', 'edit']]);
-    Route::resource('ctrExemption', 'CtrExemptionController', ['except' => ['create', 'edit']]);
-    Route::resource('ctrDisponibility', 'CtrDisponibilityController', ['except' => ['create', 'edit']]);
-    Route::resource('complementaryCourse', 'ComplementaryCourseController', ['except' => ['create', 'edit']]);
-    Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
+    // Les routes seront transférées ici quand l'authentification sera terminé.
 });
+
+Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
+Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
+Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
+Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
+Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
+Route::resource('ctrPrioritization', 'CtrPrioritizationController', ['except' => ['create', 'edit']]);
+Route::resource('ctrExemption', 'CtrExemptionController', ['except' => ['create', 'edit']]);
+Route::resource('ctrDisponibility', 'CtrDisponibilityController', ['except' => ['create', 'edit']]);
+Route::resource('complementaryCourse', 'ComplementaryCourseController', ['except' => ['create', 'edit']]);
+Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
 Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
 Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
