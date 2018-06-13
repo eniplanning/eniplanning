@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CtrDisponibility;
 
 class CtrDisponibilityController extends Controller
 {
@@ -35,7 +36,7 @@ class CtrDisponibilityController extends Controller
      */
     public function show(CtrDisponibility $ctrDisponibility)
     {
-        return $ctrDisponibility;
+        return $ctrDisponibility->toJson();
     }
 
     /**

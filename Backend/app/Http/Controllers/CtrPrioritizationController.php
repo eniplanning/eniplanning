@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CtrPrioritization;
 
 class CtrPrioritizationController extends Controller
 {
@@ -35,7 +36,7 @@ class CtrPrioritizationController extends Controller
      */
     public function show(CtrPrioritization $ctrPrioritization)
     {
-        return $ctrPrioritization;
+        return $ctrPrioritization->toJson();
     }
 
     /**

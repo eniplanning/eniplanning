@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ComplementaryModule;
 
 class ComplementaryModuleController extends Controller
 {
@@ -35,7 +36,7 @@ class ComplementaryModuleController extends Controller
      */
     public function show(ComplementaryModule $complementaryModule)
     {
-        return $complementaryModule;
+        return $complementaryModule->toJson();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ChainingModule;
 
 class ChainingModuleController extends Controller
 {
@@ -35,7 +36,7 @@ class ChainingModuleController extends Controller
      */
     public function show(ChainingModule $chainingModule)
     {
-        return $chainingModule;
+        return $chainingModule->toJson();
     }
 
     /**

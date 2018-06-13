@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cours;
 
 class CoursController extends Controller
 {
@@ -24,6 +25,6 @@ class CoursController extends Controller
      */
     public function show(Cours $cours)
     {
-        return $cours;
+        return $cours->toJson();
     }
 }

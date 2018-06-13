@@ -19,14 +19,7 @@ class StagiaireController extends Controller
     {
         return Stagiaire::all();
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -35,27 +28,20 @@ class StagiaireController extends Controller
      */
     public function store(Request $request)
     {
+        Stagiaire::create($request->all());
     }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stagiaire $stagiaire)
     {
-        //
+        return $stagiaire->toJson();
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
     /**
      * Update the specified resource in storage.
      *
@@ -63,18 +49,19 @@ class StagiaireController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stagiaire $stagiaire)
     {
-        //
+        $stagiaire->update($request->all());
     }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Stagiaire $stagiaire)
     {
-        //
+        $stagiaire->delete();
     }
 }
