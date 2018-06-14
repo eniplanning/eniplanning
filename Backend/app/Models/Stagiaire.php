@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Stagiaire extends Model
 {
     // https://laravel.com/docs/5.6/eloquent
-    protected $connection = 'eniplanning';
-    protected $table = 'stagiaires';
+    protected $connection = 'enierp';
+    protected $table = 'stagiaire';
     protected $primaryKey = 'CodeStagiaire';
 
     // Liste des attributs restitués dans les tableaux d'objets

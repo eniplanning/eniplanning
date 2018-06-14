@@ -2,16 +2,14 @@
 
 <div class="panel md-form">
  <div *ngIf="undefined === restStagiaires">Loading...</div>
-    <div *ngIf="undefined !== restStagiaires">
-        <ul>
-            <li *ngFor="let stagiaire of restStagiaires['stagiaires']" [innerHTML]="stagiaire.nom">
-            </li>
-        </ul>
-    </div>
-    <ng-select class="custom" [items]="restStagiaires" bindLabel="Nom" bindValue="CodeStagiaire" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
-    </ng-select>
-    <ng-select class="custom" [items]="stagiaires" bindLabel="name" bindValue="id" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
-    </ng-select>
+ <div *ngIf="undefined !== restStagiaires">
+    <ul>
+        <li *ngFor="let stagiaire of restStagiaires['stagiaires']" [innerHTML]="stagiaire.nom">
+        </li>
+    </ul>
+  </div>
+  <ng-select class="custom" [items]="restStagiaires" bindLabel="Nom" bindValue="CodeStagiaire" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+  </ng-select>
 </div>
 
 <div class="panel">

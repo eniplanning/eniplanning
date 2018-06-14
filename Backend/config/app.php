@@ -4,6 +4,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Authorized Client URL
+    |--------------------------------------------------------------------------
+    |
+    | This value is the Client URL of your application. This value is used when the
+    | framework needs to check the application's client url required by the application
+    | or its packages.
+    |
+    */
+
+    'http_client' => env('CLIENT_HTTP', ''),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Log File
+    |--------------------------------------------------------------------------
+    |
+    | This value is the Client URL of your application. This value is used when the
+    | framework needs to check the application's client url required by the application
+    | or its packages.
+    |
+    */
+
+    'log_file' => env('LOG_FILE', ''),
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
@@ -159,6 +184,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
