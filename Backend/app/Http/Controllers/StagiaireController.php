@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 use App\Http\Middleware;
-
+use Log;
+use Illuminate\Support\facades\Config;
 
 class StagiaireController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      * url : .../Backend/public/stagiaire
@@ -17,6 +19,8 @@ class StagiaireController extends Controller
      */
     public function index()
     {
+        //Log::useDailyFiles(storage_path().Config::get('app.log_file'));
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Stagiaire::all();
     }
     /**

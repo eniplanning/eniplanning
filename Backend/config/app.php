@@ -17,6 +17,18 @@ return [
     
     /*
     |--------------------------------------------------------------------------
+    | Log File
+    |--------------------------------------------------------------------------
+    |
+    | This value is the Client URL of your application. This value is used when the
+    | framework needs to check the application's client url required by the application
+    | or its packages.
+    |
+    */
+
+    'log_file' => env('LOG_FILE', ''),
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
