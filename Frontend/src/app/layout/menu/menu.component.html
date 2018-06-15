@@ -1,0 +1,39 @@
+<a><i class="fa fa-bars fa-2x menu-icon mr-3" data-toggle="modal" data-target="#modal-menu" (click)="modalMenu.show()"></i></a>
+
+<div mdbModal #modalMenu="mdb-modal" class="modal fade" id="modal-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Menu</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalMenu.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            	<div class="menu-row">
+	                <div class="menu-link">
+	                	<a routerLink="/planning">
+	                		<fa name="calendar-alt" size="4x"></fa>
+	                		<div>Planning</div>
+	            		</a>
+	                </div>
+	                <div class="menu-link">
+	                	<a routerLink="/moncompte">
+	                		<fa name="user-cog" size="4x"></fa>
+	                		<div>Mon compte</div>
+	            		</a>
+	                </div>
+	                <div class="menu-link">
+	                	<a routerLink="/modeles">
+	                		<fa name="calendar" size="4x"></fa>
+	                		<div>Modèles</div>
+	            		</a>
+	                </div>
+	            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm waves-light" data-dismiss="modal" (click)="modalMenu.hide()" mdbWavesEffect>Close</button>
+            </div>
+        </div>
+    </div>
+</div>

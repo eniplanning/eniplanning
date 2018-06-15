@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { ENIconfig } from '../../../ENIConfig';
+import { db_config } from '../../utils/database/config';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class LeftPanelComponent implements OnInit {
 	selectedStagiaire: string;
 
   	restStagiaires: any;
-	restStagiairesUrl = ENIconfig.stagiairesAPI;
+	restStagiairesUrl = db_config.url_stagiaires;
 	constructor(private http: HttpClient) {}
 
 	ngOnInit() {
