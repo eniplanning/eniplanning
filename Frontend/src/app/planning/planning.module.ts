@@ -5,9 +5,9 @@ import { NgSelectModule, NG_SELECT_DEFAULT_CONFIG } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { PlanningRoutingModule } from './planning-routing.module';
-import { PlanningComponent } from './planning/planning.component';
-import { LeftPanelComponent } from './planning/left-panel/left-panel.component';
-import { RightPanelComponent } from './planning/right-panel/right-panel.component';
+import { PlanningComponent } from './planning.component';
+import { LeftPanelComponent } from './left-panel/left-panel.component';
+import { RightPanelComponent } from './right-panel/right-panel.component';
 
 @NgModule({
   declarations: [PlanningComponent, LeftPanelComponent, RightPanelComponent],
