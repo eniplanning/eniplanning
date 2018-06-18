@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     protected $connection = 'enierp';
+    protected $table = 'Module';
     protected $primaryKey = 'IdModule';
 
     public function chainingModule(){
