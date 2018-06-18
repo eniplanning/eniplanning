@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => 'addHeadersCors'], function() {
-    Route::resource('stagiaire', 'StagiaireController');
+    // Route::resource('stagiaire', 'StagiaireController');
 });
