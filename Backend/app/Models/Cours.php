@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cours extends Model
 {
     protected $connection = 'enierp';
+    protected $table = 'Cours';
     protected $primaryKey = 'IdCours';
 
     public function planningCourse(){
