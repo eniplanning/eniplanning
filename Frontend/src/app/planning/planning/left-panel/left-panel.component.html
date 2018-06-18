@@ -1,15 +1,12 @@
 <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
 <div class="panel md-form">
- <div *ngIf="undefined === restStagiaires">Loading...</div>
- <div *ngIf="undefined !== restStagiaires">
-    <ul>
-        <li *ngFor="let stagiaire of restStagiaires['stagiaires']" [innerHTML]="stagiaire.nom">
-        </li>
-    </ul>
-  </div>
-  <ng-select class="custom" [items]="restStagiaires" bindLabel="Nom" bindValue="CodeStagiaire" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+ <div *ngIf="undefined === stagiaires">Chargement...</div>
+ <div *ngIf="undefined !== stagiaires">
+  <ng-select class="custom" [items]="stagiaires" bindLabel='Nom' bindValue="CodeStagiaire" 
+    [(ngModel)]="selectedStagiaire" placeholder="stagiaire">
   </ng-select>
+  </div>
 </div>
 
 <div class="panel">

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { ENIconfig } from '../../../ENIConfig';
+import { StagiaireService } from '../../../services/stagiaire.service';
+import { Stagiaire } from '../../../models/stagiaire';
 
 
 @Component({
@@ -11,33 +10,20 @@ import { ENIconfig } from '../../../ENIConfig';
 })
 export class LeftPanelComponent implements OnInit {
 	  
-	selectedStagiaire: string;
+	constructor(private stagiaireService: StagiaireService) { } 
 
-  	restStagiaires: any;
-	restStagiairesUrl = ENIconfig.stagiairesAPI;
-	constructor(private http: HttpClient) {}
+	selectedStagiaire: Stagiaire;
+  	stagiaires: Stagiaire[];
 
 	ngOnInit() {
-		this.getRestStagiaires();
+		this.getStagiaires();
 	}
 
-	// Read all REST Stagiaires
-	getRestStagiaires(): void {
-		this.restStagiairesServiceGetRestItems()
-			.subscribe(
-				restStagiaires => {
-					this.restStagiaires = restStagiaires;
-					console.log(this.restStagiaires);
-				}
-			)
+	// Méthodes qui va récupérer les Stagiaires depuis le service
+	getStagiaires(): void {
+	   this.stagiaireService.getStagiaires().subscribe(stagiaires => this.stagiaires = stagiaires);
 	}
 
-	// Rest Items Service: Read all REST Items
-	restStagiairesServiceGetRestItems() {
-		return this.http
-			.get<any[]>(this.restStagiairesUrl)
-			.pipe(map(data => data));
-	}
 
 	public onChangeSelectedStagiaire() {
 		// fired when the user clicks on a stagiaire
