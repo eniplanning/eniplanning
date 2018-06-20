@@ -8,9 +8,10 @@ import { PlanningRoutingModule } from './planning-routing.module';
 import { PlanningComponent } from './planning/planning.component';
 import { LeftPanelComponent } from './planning/left-panel/left-panel.component';
 import { RightPanelComponent } from './planning/right-panel/right-panel.component';
+import { ModalCreatePlanningComponent } from './planning/modal-create-planning/modal-create-planning.component';
 
 @NgModule({
-  declarations: [PlanningComponent, LeftPanelComponent, RightPanelComponent],
+  declarations: [PlanningComponent, LeftPanelComponent, RightPanelComponent, ModalCreatePlanningComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule,
@@ -18,6 +19,7 @@ import { RightPanelComponent } from './planning/right-panel/right-panel.componen
     FormsModule,
     AngularFontAwesomeModule,
     PlanningRoutingModule,
+    MDBBootstrapModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
