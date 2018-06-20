@@ -1,11 +1,16 @@
 <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
 <div class="panel md-form">
-  <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+  <div *ngIf="undefined === stagiaires">Chargement...</div>
+  <div *ngIf="undefined !== stagiaires">  
+     <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
     <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
   </ng-select>
+  </div>
 </div>
 
+
+<div *ngIf="selectedStagiaire !== undefined" >
 <div class="panel">
     <div class="panel-header">
         <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Information</button>
@@ -71,4 +76,5 @@
            Content
         </div>
     </div>
+</div>
 </div>
