@@ -1,14 +1,8 @@
 <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
 <div class="panel md-form">
- <div *ngIf="undefined === restStagiaires">Loading...</div>
- <div *ngIf="undefined !== restStagiaires">
-    <ul>
-        <li *ngFor="let stagiaire of restStagiaires['stagiaires']" [innerHTML]="stagiaire.nom">
-        </li>
-    </ul>
-  </div>
-  <ng-select class="custom" [items]="restStagiaires" bindLabel="Nom" bindValue="CodeStagiaire" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+  <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+    <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
   </ng-select>
 </div>
 
@@ -18,12 +12,12 @@
     </div>
     <div class="panel-content informations" [mdbCollapse]="isCollapsed" #informations="bs-collapse">
         <div class="content-title">Informations</div>
-        <div class="content-body">
-            <p>Stagiaire : Mélanie Fracquin</p>
+        <div class="content-body" *ngIf="selectedStagiaire">
+            <p>Stagiaire : {{selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
             <p>Entreprise : Orange France</p>
         </div>
         <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
-        <div class="content-body">
+        <div class="content-body" *ngIf="selectedStagiaire">
             <ul>
                 <li><span>Nom du planning 1</span> - <span>CDI</span></li>
                 <li><span>Nom du planning 2</span> - <span>CDI</span></li>

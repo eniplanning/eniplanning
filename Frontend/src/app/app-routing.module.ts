@@ -16,6 +16,26 @@ const routes: Routes = [
 		loadChildren: './mon-compte/mon-compte.module#MonCompteModule'
 	},
 	{
+		path: 'modules-complementaires',
+		loadChildren: './modules-complementaires/modules-complementaires.module#ModulesComplementairesModule'
+	},
+	{
+		path: 'modules',
+		loadChildren: './modules/modules.module#ModulesModule'
+	},
+	{
+		path: 'admin/logs',
+		loadChildren: './logs/logs.module#LogsModule'
+	},
+	{
+		path: 'admin/statut',
+		loadChildren: './statut/statut.module#StatutModule'
+	},
+	{
+		path: 'admin/utilisateurs',
+		loadChildren: './utilisateurs/utilisateurs.module#UtilisateursModule'
+	},
+	{
 		path: 'login',
 		loadChildren: './login/login.module#LoginModule'
 	},

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { db_config } from '../../utils/database/config';
+import { db_config } from '../../../utils/config';
 
 
 @Component({
@@ -13,12 +13,17 @@ export class LeftPanelComponent implements OnInit {
 	  
 	selectedStagiaire: string;
 
-  	restStagiaires: any;
-	restStagiairesUrl = db_config.url_stagiaires;
+  	stagiaires: any;
+	stagiairesUrl = db_config.url_stagiaires;
 	constructor(private http: HttpClient) {}
 
 	ngOnInit() {
-		this.getRestStagiaires();
+		this.stagiaires = [{
+			Nom: 'Valjean',
+			Prenom: 'Jean',
+			CodeStagiaire: '32'
+		}]
+		//this.getRestStagiaires();
 	}
 
 	// Read all REST Stagiaires
@@ -26,8 +31,8 @@ export class LeftPanelComponent implements OnInit {
 		this.restStagiairesServiceGetRestItems()
 			.subscribe(
 				restStagiaires => {
-					this.restStagiaires = restStagiaires;
-					console.log(this.restStagiaires);
+					this.stagiaires = restStagiaires;
+					console.log(this.stagiaires);
 				}
 			)
 	}
@@ -35,14 +40,7 @@ export class LeftPanelComponent implements OnInit {
 	// Rest Items Service: Read all REST Items
 	restStagiairesServiceGetRestItems() {
 		return this.http
-			.get<any[]>(this.restStagiairesUrl)
+			.get<any[]>(this.stagiairesUrl)
 			.pipe(map(data => data));
 	}
-
-	public onChangeSelectedStagiaire() {
-		// fired when the user clicks on a stagiaire
-		// request data from backend here
-		console.log('ID du stagiaire : ' + this.selectedStagiaire);
-	}
-
 }

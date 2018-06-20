@@ -28,13 +28,13 @@
 		            		</a>
 		                </div>
 		                <div class="menu-link col-3">
-		                	<a routerLink="/plannings-en-defaut" (click)="modalMenu.hide()">
+		                	<a routerLink="/planning/en-defaut" (click)="modalMenu.hide()">
 		                		<fa name="calendar-times-o" size="3x"></fa>
 		                		<div>Plannings en défaut</div>
 		            		</a>
 		                </div>
 		                <div class="menu-link col-2">
-		                	<a routerLink="/moncompte" (click)="modalMenu.hide()">
+		                	<a routerLink="/mon-compte" (click)="modalMenu.hide()">
 		                		<fa name="user-circle-o" size="3x"></fa>
 		                		<div>Mon compte</div>
 		            		</a>
@@ -68,15 +68,21 @@
 	            	</div>
 	            	<div class=" row col-lg-9 col-xs-12">
 		                <div class="menu-link col-2">
-		                	<a routerLink="/administration" (click)="modalMenu.hide()">
-		                		<fa name="cogs" size="3x"></fa>
-		                		<div>Administration</div>
+		                	<a routerLink="/admin/utilisateurs" (click)="modalMenu.hide()">
+		                		<fa name="users" size="3x"></fa>
+		                		<div>Utilisateurs</div>
 		            		</a>
 		                </div>
 		                <div class="menu-link col-2">
-		                	<a routerLink="/supervision" (click)="modalMenu.hide()">
+		                	<a routerLink="/admin/statut" (click)="modalMenu.hide()">
 		                		<fa name="sliders" size="3x"></fa>
-		                		<div>Supervision</div>
+		                		<div>Statut</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-2">
+		                	<a routerLink="/admin/logs" (click)="modalMenu.hide()">
+		                		<fa name="file-text-o" size="3x"></fa>
+		                		<div>Logs</div>
 		            		</a>
 		                </div>
 			        </div>
