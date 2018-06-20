@@ -1,4 +1,4 @@
-export const db_config = {
-    url_stagiaires: 'http://localhost:80/eniplanning/Backend/public/api/stagiaire'
+export const CONFIG = {
+    backend_url : 'http://localhost:80/eniplanning/Backend/public/api/'
 
 };

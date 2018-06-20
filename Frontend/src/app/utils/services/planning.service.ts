@@ -4,14 +4,14 @@ import { Observable, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Planning } from '../models/planning';
-import { ENIconfig } from '../ENIConfig';
+import { CONFIG } from '../../utils/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanningService {
 
-	planningsAPI = ENIconfig.backendAPI + 'planning';
+	planningsAPI = CONFIG.backend_url + 'planning';
   plannings: any;
 
   constructor(private http: HttpClient) { 
