@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of} from 'rxjs';
 
 import { Stagiaire } from '../models/stagiaire';
-import { ENIconfig } from '../ENIConfig';
+import { CONFIG } from '../utils/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StagiaireService {
 
-	stagiairesAPI = ENIconfig.backendAPI + 'stagiaire';
+	stagiairesAPI = CONFIG.backend_url + 'stagiaire';
   stagiaires: any;
 
   constructor(private http: HttpClient) {
