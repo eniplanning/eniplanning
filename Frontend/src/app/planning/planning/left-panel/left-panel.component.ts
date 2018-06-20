@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { LoggerService } from '../../../services/logger.service';
 import { StagiaireService } from '../../../services/stagiaire.service';
+import { PlanningService } from '../../../services/planning.service';
 import { Stagiaire } from '../../../models/stagiaire';
+import { Planning } from '../../../models/planning';
+import { PLANNINGS } from '../../../fake-datas/planning';
 
 
 @Component({
@@ -8,27 +12,46 @@ import { Stagiaire } from '../../../models/stagiaire';
   	templateUrl: './left-panel.component.html',
   	styleUrls: ['./left-panel.component.scss']
 })
+
 export class LeftPanelComponent implements OnInit {
 	  
-	constructor(private stagiaireService: StagiaireService) { } 
-
+	stagiaires: Stagiaire[];
 	selectedStagiaire: Stagiaire;
-  	stagiaires: Stagiaire[];
+	selectedPlanning: Planning;
+
+	constructor(
+		private logger: LoggerService,
+		private stagiaireService: StagiaireService,
+		private planningService: PlanningService,
+	) { } 
 
 	ngOnInit() {
 		this.getStagiaires();
 	}
 
-	// Méthodes qui va récupérer les Stagiaires depuis le service
+	// Récupération des Stagiaires depuis le service : stagiaire
 	getStagiaires(): void {
 	   this.stagiaireService.getStagiaires().subscribe(stagiaires => this.stagiaires = stagiaires);
 	}
 
-
-	public onChangeSelectedStagiaire() {
-		// fired when the user clicks on a stagiaire
-		// request data from backend here
-		console.log('ID du stagiaire : ' + this.selectedStagiaire);
+	// Récupération des Plannings du stagiaire sélectionné depuis le service : planning
+	getPlannings(selectedStagiaire: Stagiaire): void {
+		this.planningService.getPlannings().subscribe(plannings => this.selectedStagiaire.listPlannings = plannings);
 	}
+
+	// Mise à jour de la liste des plannings du stagiaire
+	// à la sélection d'un stagiaire
+	public onChangeSelectedStagiaire(selectedStagiaire: Stagiaire) {
+		this.selectedStagiaire.listPlannings = PLANNINGS;
+		this.logger.LogConsole('stagiaire sélectionné' , JSON.stringify(this.selectedStagiaire));
+		this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
+	}
+
+	public onSelectedPlanning(planning: Planning){
+		this.selectedPlanning = planning;
+		this.logger.LogConsole('planning sélectionné' , JSON.stringify(this.selectedPlanning));	
+		this.selectedPlanning.status_selected = true;
+	}
+
 
 }

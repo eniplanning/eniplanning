@@ -1,12 +1,14 @@
 // Model de l'objet : Stagiaire
 
+import { Planning } from './planning';
 
 export class Stagiaire {
-    CodeStagiaire: number;
-    Civilite:string;
-    Nom: string;
-    Prenom: string;
-
+    codeStagiaire:      number;
+    civilite:           string;
+    nom:                string;
+    prenom:             string;
+    listPlannings:      Planning[];
+   
     constructor() {
     }
 

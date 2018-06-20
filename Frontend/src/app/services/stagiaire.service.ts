@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { Stagiaire } from '../models/stagiaire';
 import { ENIconfig } from '../ENIConfig';
@@ -11,7 +10,7 @@ import { ENIconfig } from '../ENIConfig';
 })
 export class StagiaireService {
 
-	stagiairesUrl = ENIconfig.stagiairesAPI;
+	stagiairesAPI = ENIconfig.backendAPI + 'stagiaire';
   stagiaires: any;
 
   constructor(private http: HttpClient) {
@@ -19,11 +18,12 @@ export class StagiaireService {
   }
 
   getStagiaires(): Observable<Stagiaire[]> {
-    return this.http.get<Stagiaire[]>(ENIconfig.stagiairesAPI);
+    return this.http.get<Stagiaire[]>(this.stagiairesAPI);
   }
 
   getStagiaire(codeStagiaire:number):Observable<Stagiaire> {
     return of(this.stagiaires.find(stagiaire => stagiaire.CodeStagiaire === codeStagiaire));
   }
+
 }
 

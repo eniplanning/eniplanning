@@ -15,4 +15,5 @@ yarn-error.log
 
 # perso Carine
 /angular-tour-of-heroes/*
-/Database/*
+/DBScript/e*
+/Frontend/src/app/fake-datas/*
