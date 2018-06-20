@@ -1,28 +1,37 @@
 <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
 <div class="panel md-form">
-  <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
-    <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
+ <div *ngIf="undefined === stagiaires">Chargement...</div>
+ <div *ngIf="undefined !== stagiaires">
+    <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire">
+        <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
+    <ng-select class="custom" [(ngModel)]="selectedStagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
   </ng-select>
 </div>
 
+<div *ngIf="selectedStagiaire !== undefined" >
 <div class="panel">
     <div class="panel-header">
         <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Information</button>
     </div>
     <div class="panel-content informations" [mdbCollapse]="isCollapsed" #informations="bs-collapse">
-        <div class="content-title">Informations</div>
-        <div class="content-body" *ngIf="selectedStagiaire">
-            <p>Stagiaire : {{selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
-            <p>Entreprise : Orange France</p>
-        </div>
-        <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
-        <div class="content-body" *ngIf="selectedStagiaire">
-            <ul>
-                <li><span>Nom du planning 1</span> - <span>CDI</span></li>
-                <li><span>Nom du planning 2</span> - <span>CDI</span></li>
-                <li><span>Nom du planning 3</span> - <span>DL</span></li>
-            </ul>
+        <div>
+            <div class="content-title" >Informations</div>
+            <div class="content-body">
+                <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
+                <p>Entreprise : {{ selectedStagiaire.Entreprise[0].RaisonSociale }} </p>
+            </div>
+            <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
+            <div class="content-body">
+                <ul>
+                    <li *ngFor="let planning of selectedStagiaire.listPlannings"
+                         (click)="onSelectedPlanning(planning)" 
+                         [ngClass]="planning.status_selected ? 'text-success' : ''">
+                        Nom du planning : {{ planning.label }}
+                        <img src=""/>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>     
 </div>
@@ -71,4 +80,5 @@
            Content
         </div>
     </div>
+</div>
 </div>

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\StagiaireParEntrepriseController;
+use App\Http\Controllers\EntrepriseController;
 
 class Stagiaire extends Model
 {
@@ -11,9 +13,17 @@ class Stagiaire extends Model
     protected $table = 'stagiaire';
     protected $primaryKey = 'CodeStagiaire';
 
+    
+    //Make it available in the json response
+    protected $appends = ['Entreprise'];
+
     // Liste des attributs restitués dans les tableaux d'objets
-    // https://laravel.com/docs/5.6/eloquent-serialization
-    protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom'];
+    protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Entreprise'];
     public $timestamps = false;
 
+
+    public function getEntrepriseAttribute()
+    {
+        return EntrepriseController::getByStagiaire($this);
+    }
 }

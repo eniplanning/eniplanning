@@ -48,7 +48,7 @@ class PlanningController extends Controller
      */
     public function update(Request $request, Planning $planning)
     {
-        $planning->update($request->all());
+            
     }
 
     /**

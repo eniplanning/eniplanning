@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  eniplanningAPI:'http://localhost:80/eniplanning_newarch/eniplanning/Backend/public'
 };
 
 /*
