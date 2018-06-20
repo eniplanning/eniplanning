@@ -1,0 +1,54 @@
+<li class="nav-item waves-light" mdbWavesEffect>
+    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="createModal.show()" >Créer</a>
+</li>
+
+<!-- Modal -->
+<div mdbModal #createModal="mdb-modal" class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="creaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h5 class="modal-title" id="creaModalLabel">Paramètres du planning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                   <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6">
+                       <input class="form-control" type="text" placeholder="Nom du planning">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 md-form panel" >
+                        <p>Stagiaire : <!-- {{selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}} --></p>
+                        <p>Entreprise :</p>
+                        <p><select class="" placeholder="Choisir une formation">
+                            <option>Test</option>
+                            <option>Test2</option>
+                        </select></p>
+                        <p>
+                            <select class="form-control" placeholder="Choisir un site de formation">
+                                <option>Tes</option>
+                            </select>
+                        </p>
+                        <p>
+                            <select class="form-control" placeholder="Choisir un modèle de planning">
+                                <option>Test</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div class=" col-lg-6 col-md-6">
+                        <p>
+                            <label class="col-lg-3 col-md-3" for="creaDateDebut">Date de début :</label>
+                            <input class="form-control col-lg-3 col-md-3" type="date">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="createModal.hide()">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

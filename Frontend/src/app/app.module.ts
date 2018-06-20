@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { 
+import {
 	//MatButtonModule
 } from '@angular/material';
 import { AppComponent } from './app.component';
@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { MenuComponent } from './layout/menu/menu.component';
+import { ModalCreatePlanningComponent } from './planning/planning-general/modal-create-planning/modal-create-planning.component';
+
 
 
 @NgModule({
@@ -24,7 +26,7 @@ export class AngularMaterialModule {}
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, HeaderComponent, MenuComponent
+      AppComponent, FooterComponent, HeaderComponent, MenuComponent, ModalCreatePlanningComponent
   ],
   imports: [
     BrowserModule,
