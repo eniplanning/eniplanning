@@ -18,8 +18,7 @@ import { ModalCreatePlanningComponent } from './planning/modal-create-planning/m
     NgSelectModule,
     FormsModule,
     AngularFontAwesomeModule,
-    PlanningRoutingModule,
-    MDBBootstrapModule
+    PlanningRoutingModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
