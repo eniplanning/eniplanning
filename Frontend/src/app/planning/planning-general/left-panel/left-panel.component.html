@@ -3,7 +3,7 @@
 <div class="panel md-form">
  <div *ngIf="undefined === stagiaires">Chargement...</div>
  <div *ngIf="undefined !== stagiaires">
-    <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)"></ng-select>
+    <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
         <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
     </ng-select>
   </div>
