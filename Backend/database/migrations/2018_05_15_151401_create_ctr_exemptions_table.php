@@ -16,7 +16,7 @@ class CreateCtrExemptionsTable extends Migration
         Schema::create('ctr_exemptions', function (Blueprint $table) {
             $table->integer('planning_id')->unsigned();
             $table->integer('module_id')->unsigned();
-            $table->integer('num_week');
+            $table->integer('num_week')->nullable();
             $table->timestamps();
             $table->primary(['planning_id', 'module_id'], 'exemption_id');
         });
