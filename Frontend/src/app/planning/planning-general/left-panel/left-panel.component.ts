@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggerService } from '../../../services/logger.service';
-import { StagiaireService } from '../../../services/stagiaire.service';
-import { PlanningService } from '../../../services/planning.service';
-import { Stagiaire } from '../../../models/stagiaire';
-import { Planning } from '../../../models/planning';
-import { PLANNINGS } from '../../../fake-datas/planning';
+import { LoggerService } from '../../../utils/services/logger.service';
+import { StagiaireService } from '../../../utils/services/stagiaire.service';
+import { PlanningService } from '../../../utils/services/planning.service';
+import { Stagiaire } from '../../../utils/models/stagiaire';
+import { Planning } from '../../../utils/models/planning';
+import { PLANNINGS } from '../../../utils/fake-datas/planning';
 
 
 @Component({
