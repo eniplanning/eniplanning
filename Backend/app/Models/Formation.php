@@ -9,4 +9,5 @@ class Formation extends Model
     protected $connection = 'enierp';
     protected $table = 'Formation';
     protected $primaryKey = 'CodeFormation';
+    protected $keyType = 'string';
 }
