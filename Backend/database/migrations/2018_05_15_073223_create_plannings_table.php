@@ -16,15 +16,15 @@ class CreatePlanningsTable extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('label');
-            $table->date('date_start_contract');
-            $table->date('date_end_contract');
+            $table->date('date_start_contract')->nullable();
+            $table->date('date_end_contract')->nullable();
             $table->date('date_start_formation');
             $table->date('date_end_formation');
-            $table->date('date_subscription');
-            $table->integer('nb_weeks_formation');
-            $table->integer('nb_weeks_enterprise');
-            $table->integer('limit_day_formation');
-            $table->integer('num_version');
+            $table->date('date_inscription')->nullable();
+            $table->integer('nb_weeks_formation')->nullable();
+            $table->integer('nb_weeks_enterprise')->nullable();
+            $table->integer('limit_day_formation')->nullable();
+            $table->integer('num_version')->nullable();
             $table->integer('status');
             $table->boolean('is_archived');
             $table->boolean('is_model');

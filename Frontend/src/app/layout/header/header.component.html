@@ -1,13 +1,11 @@
-<mdb-navbar SideClass="navbar static-top navbar-expand-lg navbar-light white scrolling-navbar ie-nav" [containerInside]="false">
+<mdb-navbar SideClass="navbar static-top navbar-expand-lg navbar-light white scrolling-navbar ie-nav py-1 py-md-1" [containerInside]="false">
   <logo>
-      <img src="../assets/logo-eni.png" height="40" class="d-inline-block align-top mr-3" alt="">
-      <a class="logo navbar-brand" href="#"><strong>ENI PLANNING</strong></a>
+      <app-menu></app-menu>
+      <a class="navbar-brand align-self-center" href="#"><strong>ENI PLANNING</strong></a>
   </logo>
+  
   <links>
-      <ul class="navbar-nav mr-auto">
-          <li class="nav-item waves-light home-icon" mdbWavesEffect>
-              <a><fa name="home" size="2x"></fa></a>
-          </li>
+      <ul class="navbar-nav mr-auto">        
           <li class="nav-item active waves-light" mdbWavesEffect>
               <a class="nav-link">PLANNING</a>
           </li>
@@ -15,23 +13,25 @@
               <app-modal-create-planning></app-modal-create-planning>
           </li>
           <li class="nav-item waves-light" mdbWavesEffect>
-              <a class="nav-link">Purger</a>
+              <a class="nav-link" routerLink="/planning/purger">Purger</a>
           </li>
 
       </ul>
-      <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav ie-hidden-double-nav">
-          <li class="nav-item">
-              <a class="waves-light user-icon" mdbWavesEffect>
-                  <fa name="user" size="2x"></fa>
-                  <span class="clearfix d-none d-sm-inline-block">Utilisateur</span>
+      
+      <ul class="navbar-nav ml-auto">        
+          <li class="nav-item waves-light " mdbWavesEffect>
+              <a class="nav-link">
+                <fa name="user"></fa>
+                <span class="clearfix d-none d-sm-inline-block">Utilisateur</span>
               </a>
           </li>
-          <li class="nav-item">
-              <a class="waves-light logout-icon" mdbWavesEffect>
-                  <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+          <li class="nav-item waves-light logout-icon" mdbWavesEffect>
+              <a class="nav-link">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="clearfix d-none d-sm-inline-block">Déconnexion</span>
               </a>
           </li>
-        </ul>
+      </ul>
   </links>
 </mdb-navbar>
 <!-- <app-modal-create-planning></app-modal-create-planning> -->
