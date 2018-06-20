@@ -1,3 +1,13 @@
+logo {
+	display: flex;
+	justify-content: center;
+}
+
+.navbar-brand {
+	font-size: 16px;
+	margin: 0;
+}
+
 .mr-auto {
     padding-left: 40px;
 }
@@ -21,4 +31,8 @@
 
 .nav-item {
 	font-size: 14px;
+}
+
+.nav-link {
+	padding: 6px;
 }
