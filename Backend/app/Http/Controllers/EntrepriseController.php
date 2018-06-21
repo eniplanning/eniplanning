@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class EntrepriseController extends Controller
 {
-    const TABLE_NAME= 'Entreprise';
 
     /**
      * Récuperer une Entreprise à partir d'un stagiaire.
@@ -26,12 +25,11 @@ class EntrepriseController extends Controller
         $entreprise = null;
         if (!is_null($stagiaireParEntreprise))
         {
-            $entreprise = DB::table(Config::get('app.prefix_erp_tablename') . self::TABLE_NAME)
-                ->where('codeEntreprise', [$stagiaireParEntreprise->CodeEntreprise])
-                ->first();
+            $entreprise = Entreprise::where('codeEntreprise', [$stagiaireParEntreprise->CodeEntreprise])->first();
         }
         return $entreprise;
     }
+    
     /**
      * Display a listing of the resource.
      *
