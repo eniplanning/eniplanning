@@ -10,20 +10,18 @@ use Illuminate\Support\Facades\DB;
 
 class StagiaireParEntrepriseController extends Controller
 {
-    // TODO NOM TABLE
-    const TABLE_NAME_STAGIAIRE_PAR_ENTREPRISE = 'dbo.StagiaireParEntreprise';
+    const TABLE_NAME = 'StagiaireParEntreprise';
     
     /**
-     * Get the specified resource by $codeStagiaire.
-     * https://laravel.com/docs/5.6/database
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Récuperer un StagiaireParEntreprise à partir d'un stagiaire.
+     * @param  Stagiaire = Instance de Stagiaire
+     * @return \Illuminate\Http\Response = Instance de StagiaireParEntreprise
      */
     static function getByStagiaire(Stagiaire $stagiaire)
     {
-        $stagiaireParEntreprise= DB::select('select top(1) * from '. Config::get('app.db_erp_name') . self::TABLE_NAME_STAGIAIRE_PAR_ENTREPRISE.
-            ' where codeStagiaire = ? order by DateDebutEnEts desc', [$stagiaire->CodeStagiaire]);
-        return $stagiaireParEntreprise;
+        return DB::table(Config::get('app.prefix_erp_tablename') . self::TABLE_NAME)
+            ->where('codeStagiaire', [$stagiaire->CodeStagiaire])
+            ->orderBy('DateDebutEnEts', 'desc')
+            ->first();
     }
-
 }

@@ -39,14 +39,14 @@ export class LeftPanelComponent implements OnInit {
 		this.planningService.getPlannings().subscribe(plannings => this.selectedStagiaire.listPlannings = plannings);
 	}
 
-	// Mise à jour de la liste des plannings du stagiaire
-	// à la sélection d'un stagiaire
+	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
 	public onChangeSelectedStagiaire(selectedStagiaire: Stagiaire) {
 		this.selectedStagiaire.listPlannings = PLANNINGS;
 		this.logger.LogConsole('stagiaire sélectionné' , JSON.stringify(this.selectedStagiaire));
 		this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
 	}
 
+	// Mise à jour de TODO à la sélection d'un planning
 	public onSelectedPlanning(planning: Planning){
 		this.selectedPlanning = planning;
 		this.logger.LogConsole('planning sélectionné' , JSON.stringify(this.selectedPlanning));	

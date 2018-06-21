@@ -14,7 +14,7 @@ return [
     */
 
     'http_client' => env('CLIENT_HTTP', ''),
-    'db_erp_name' => env('DB2_DATABASE', ''),
+    'prefix_erp_tablename' => env('PREFIX_ERP_TABLENAME', ''),
     
     /*
     |--------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 <!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
 
+<!-- BLOC SELECTION DU STAGIAIRE -->
 <div class="panel md-form">
  <div *ngIf="undefined === stagiaires">Chargement...</div>
  <div *ngIf="undefined !== stagiaires">
@@ -10,19 +11,27 @@
 </div>
 
 <div *ngIf="selectedStagiaire !== undefined" >
+
+<!-- AFFICHAGE DU BLOC INFORMATION -->
 <div class="panel">
     <div class="panel-header">
-        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Information</button>
+        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Informations</button>
     </div>
     <div class="panel-content informations" [mdbCollapse]="isCollapsed" #informations="bs-collapse">
         <div>
-            <div class="content-title" >Informations</div>
+            <!--div class="content-title" >Informations</div-->
             <div class="content-body">
+                <!-- Affichage des nom et prénom du stagiaire -->
                 <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
-                <p>Entreprise : {{ selectedStagiaire.Entreprise[0].RaisonSociale }} </p>
+                <!-- Affichage de l'entreprise du stagiaire -->
+                <div *ngIf="selectedStagiaire.Entreprise !== null; then content else other_content"></div>
+                <ng-template #content><p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }} </p></ng-template>
+                <ng-template #other_content><p>Entreprise : non définie </p></ng-template>
+                <p>Formation suivie : / Site : </p>
             </div>
             <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
             <div class="content-body">
+                <!-- Affichage des plannings du stagiaire -->
                 <ul>
                     <li *ngFor="let planning of selectedStagiaire.listPlannings"
                          (click)="onSelectedPlanning(planning)" 
@@ -36,6 +45,7 @@
     </div>     
 </div>
 
+<!-- AFFICHAGE DU BLOC PLANNING -->
 <div class="panel">
     <div class="panel-header">
         <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="plannings.toggle()" mdbWavesEffect>Planning</button>
@@ -58,6 +68,7 @@
     </div>
 </div>
 
+<!-- AFFICHAGE DU BLOC FORMATIONS ENI -->
 <div class="panel">
     <div class="panel-header">
         <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="formationseni.toggle()" mdbWavesEffect>Formations ENI</button>
@@ -70,6 +81,7 @@
     </div>
 </div>
 
+<!-- AFFICHAGE DU BLOC MODULES COMPLEMENTAIRES -->
 <div class="panel">
     <div class="panel-header">
         <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="modulescompl.toggle()" mdbWavesEffect>Modules complémentaires</button>
