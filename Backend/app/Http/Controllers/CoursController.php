@@ -23,8 +23,8 @@ class CoursController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cours $cours)
+    public function show(Cours $cour)
     {
-        return $cours->toJson();
+        return $cour->toJson();
     }
 }
