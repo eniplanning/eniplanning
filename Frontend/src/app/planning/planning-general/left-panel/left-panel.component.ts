@@ -4,7 +4,7 @@ import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Planning } from '../../../utils/models/planning';
-import { PLANNINGS } from '../../../utils/fake-datas/planning';
+import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
 @Component({

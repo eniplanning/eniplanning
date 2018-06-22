@@ -10,8 +10,6 @@ import {
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
-import { HeaderComponent } from './layout/header/header.component';
-import { MenuComponent } from './layout/menu/menu.component';
 
 
 @NgModule({
@@ -24,7 +22,8 @@ export class AngularMaterialModule {}
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, HeaderComponent, MenuComponent
+    AppComponent, 
+    FooterComponent
   ],
   imports: [
     BrowserModule,
