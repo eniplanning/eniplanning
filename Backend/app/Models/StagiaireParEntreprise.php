@@ -8,7 +8,7 @@ class StagiaireParEntreprise extends Model
 {
     // https://laravel.com/docs/5.6/eloquent
     protected $connection = 'enierp';
-    protected $table = 'stagiaireparentreprise';
+    protected $table = 'StagiaireParEntreprise';
     protected $primaryKey = 'NumLien';
     
     

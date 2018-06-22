@@ -39,6 +39,11 @@ insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Vi
 Email, DateNaissance, CodeRegion, DateCreation) 
 VALUES ('Mme', 'GEINDREAU', 'Carine', 'Rue Renan', '44000', 'NANTES', 
 'carine@gmail.com', Convert(datetime,'27-04-1975',103), 'NT',  Convert(datetime,'01-06-2018', 103));
+insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
+Email, DateNaissance, CodeRegion, DateCreation) 
+VALUES ('Mme', 'BLIN', 'Marina', 'Place Canclaux', '44000', 'NANTES', 
+'marina@gmail.com', Convert(datetime,'29-06-1996',103), 'NT',  Convert(datetime,'01-06-2018',103));
+
 -- UDPATE STAGIAIRE
 UPDATE enierp.dbo.Stagiaire SET Nom='GEINDREAU', Prenom='Carine' WHERE CodeStagiaire=12;
 UPDATE enierp.dbo.Stagiaire SET DateNaissance=CONVERT(datetime, '27/04/1975', 103), Email='carine@gmail.com' WHERE CodeStagiaire=12;

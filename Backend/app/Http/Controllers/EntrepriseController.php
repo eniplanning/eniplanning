@@ -13,27 +13,34 @@ use Illuminate\Support\Facades\DB;
 
 class EntrepriseController extends Controller
 {
+<<<<<<< HEAD
     const TABLE_NAME_ENTREPRISE = '.dbo.Entreprise';
+=======
+>>>>>>> dev
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Stagiaire  $stagiaire
-     * @return \Illuminate\Http\Response
+     * Récuperer une Entreprise à partir d'un stagiaire.
+     * @param  Stagiaire = Instance de Stagiaire
+     * @return \Illuminate\Http\Response = Instance de Entreprise
      */
     static function getByStagiaire(Stagiaire $stagiaire)
     {
         $stagiaireParEntreprise = StagiaireParEntrepriseController::getByStagiaire($stagiaire);
-        if (is_null($stagiaireParEntreprise)) {
-            return;
-        } else {
-            $entreprise = DB::select('select * from '. Config::get('app.db_erp_name') . self::TABLE_NAME_ENTREPRISE  .' where codeentreprise = ?',
-                 [$stagiaireParEntreprise[0]->CodeEntreprise]);
-            if (is_null($entreprise)) {
-                return;
-            }
-            return $entreprise;
-        } 
+        $entreprise = null;
+        if (!is_null($stagiaireParEntreprise))
+        {
+            $entreprise = Entreprise::where('codeEntreprise', [$stagiaireParEntreprise->CodeEntreprise])->first();
+        }
+        return $entreprise;
     }
-
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return Entreprise::all()->toJson();
+    }
 }
