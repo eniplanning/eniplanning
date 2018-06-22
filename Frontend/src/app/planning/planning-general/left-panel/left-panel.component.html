@@ -35,9 +35,9 @@
                 <ul>
                     <li *ngFor="let planning of selectedStagiaire.listPlannings"
                          (click)="onSelectedPlanning(planning)" 
-                         [ngClass]="planning.status_selected ? 'text-success' : ''">
-                        Nom du planning : {{ planning.label }}
-                        <img src=""/>
+                         [ngClass]="planning.status_selected ? ['bold-text', 'blue'] : ''">
+                         Nom du planning : {{ planning.label }}
+                        <fa name="angle-double-right" size="1x"></fa>
                     </li>
                 </ul>
             </div>
