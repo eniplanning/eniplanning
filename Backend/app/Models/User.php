@@ -23,6 +23,9 @@ class User extends Authenticatable
         'role_id',
     ];
 
+    protected $dateFormat = 'Y-d-m H:i:s';
+
+
     /**
      * The attributes that should be hidden for arrays.
      *
