@@ -52,6 +52,4 @@ export class LeftPanelComponent implements OnInit {
 		this.logger.LogConsole('planning sélectionné' , JSON.stringify(this.selectedPlanning));	
 		this.selectedPlanning.status_selected = true;
 	}
-
-
 }
