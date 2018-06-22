@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class EntrepriseController extends Controller
 {
-    const TABLE_NAME_ENTREPRISE = 'dbo.Entreprise';
+    const TABLE_NAME_ENTREPRISE = '.dbo.Entreprise';
 
     /**
      * Display the specified resource.

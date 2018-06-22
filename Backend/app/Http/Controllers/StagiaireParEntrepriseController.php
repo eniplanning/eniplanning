@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class StagiaireParEntrepriseController extends Controller
 {
     // TODO NOM TABLE
-    const TABLE_NAME_STAGIAIRE_PAR_ENTREPRISE = 'dbo.StagiaireParEntreprise';
+    const TABLE_NAME_STAGIAIRE_PAR_ENTREPRISE = '.dbo.StagiaireParEntreprise';
     
     /**
      * Get the specified resource by $codeStagiaire.
