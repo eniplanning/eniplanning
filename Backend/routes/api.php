@@ -31,4 +31,5 @@ Route::group(['middleware' => 'addHeadersCors'], function () {
     Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
     Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
+    Route::resource('home', 'HomeController@index');
 });

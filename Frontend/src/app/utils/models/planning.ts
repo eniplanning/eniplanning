@@ -1,6 +1,6 @@
-// Model de l'objet : Planning
-
-
+/*
+ * CLASS PLANNING
+ */
 export class Planning {
     planning_id: number;
     label: string;
@@ -9,5 +9,4 @@ export class Planning {
     constructor() {
         this.status_selected = false;
     }
-
 }

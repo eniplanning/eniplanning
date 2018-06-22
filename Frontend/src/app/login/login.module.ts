@@ -18,4 +18,8 @@ import { LoginComponent } from './login.component';
   ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })
-export class LoginModule { }
+export class LoginModule { 
+
+  title = "Page de connexion";
+
+}
