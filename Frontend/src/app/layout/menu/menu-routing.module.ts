@@ -8,6 +8,10 @@ const routes: Routes = [
 		loadChildren: '../../planning/planning.module#PlanningModule'
 	},
 	{
+		path: 'plannings-en-defaut',
+		loadChildren: '../../plannings-en-defaut/plannings-en-defaut.module#PlanningsEnDefautModule'
+	},
+	{
 		path: 'modeles',
 		loadChildren: '../../modeles/modeles.module#ModelesModule'
 	},
