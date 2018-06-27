@@ -1,34 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    MatButtonModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatNativeDateModule
-} from '@angular/material';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
-import { HeaderComponent } from './planning/header/header.component';
-import { MenuComponent } from './layout/menu/menu.component';
-import { ModalCreatePlanningComponent } from './planning/planning-general/modal-create-planning/modal-create-planning.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { MatDatepickerModule } from '@angular/material/datepicker'
+
+
 
 
 
 @NgModule({
 	exports: [
-    MatButtonModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    // MatButtonModule,
+    // BrowserAnimationsModule,
+    // MatCheckboxModule,
+    // MatDatepickerModule,
+    // MatNativeDateModule
+    BrowserAnimationsModule
 	]
 })
 export class AngularMaterialModule {}
@@ -36,7 +29,7 @@ export class AngularMaterialModule {}
 
 @NgModule({
   declarations: [
-      AppComponent, FooterComponent, HeaderComponent, MenuComponent, ModalCreatePlanningComponent
+      AppComponent, FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -47,13 +40,7 @@ export class AngularMaterialModule {}
     AppRoutingModule,
     AngularMaterialModule,
     NgSelectModule,
-    FormsModule,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule
+    FormsModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [],

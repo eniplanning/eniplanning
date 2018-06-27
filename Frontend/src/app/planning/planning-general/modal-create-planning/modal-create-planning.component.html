@@ -15,9 +15,6 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6">
-                        <!-- <mat-form-field>
-                            <input matInput class="" type="text" placeholder="Nom du planning"> --> <!-- [(ngModel)]="planning.label" matInput -->
-                        <!-- </mat-form-field> -->
                         <mat-form-field>
                             <input matInput placeholder="Nom du planning">
                         </mat-form-field>
@@ -32,7 +29,7 @@
                             <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
                         </ng-select>
                         <ng-select class="custom" placeholder="Choisir un site de formation">
-
+                            <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
                         </ng-select>
                         <ng-select class="custom" placeholder="Choisir un modèle de planning">
 

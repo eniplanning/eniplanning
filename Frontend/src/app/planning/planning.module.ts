@@ -12,6 +12,10 @@ import { LeftPanelComponent } from './planning-general/left-panel/left-panel.com
 import { RightPanelComponent } from './planning-general/right-panel/right-panel.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
+import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+
+
 
 
 @NgModule({
@@ -20,7 +24,8 @@ import { MenuModule } from '../layout/menu/menu.module';
     LeftPanelComponent,
     RightPanelComponent,
     PurgerPlanningComponent,
-    HeaderComponent
+    HeaderComponent,
+    ModalCreatePlanningComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +34,11 @@ import { MenuModule } from '../layout/menu/menu.module';
     FormsModule,
     AngularFontAwesomeModule,
     PlanningRoutingModule,
-    MenuModule
+    MenuModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [

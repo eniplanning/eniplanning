@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class EntrepriseController extends Controller
 {
-<<<<<<< HEAD
-    const TABLE_NAME_ENTREPRISE = '.dbo.Entreprise';
-=======
->>>>>>> dev
 
     /**
      * Récuperer une Entreprise à partir d'un stagiaire.

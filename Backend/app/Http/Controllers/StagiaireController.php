@@ -21,7 +21,7 @@ class StagiaireController extends Controller
     {
         //Log::useDailyFiles(storage_path().Config::get('app.log_file'));
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        return Stagiaire::all();
+        return Stagiaire::all()->toJson();
     }
     
     /**

@@ -7,12 +7,6 @@ use App\Models\StagiaireParEntreprise;
 
 class StagiaireParEntrepriseController extends Controller
 {
-<<<<<<< HEAD
-    // TODO NOM TABLE
-    const TABLE_NAME_STAGIAIRE_PAR_ENTREPRISE = '.dbo.StagiaireParEntreprise';
-    
-=======
->>>>>>> dev
     /**
      * Récuperer un StagiaireParEntreprise à partir d'un stagiaire.
      * @param  Stagiaire = Instance de Stagiaire

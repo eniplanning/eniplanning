@@ -15,17 +15,17 @@ export class LieuService {
 
     constructor(private http:HttpClient)
     {
-        // this.lieux = this.getLieux;
+        this.lieux = this.getLieux;
     }
 
-    // getLieux(): Observable<Lieu[]>
-    // {
-    //     return this.http.get<Lieu[]>(this.lieuAPI);
-    // }
+    getLieux(): Observable<Lieu[]>
+    {
+        return this.http.get<Lieu[]>(this.lieuAPI);
+    }
 
-    // getLieu(codeLieu: number)
-    // {
-    //     return of(this.lieux.find(lieu => lieu.codeLieu ===codeLieu))
-    // }
+    getLieu(codeLieu: number)
+    {
+        return of(this.lieux.find(lieu => lieu.codeLieu === codeLieu))
+    }
 
 }
