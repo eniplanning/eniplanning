@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
-use App\Http\Middleware;
 use Log;
 use Illuminate\Support\facades\Config;
 

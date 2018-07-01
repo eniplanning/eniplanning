@@ -5,8 +5,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
-	//MatButtonModule
-} from '@angular/material';
+  //MatButtonModule
+ } from '@angular/material';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -14,7 +14,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
 	exports: [
-    //MatButtonModule
+    
 	]
 })
 export class AngularMaterialModule {}

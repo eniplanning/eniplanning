@@ -1,62 +1,36 @@
-<h1>Login page</h1>
-
-<!-- Application header starts -->
-<div class="app-header">    <h1 class="app-heading">{{title}}</h1>
-</div>
-<!-- Application header ends -->
- 
-<md-grid-list cols="3">
-    <md-grid-tile></md-grid-tile>
- 
-    <!-- Writing markup for login starts -->
-    <md-grid-tile class='login-element'>
-        <div class="login-container">
- 
-            <!-- Template Header starts -->
-            <div class="login-box-header">
-                <img src="http://www.codershood.info/wp-content/uploads/2015/12/codershood.info-logo1.png">
-            </div>
-            <!-- Template Header ends -->
- 
-            <!-- Template Body starts -->
-            <div class="login-box-body">
- 
-                <!-- Markup for getting Username starts -->
-                <md-grid-list cols="9" rowHeight="75px">
-                    <md-grid-tile [rowspan]="1" class="login-icon">
-                        <md-icon>lock</md-icon>
-                    </md-grid-tile>
-                    <md-grid-tile [colspan]="7">
-                        <md-input-container class="justifier">
-                            <input mdInput placeholder="Username" text="text">
-                        </md-input-container>
-                    </md-grid-tile>
-                </md-grid-list>
-                <!-- Markup for getting Username ends -->
- 
-                <!-- Markup for getting Password starts -->
-                <md-grid-list cols="9" rowHeight="100px">
-                    <md-grid-tile [rowspan]="1"  class="login-icon">
-                        <md-icon>remove_red_eye</md-icon>
-                    </md-grid-tile>
-                    <md-grid-tile [colspan]="7">
-                        <md-input-container class="justifier">
-                            <input mdInput placeholder="Password" text="password">
-                        </md-input-container>
-                    </md-grid-tile>
-                </md-grid-list>
-                <!-- Markup for getting Password ends -->
- 
-                <button md-raised-button class="login-button"> 
-                    <md-icon>input</md-icon> Login
-                </button>
- 
-            </div>
-            <!-- Template Body ends -->
-            
-        </div>
-    </md-grid-tile>
-    <!-- Writing markup for login ends -->
-    <md-grid-tile></md-grid-tile>
- 
-</md-grid-list>
+<div class="mt-4 col-8 offset-2">
+    <div class="card">
+      
+        <!-- Material form login -->
+        <form #loginForm=ngForm (ngSubmit)="onSubmit()">
+          <p class="h4 text-center mb-4">Connexion</p>
+  
+          <div class="alert alert-danger" [hidden]="!error">{{error}}</div>
+          <!-- Material input email -->
+          <div class="md-form">
+              <i class="fa fa-envelope prefix grey-text"></i>
+              <!--label for="loginEmail">Email</label-->
+              <input type="email" name="email" id="loginEmail" class="form-control" 
+                  [(ngModel)]="form.email" required>
+          </div>
+  
+          <!-- Material input password -->
+          <div class="md-form">
+              <i class="fa fa-lock prefix grey-text"></i>
+              <!-- label for="loginPassword">Mot de Passe</label-->
+              <input type="password" name="password" id="loginPassword" class="form-control" 
+                  [(ngModel)]="form.password" required>
+          </div>
+  
+          <div class="text-center mt-4">
+              <button class="btn btn-indigo" type="submit" [disabled]="!loginForm.valid">Login</button>
+  
+          </div>
+        </form>
+        <!-- Default form login -->
+  
+  
+  
+    </div>
+  </div>
+  

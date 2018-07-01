@@ -30,6 +30,7 @@
     "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
+    "ngx-cookie-service": "^1.0.10",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

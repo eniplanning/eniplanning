@@ -17,7 +17,12 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'addHeadersCors'], function () {
+Route::group([
+    'middleware' => [
+        'addHeadersCors'
+        //,'role:admin'
+    ]
+], function () {
     Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
@@ -31,5 +36,20 @@ Route::group(['middleware' => 'addHeadersCors'], function () {
     Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
     Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
-    Route::resource('home', 'HomeController@index');
+
+    Route::post('logout', 'AuthController@logout');
+    Route::post('me', 'AuthController@me');
+
 });
+Route::group(['middleware' => 'addHeadersCors'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('user', 'UserController@show');
+    Route::post('refresh', 'AuthController@refresh');
+
+});
+Route::put('post/{id}', function ($id) {
+    //
+})->middleware('auth', 'role:admin');
+
+
+

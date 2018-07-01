@@ -1,19 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './utils/guards/auth.guard';
+import { LoggedGuard } from './utils/guards/logged.guard';
+import { OnlyPedagGuard } from './utils/guards/onlypedag.guard';
+import { OnlyAdminGuard } from './utils/guards/onlyadmin.guard';
 
 //Lazy loading. Real routes are defined in each module (modulename-routing.module)
 const routes: Routes = [
 	{
 		path: 'planning',
-		loadChildren: './planning/planning.module#PlanningModule'
+		loadChildren: './planning/planning.module#PlanningModule',
+		canActivate: [AuthGuard] 
 	},
 	{
 		path: 'plannings-en-defaut',
-		loadChildren: './plannings-en-defaut/plannings-en-defaut.module#PlanningsEnDefautModule'
+		loadChildren: './plannings-en-defaut/plannings-en-defaut.module#PlanningsEnDefautModule',
+		canActivate: [OnlyPedagGuard] 
 	},
 	{
 		path: 'modeles',
-		loadChildren: './modeles/modeles.module#ModelesModule'
+		loadChildren: './modeles/modeles.module#ModelesModule',
+		canActivate: [OnlyPedagGuard] 
 	},
 	{
 		path: 'mon-compte',
@@ -21,33 +28,45 @@ const routes: Routes = [
 	},
 	{
 		path: 'modules-complementaires',
-		loadChildren: './modules-complementaires/modules-complementaires.module#ModulesComplementairesModule'
+		loadChildren: './modules-complementaires/modules-complementaires.module#ModulesComplementairesModule',
+		canActivate: [OnlyPedagGuard] 
 	},
 	{
 		path: 'modules',
-		loadChildren: './modules/modules.module#ModulesModule'
+		loadChildren: './modules/modules.module#ModulesModule',
+		canActivate: [OnlyPedagGuard] 
 	},
 	{
 		path: 'admin/logs',
-		loadChildren: './logs/logs.module#LogsModule'
+		loadChildren: './logs/logs.module#LogsModule',
+		canActivate: [OnlyAdminGuard] 
 	},
 	{
 		path: 'admin/statut',
-		loadChildren: './statut/statut.module#StatutModule'
+		loadChildren: './statut/statut.module#StatutModule',
+		canActivate: [OnlyAdminGuard] 
 	},
 	{
 		path: 'admin/utilisateurs',
-		loadChildren: './utilisateurs/utilisateurs.module#UtilisateursModule'
+		loadChildren: './utilisateurs/utilisateurs.module#UtilisateursModule',
+		canActivate: [OnlyAdminGuard] 
 	},
 	{
 		path: 'login',
-		loadChildren: './login/login.module#LoginModule'
+		loadChildren: './login/login.module#LoginModule',
+		canActivate: [LoggedGuard] 
 	},
 	{
-	  path: '',
-	  redirectTo: 'planning',
-	  pathMatch: 'full'
-	}
+		path: '',
+		redirectTo: 'planning',
+		pathMatch: 'full'
+	},
+	{
+		path: 'unauthorized',
+		loadChildren: './unauthorized/unauthorized.module#UnauthorizedModule'
+	},
+	// otherwise redirect to planning
+    { path: '**', redirectTo: 'planning' }
 ]
 
 @NgModule({

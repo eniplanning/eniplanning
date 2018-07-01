@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Log;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {
+    {   
         return $user->toJson();
     }
 
@@ -57,8 +58,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function desactivate(Request $request, User $user)
     {
-        $user->delete();
+        $user->is_active = false;
+        $user->update($request->all());
     }
+    
+    /**
+     * Activate the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate(User $user)
+    {
+        $user->is_active = true;
+        $user->update($request->all());
+    }
+    
 }

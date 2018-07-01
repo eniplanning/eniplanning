@@ -16,20 +16,23 @@
               <a class="nav-link" routerLink="/planning/purger">Purger</a>
           </li>
       </ul>
+  </links>
+  
+  <links>
       
-      <ul class="navbar-nav ml-auto">        
-          <li class="nav-item waves-light " mdbWavesEffect>
-              <a class="nav-link">
-                <fa name="user"></fa>
-                <span class="clearfix d-none d-sm-inline-block">Utilisateur</span>
-              </a>
-          </li>
-          <li class="nav-item waves-light logout-icon" mdbWavesEffect>
-              <a class="nav-link">
+    <ul class="navbar-nav ml-auto">        
+        <li class="nav-item waves-light " mdbWavesEffect>
+            <a class="nav-link" (click)='redirectToMonCompte($eventCompte)'>
+              <fa name="user"></fa>
+              <span class="clearfix d-none d-sm-inline-block">{{ username }}</span>
+            </a>
+        </li>
+        <li class="nav-item waves-light logout-icon" mdbWavesEffect>
+            <a class="nav-link" (click)='logout($eventLogout)'>
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                 <span class="clearfix d-none d-sm-inline-block">Déconnexion</span>
-              </a>
-          </li>
-      </ul>
-  </links>
+            </a>
+        </li>
+    </ul>
+    </links>
 </mdb-navbar>
