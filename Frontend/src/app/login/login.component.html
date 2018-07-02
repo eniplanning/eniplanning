@@ -4,7 +4,20 @@
         <!-- Material form login -->
         <form #loginForm=ngForm (ngSubmit)="onSubmit()">
           <p class="h4 text-center mb-4">Connexion</p>
-          <p class="h6 text-center mb-4">(sollivier@campus-eni.fr / admin)</p>
+          <p class="h6 text-center mb-4">
+            INSERT INTO eniplanning.dbo.users 
+            <br>
+            (email, password, name, firstname, role_id)
+            <br>
+            VALUES ('sollivier@campus-eni.fr', 
+            <br>
+            '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2EWvOdzEzWdFhCU1kK', 'Administrateur', '', 3);
+            <br>
+            <br>
+            login : sollivier@campus-eni.fr 
+            <br>
+            password : admin
+            </p>
             
           <div class="alert alert-danger" [hidden]="!error">{{error}}</div>
           <!-- Material input email -->
