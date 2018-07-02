@@ -63,7 +63,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'unauthorized',
-		loadChildren: './unauthorized/unauthorized.module#UnauthorizedModule'
+		loadChildren: './unauthorized/unauthorized.module#UnauthorizedModule',
+		canActivate: [AuthGuard] 
 	},
 	// otherwise redirect to planning
     { path: '**', redirectTo: 'planning' }

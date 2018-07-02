@@ -11,7 +11,7 @@ import { UserService } from '../utils/services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-    public form = {
+  public form = {
     email: null,
     password:null
   };
@@ -33,16 +33,20 @@ export class LoginComponent implements OnInit {
     console.log(this.form);
     return this.loginService.login(this.form).subscribe(
       data=>{
-          this.handleResponse(data);
-          console.log(data)
-        },
-      error=>this.handleError(error)
+        //console.log(data);
+        this.handleResponse(data);
+      },
+      error=>{
+        //console.log(error);
+        if (error.status == '0') {
+          this.error = "Echec de connexion au serveur. Veuillez contacter l'administrateur du site !";
+        } else {
+          this.error=error.error.error;
+        }
+      }
     );
   }
 
-  handleError(error) {
-    this.error = error.error.error;
-  }
   
   handleResponse(data) {
     this.tokenService.handleToken(data.access_token);

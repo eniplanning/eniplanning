@@ -1,0 +1,79 @@
+<utilisateurs-header></utilisateurs-header>
+
+<div class="mt-4 col-8 offset-2">
+  <div class="card">
+    <div class="card-header">Créer un utilisateur</div>
+
+    <div class="card-body">
+      <form #utilisateurForm=ngForm (ngSubmit)="onSubmit()">
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-3 col-form-label">Nom</label>
+          <div class="col-sm-9">
+            <input type="text" name="name" class="form-control" id="name" placeholder="Nom" [(ngModel)]="form.name" required>
+            <div class="alert alert-danger" [hidden]="!error.name">
+              {{ error.name }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="firstname" class="col-sm-3 col-form-label">Prénom</label>
+          <div class="col-sm-9">
+            <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Prénom" [(ngModel)]="form.firstname">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="email" name="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="form.email" required>
+            <div class="alert alert-danger" [hidden]="!error.email">
+                {{ error.email }}
+              </div>          
+            </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Mot de passe</label>
+          <div class="col-sm-9">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe"
+              [(ngModel)]="form.password" required>
+            <div class="alert alert-danger" [hidden]="!error.password">
+              {{ error.password }}
+            </div>  
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="password_confirmation" class="col-sm-3 col-form-label">Confirmation de mot de passe</label>
+            <div class="col-sm-9">
+              <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Mot de passe"
+                [(ngModel)]="form.password_confirmation" required>
+              <div class="alert alert-danger" [hidden]="!error.password">
+                {{ error.password }}
+              </div>  
+            </div>
+          </div>
+  
+        <div class="form-group row">
+            <label for="role_id" class="col-sm-3 col-form-label">Rôle</label>
+            <div class="col-sm-9">
+              <div *ngFor="let role of roles">
+                <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline" [id]=role.id
+                    [(ngModel)]="form.role_id" [value]=role.id required>{{ role.name }}
+              </div>  
+            </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-9 offset-3">
+            <button type="submit" class="btn btn-primary" [disabled]="!utilisateurForm.valid">Enregistrer</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

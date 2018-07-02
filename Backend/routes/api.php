@@ -43,7 +43,8 @@ Route::group([
 });
 Route::group(['middleware' => 'addHeadersCors'], function () {
     Route::post('login', 'AuthController@login');
-    Route::post('user', 'UserController@show');
+    Route::get('user', 'UserController@show');
+    Route::post('user', 'UserController@store');
     Route::post('refresh', 'AuthController@refresh');
 
 });

@@ -4,7 +4,8 @@
         <!-- Material form login -->
         <form #loginForm=ngForm (ngSubmit)="onSubmit()">
           <p class="h4 text-center mb-4">Connexion</p>
-  
+          <p class="h6 text-center mb-4">(sollivier@campus-eni.fr / admin)</p>
+            
           <div class="alert alert-danger" [hidden]="!error">{{error}}</div>
           <!-- Material input email -->
           <div class="md-form">

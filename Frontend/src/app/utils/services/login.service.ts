@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CONFIG } from '../../utils/config';
 
 @Injectable({
@@ -10,7 +10,8 @@ import { CONFIG } from '../../utils/config';
 export class LoginService {
 
 	loginAPI = CONFIG.backend_url + 'login';
-	registerAPI = CONFIG.backend_url + 'register';
+  registerAPI = CONFIG.backend_url + 'user';
+  response: Observable<Object>;
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   constructor(
@@ -24,7 +25,7 @@ export class LoginService {
   }
 
   getStatus() {
-    console.log("localStorage.getItem('loggedIn') = "+localStorage.getItem('loggedIn') );
+    console.log("localStorage.getItem('loggedIn') = "+localStorage.getItem('loggedIn'));
     return this.loggedIn.asObservable();
   }
 
@@ -32,9 +33,10 @@ export class LoginService {
   login(data)
   {
     return this.http.post(this.loginAPI, data);
+    
   }
   
-  register(data)
+  store(data)
   {  
     return this.http.post(this.registerAPI, data);
   }
