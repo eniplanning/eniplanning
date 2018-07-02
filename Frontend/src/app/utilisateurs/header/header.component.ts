@@ -29,4 +29,8 @@ export class HeaderComponent implements OnInit {
     this.tokenService.remove();
     this.router.navigateByUrl('/login');
   }
+
+  redirectToCreate(eventCreate: MouseEvent) {
+    this.router.navigateByUrl('admin/utilisateurs/create')
+  }
 }
