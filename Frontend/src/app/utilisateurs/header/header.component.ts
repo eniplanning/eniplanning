@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   } 
 
     
-  logout(eventLogout: MouseEvent) {
+  logout(event: MouseEvent) {
     event.preventDefault();
     this.loginService.changeAuthStatus(false);
     this.userService.unsetUser();
@@ -30,7 +30,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
-  redirectToCreate(eventCreate: MouseEvent) {
-    this.router.navigateByUrl('admin/utilisateurs/create')
+  redirectToCreate(event: MouseEvent) {
+    event.preventDefault();
+    this.router.navigateByUrl('admin/utilisateurs/create');
   }
 }

@@ -24,13 +24,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.loggedIn = this.login.getStatus() ? true : false;
-    this.username = localStorage.getItem('username');
-    // console.log("this.loggedIn = "+this.loggedIn);
-    console.log("this.username = "+this.username);
+    this.username = this.userService.getUserName();
   }
     
     
-  logout(eventLogout: MouseEvent) {
+  logout(event: MouseEvent) {
     event.preventDefault();
     this.login.changeAuthStatus(false);
     this.router.navigateByUrl('/login');
@@ -38,7 +36,8 @@ export class HeaderComponent implements OnInit {
     this.token.remove();
   }
 
-  redirectToMonCompte(eventCompte: MouseEvent) {
+  redirectToMonCompte(event: MouseEvent) {
+    event.preventDefault();
     this.router.navigateByUrl('/mon-compte');
   }
 }

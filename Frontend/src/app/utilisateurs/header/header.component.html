@@ -10,7 +10,7 @@
               <a class="nav-link">UTILISATEURS</a>
           </li>
           <li class="nav-item waves-light" mdbWavesEffect>
-              <a class="nav-link" (click)='redirectToCreate($eventCreate)'>Créer</a>
+              <a class="nav-link" (click)='redirectToCreate($event)'>Créer</a>
           </li>
       </ul>
       
@@ -19,7 +19,7 @@
       
     <ul class="navbar-nav ml-auto">        
         <li class="nav-item waves-light " mdbWavesEffect>
-            <a class="nav-link" (click)='redirectToMonCompte($eventCompte)'>
+            <a class="nav-link" (click)='redirectToMonCompte($event)'>
               <fa name="user"></fa>
               <span class="clearfix d-none d-sm-inline-block">{{ username }}</span>
             </a>

@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { ROLES } from '../role';
  
 @Injectable({ providedIn: 'root' })
 export class OnlyPedagGuard implements CanActivate {
  
-    constructor(private router: Router) { }
+
+    constructor(
+        private router: Router
+    ) { }
  
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (localStorage.getItem('role_id') == '2' || localStorage.getItem('role_id') == '3') {
+        if (sessionStorage.getItem('user_role') == '2' || sessionStorage.getItem('user_role') == '3' ) {
             // logged in so return true
             return true;
         }

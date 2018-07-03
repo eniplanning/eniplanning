@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../utils/services/user.service';
 
 @Component({
   selector: 'app-mon-compte',
@@ -8,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class MonCompteComponent implements OnInit {
 
   username: string;
-  constructor() { }
+  constructor(
+    private userService : UserService,
+  ) { }
 
   ngOnInit() {
-    this.username = localStorage.getItem('username');
+    this.username = this.userService.getUserName();
   }
 
 }

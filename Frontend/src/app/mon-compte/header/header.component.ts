@@ -18,11 +18,11 @@ export class HeaderComponent implements OnInit {
     private tokenService:   TokenService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(  ) {
   } 
 
     
-  logout(eventLogout: MouseEvent) {
+  logout(event: MouseEvent) {
     event.preventDefault();
     this.loginService.changeAuthStatus(false);
     this.userService.unsetUser();

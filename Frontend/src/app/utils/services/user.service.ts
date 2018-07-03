@@ -1,68 +1,71 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject} from 'rxjs';
 import { Injectable } from '@angular/core';
-// import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie-service';
 
 import { User } from '../models/user';
-import { CONFIG } from '../../utils/config';
+import { API } from '../api';
+import { ROLES } from '../role';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
 
-  usersAPI = CONFIG.backend_url + 'user';
-  users: any;
   user: any;
-
 
   constructor(
     private http: HttpClient,
-    //private cookie: CookieService,
+    private cookie: CookieService,
   ) { }
 
-  getUser(user_id: number) {
-    return this.http.get(this.usersAPI+'/'+user_id, {responseType: 'json'}).subscribe(
+  getUser(dataUserId: number) {
+    return this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
       data=>{
-          this.setUser(data);
+        this.setUser(data);
       },
       error=>{
         console.log(error);
       }
     );
   }
-  
+    
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersAPI);
+    return this.http.get<User[]>(API.userAPI);
   }
 
   createUser(user: User) {
-    return this.http.post(this.usersAPI, user);
+    return this.http.post(API.userAPI, user);
   }
 
   updateUser(user: User) {
-    return this.http.put(this.usersAPI + '/' + user.id, user);
+    return this.http.put(API.userAPI + '/' + user.id, user);
   }
 
   deleteUser(id: number) {
-    return this.http.delete(this.usersAPI + '/' + id);
+    return this.http.delete(API.userAPI + '/' + id);
   }
 
-  handleUser(id: number) {
-    this.user = this.getUser(id);
+  handleUser(dataUserId: number) {
+    this.user = this.getUser(dataUserId);
   }
   
   setUser(data) {
-    this.user = new User(data);
-    //this.cookie.set('eniplanning',JSON.stringify(this.user));
-    localStorage.setItem('user_id',  this.user.id);
-    localStorage.setItem('role_id', this.user.role_id);
-    localStorage.setItem('username', this.user.username);
+    sessionStorage.setItem('user_id', data.id);
+    sessionStorage.setItem('user_name', data.name);
+    sessionStorage.setItem('user_firstname', data.firstname);
+    sessionStorage.setItem('user_role', data.role_id);
   }
 
   unsetUser() {
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('role_id');
-    localStorage.removeItem('username');
+    sessionStorage.removeItem('user_id');
+    sessionStorage.removeItem('user_name');
+    sessionStorage.removeItem('user_firstname');
+    sessionStorage.removeItem('user_role');
   } 
+
+  getUserName() {
+    return sessionStorage.getItem('user_firstname') + ' ' + sessionStorage.getItem('user_name');
+  }
 }

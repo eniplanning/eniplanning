@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../utils/services/login.service';
 import { TokenService } from '../utils/services/token.service';
 import { UserService } from '../utils/services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -23,17 +24,18 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private userService: UserService,
     private router: Router,
+    private cookieService: CookieService,
   ) { }
 
   ngOnInit() {
-  
+    this.form.email = this.cookieService.get('user_email');
   }
 
   onSubmit(){
-    console.log(this.form);
+    this.cookieService.set('user_email', this.form.email);
     return this.loginService.login(this.form).subscribe(
       data=>{
-        //console.log(data);
+        //console.log('login data', data);
         this.handleResponse(data);
       },
       error=>{
@@ -47,7 +49,6 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  
   handleResponse(data) {
     this.tokenService.handleToken(data.access_token);
     this.userService.handleUser(data.user_id);

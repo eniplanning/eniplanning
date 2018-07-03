@@ -24,7 +24,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'mon-compte',
-		loadChildren: './mon-compte/mon-compte.module#MonCompteModule'
+		loadChildren: './mon-compte/mon-compte.module#MonCompteModule',
+		canActivate: [AuthGuard] 
 	},
 	{
 		path: 'modules-complementaires',

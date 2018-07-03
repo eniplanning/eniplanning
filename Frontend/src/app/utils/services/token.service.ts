@@ -10,21 +10,21 @@ export class TokenService {
   constructor() { }
 
   handleToken(token) {
-    this.set(token);
+    this.setToken(token);
     // console.log(this.payload(token));  => retourne la valeur décodée du payload (url appel)
     // console.log(this.isValid());
   }
 
-  set(token) {
-    localStorage.setItem('token', token);
+  setToken(token) {
+    sessionStorage.setItem('token', token);
   }
   
   get() {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   } 
   
   remove() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
   } 
 
   isValid() {

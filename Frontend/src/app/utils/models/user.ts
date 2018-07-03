@@ -1,8 +1,10 @@
+import { Deserializable } from "./deserializable";
+
 /*
  * CLASS UTILISATEUR
  */
 
-export class User {
+export class User implements Deserializable {
     id:         number;
     email:      string;
     password:   string;
@@ -11,16 +13,9 @@ export class User {
     is_active:  boolean;
     role_id:    number;
     username:   string;
-   
-    constructor(data) {
-        this.id = data.id;
-        this.email = data.email;
-        this.name = data.name;
-        this.firstname = data.firstname;
-        this.is_active = data.is_active;
-        this.role_id = data.role_id;
-        this.username = data.firstname + ' ' +data.name;
+
+    deserialize(input: any) {
+        Object.assign(this, input);
+        return this;
     }
-
-
 }
