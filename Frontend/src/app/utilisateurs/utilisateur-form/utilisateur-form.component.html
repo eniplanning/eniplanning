@@ -1,6 +1,7 @@
 <a class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">Créer</a>
 
-<div mdbModal #modalUserForm="mdb-modal" class="modal fade" id="modal-user-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #modalUserForm="mdb-modal" class="modal fade" id="modal-user-form" 
+    tabindex="1200" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop:false}" >
   <div class="modal-dialog modal-fluid" role="document">
       <div class="modal-content">
           <div class="modal-header">

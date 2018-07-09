@@ -10,7 +10,7 @@ export class User implements Deserializable {
     password:   string;
     name:       string;
     firstname:  string;
-    is_active:  boolean;
+    is_active:  number;
     role_id:    number;
     username:   string;
 

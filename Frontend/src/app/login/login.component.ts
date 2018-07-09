@@ -50,9 +50,13 @@ export class LoginComponent implements OnInit {
   }
 
   handleResponse(data) {
-    this.tokenService.handleToken(data.access_token);
-    this.userService.handleUser(data.user_id);
-    this.loginService.changeAuthStatus(true);
-    this.router.navigateByUrl('/planning');
+    if (data.user_is_active == true) {
+      this.tokenService.handleToken(data.access_token);
+      this.userService.handleUser(data.user_id);
+      this.loginService.changeAuthStatus(true);
+      this.router.navigateByUrl('/planning');
+    } else {
+      this.error = "Vous n'êtes pas autorisé à accéder à l'application. Veuillez contacter l'administrateur du site pour qu'il active votre compte !";
+    }
   }
 }

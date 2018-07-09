@@ -14,7 +14,7 @@
         <div class="row">   
         <div class="input-group md-form form-sm form-2 pl-0 mb-0">
             <input class="form-control my-0 py-1 grey-border" type="text" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
+            <div class="input-group-append"  >
                 <span class="input-group-text waves-effect grey lighten-3" id="basic-addon1">
                     <a><i class="fa fa-search text-grey" aria-hidden="true"></i></a>
                 </span>
@@ -52,13 +52,15 @@
                                     <span *ngSwitchCase="3">Administrateur</span>
                                 </td> 
                                 <td> {{ user.email }} </td> 
-                                <td> {{ user.is_active ? 'x' : '' }} </td>
+                                <td> {{ user.is_active == '1' ? 'x' : '' }} </td>
                                 <td> 
-                                    <a (click) ="edit(user)">Modifier</a> |
-                                    <a (click)="changeStatus(user, user.is_active)">
-                                        <span *ngIf="user.is_active" >Désactiver</span>
-                                        <span *ngIf="!user.is_active" >Activer</span>
-                                    </a>
+                                    <a (click) ="edit(user)">Modifier</a> 
+                                    <span *ngIf="user.id != currentUserId "> |
+                                        <a (click)="changeStatus(user, user.is_active)">
+                                            <span *ngIf="user.is_active == '1'" >Désactiver</span>
+                                            <span *ngIf="user.is_active == '0'" >Activer</span>
+                                        </a>
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>

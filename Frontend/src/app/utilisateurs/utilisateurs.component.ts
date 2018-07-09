@@ -14,6 +14,7 @@ export class UtilisateursComponent implements OnInit {
   users: User[];
   selectedUser: User;
   roles = ROLES;
+  currentUserId: String;
   
   constructor(
     private userService: UserService,
@@ -21,6 +22,7 @@ export class UtilisateursComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
+    this.currentUserId = sessionStorage.getItem('user_id');
   }
 
   // Récupération des Utilisateurs depuis le service : user
@@ -33,7 +35,7 @@ export class UtilisateursComponent implements OnInit {
   }
   
   changeStatus(user, is_active) {
-    user.is_active = !is_active;
+    user.is_active = (is_active == '1' ? false : true);
     this.userService.updateUser(user);
   }
 }

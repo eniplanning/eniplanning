@@ -1,13 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, BehaviorSubject} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
 import { User } from '../models/user';
 import { API } from '../api';
-import { ROLES } from '../role';
-import { CONFIG } from '../config';
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +13,14 @@ export class UserService {
 
   user: any;
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
   constructor(
     private http: HttpClient,
-    private cookie: CookieService,
   ) { }
 
   getUser(dataUserId: number) {
@@ -38,13 +39,28 @@ export class UserService {
   }
 
   createUser(user: User) {
-    return this.http.post(API.userAPI, user);
+    return this.http.post(API.userAPI, user).subscribe(
+      data=>{
+        console.log(data);
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
 
+
   updateUser(user: User) {
-    console.log('user', JSON.stringify(user));
-    console.log('url =', API.userAPI + '/' + user.id)
-    return this.http.put(API.userAPI + '/' + user.id, JSON.stringify(user)).pipe(map(res => res));
+    //console.log('user', JSON.stringify(user));
+    //console.log('url =', API.userAPI + '/' + user.id);
+    return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
+      data=>{
+        console.log(data);
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
 
   handleUser(dataUserId: number) {
