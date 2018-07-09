@@ -6,6 +6,8 @@ import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Lieu } from '../../../utils/models/lieu';
 import { LieuService } from "../../../utils/services/Lieu.service";
+import { PlanningService } from '../../../utils/services/planning.service';
+import { Planning } from '../../../utils/models/planning';
 
 @Component({
   selector: 'app-modal-create-planning',
@@ -14,12 +16,13 @@ import { LieuService } from "../../../utils/services/Lieu.service";
 })
 export class ModalCreatePlanningComponent implements OnInit {
 
-    formations: Formation[];
-    lieux:      Lieu[];
+    formations:         Formation[];
+    lieux:              Lieu[];
     selectedFormation:  Formation;
     selectedLieu :      Lieu;
+    nomPlanning:        string;
 
-    constructor(private logger: LoggerService, private formationService:FormationService, private lieuService:LieuService)
+    constructor(private logger: LoggerService, private formationService:FormationService, private lieuService:LieuService, private planningService:PlanningService)
     { }
 
     ngOnInit() {
@@ -36,6 +39,14 @@ export class ModalCreatePlanningComponent implements OnInit {
     getLieu():void
     {
         this.lieuService.getLieux().subscribe(lieu => this.lieux = lieu);
+    }
+
+    createPlanning():void
+    {
+        var planning = new Planning();
+        planning.setLabel(this.nomPlanning);
+        console.log(this.nomPlanning);
+        // this.planningService.createPlanning(planning);
     }
 
 }
