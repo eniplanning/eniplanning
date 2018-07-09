@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { API } from '../api';
 
 @Injectable({
@@ -27,11 +27,6 @@ export class LoginService {
   login(data)
   {
     return this.http.post(API.loginAPI, data);
-  }
-  
-  store(data)
-  {  
-    return this.http.post(API.registerAPI, data);
   }
 }
 

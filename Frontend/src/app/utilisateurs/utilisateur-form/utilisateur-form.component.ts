@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROLES } from '../../utils/role';
-import { LoginService } from '../../utils/services/login.service';
 import { Router } from '@angular/router';
+import { RegisterService } from '../../utils/services/register.service';
 
 @Component({
   selector: 'app-utilisateur-form',
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class UtilisateurFormComponent implements OnInit {
 
   roles = ROLES;
+  action: string;
 
   public form = {
     email: null,
@@ -22,26 +23,39 @@ export class UtilisateurFormComponent implements OnInit {
     password_confirmation: null
   };
 
+  public confirmMsg = null;
   public error = [] ;
 
   constructor(
-    private loginService : LoginService,
+    private registerService : RegisterService,
     private router: Router,
   ) { }
 
   onSubmit() {
     //console.log(this.form);
-    return this.loginService.store(this.form).subscribe(
+    return this.registerService.store(this.form).subscribe(
       data=>{
         //console.log(data);
+        this.confirm(this.form);
         this.router.navigateByUrl('/admin/utilisateurs');
 
       },
       error=>{
-        console.log(error);
+        //console.log(error);
         this.error = error.error.errors;
       }
     );
+  }
+
+  confirm(form) {
+    this.confirmMsg = "Utilisateur enregistré avec succès";
+    this.error = [];
+    this.form.email = null;
+    this.form.name = null;
+    this.form.firstname = null;
+    this.form.role_id = null;
+    this.form.password = null;
+    this.form.password_confirmation = null;
   }
 
   ngOnInit() {

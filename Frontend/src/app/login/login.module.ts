@@ -16,7 +16,7 @@ import { LoginRoutingModule} from './login-routing.module';
     FormsModule,
   ],
   declarations: [
-  	LoginComponent
+    LoginComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

@@ -29,8 +29,6 @@ class User extends Authenticatable implements JWTSubject
     protected $connection = 'eniplanning';
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $dateFormat = 'Y-d-m H:i:s';
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -56,12 +54,18 @@ class User extends Authenticatable implements JWTSubject
 
     public function setFirstnameAttribute($value)
     {
-        $firstname = '';
-        $firstname = strtoupper($value[0]);
-        for($i = 1; $i<strlen($value);$i++){
-            $firstname.=strtolower($value[$i]);
-        }
-        $this->attributes['firstname'] = $firstname;
+        $this->attributes['firstname'] = strtoupper($value);
+    }
+
+    
+    public function setUpdated_At($value)
+    {
+        $this->attributes['updated_at'] = Carbon::parse($value)->format('Y m d h:m:s');
+    }
+    
+    public function setCreate_At($value)
+    {
+        $this->attributes['created_at'] = Carbon::parse($value)->format('Y m d h:m:s');
     }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return User::all()->toJson();
     }
 
@@ -39,6 +40,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {   
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$user.')');
         return $user->toJson();
     }
 
@@ -49,33 +51,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
-        $user->update($request->all());
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function desactivate(Request $request, User $user)
-    {
-        $user->is_active = false;
-        $user->update($request->all());
-    }
-    
-    /**
-     * Activate the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function activate(User $user)
-    {
-        $user->is_active = true;
-        $user->update($request->all());
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.','.$id.')');
+        $user = User::find($id);
+        $user->is_active = $request->input('is_active') == 'false' ? false : true;
+        return $user->save();
+        //User::update($user);
     }
     
 }

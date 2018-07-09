@@ -23,7 +23,7 @@ Route::group([
         //,'role:admin'
     ]
 ], function () {
-    Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
+    Route::resource('user', 'UserController', ['except' => ['create', 'edit', 'destroy']]);
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
     Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
@@ -39,15 +39,11 @@ Route::group([
 
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');
-
-});
-Route::group(['middleware' => 'addHeadersCors'], function () {
     Route::post('login', 'AuthController@login');
-    Route::get('user', 'UserController@show');
-    Route::post('user', 'UserController@store');
     Route::post('refresh', 'AuthController@refresh');
 
 });
+
 Route::put('post/{id}', function ($id) {
     //
 })->middleware('auth', 'role:admin');

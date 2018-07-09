@@ -6,6 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { User } from '../models/user';
 import { API } from '../api';
 import { ROLES } from '../role';
+import { CONFIG } from '../config';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,7 @@ export class UserService {
     );
   }
     
-  getUsers(): Observable<User[]> {
+  getUsers() {
     return this.http.get<User[]>(API.userAPI);
   }
 
@@ -40,11 +42,9 @@ export class UserService {
   }
 
   updateUser(user: User) {
-    return this.http.put(API.userAPI + '/' + user.id, user);
-  }
-
-  deleteUser(id: number) {
-    return this.http.delete(API.userAPI + '/' + id);
+    console.log('user', JSON.stringify(user));
+    console.log('url =', API.userAPI + '/' + user.id)
+    return this.http.put(API.userAPI + '/' + user.id, JSON.stringify(user)).pipe(map(res => res));
   }
 
   handleUser(dataUserId: number) {
