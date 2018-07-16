@@ -6,20 +6,21 @@ export class Planning {
     date_start_contract: Date;
     date_end_contract: Date;
     date_start_formation: Date;
-    // 'date_end_formation',
-    // 'date_subscription',
-    // 'nb_weeks_formation',
-    // 'nb_weeks_enterprise',
-    // 'limit_day_formation',
-    // 'num_version',
-    // 'status',
-    // 'is_archived',
-    // 'is_model',
+    date_end_formation: Date;
+    date_subscription: Date;
+    nb_weeks_formation: number;
+    nb_weeks_enterprise: number;
+    limit_day_formation: number;
+    num_version: number;
+    status: number
+    is_archived: boolean;
+    is_model: boolean
     planning_id: number;
-    // 'stagiaire_id',
-    // 'formation_id',
-    // 'user_id',
+    stagiaire_id: number;
+    formation_id: number;
+    user_id: number
     status_selected: boolean;
+
 
     constructor() {
         this.status_selected = false;

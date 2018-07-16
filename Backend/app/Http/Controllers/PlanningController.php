@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Planning;
+use Log;
 
 class PlanningController extends Controller
 {
@@ -25,6 +26,7 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
         Planning::create($request->all());
     }
 

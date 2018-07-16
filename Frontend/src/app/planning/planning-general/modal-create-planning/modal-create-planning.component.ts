@@ -46,7 +46,7 @@ export class ModalCreatePlanningComponent implements OnInit {
         var planning = new Planning();
         planning.setLabel(this.nomPlanning);
         console.log(this.nomPlanning);
-        // this.planningService.createPlanning(planning);
+        this.planningService.createPlanning(planning);
     }
 
 }
