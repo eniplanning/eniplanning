@@ -10,8 +10,8 @@ const routes: Routes = [
   	},
   	{
   		path: 'purger',
-  		component: PurgerPlanningComponent
-  	}
+		component: PurgerPlanningComponent
+	}
 ];
 
 @NgModule({

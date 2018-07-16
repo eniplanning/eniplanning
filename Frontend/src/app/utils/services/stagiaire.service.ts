@@ -24,6 +24,5 @@ export class StagiaireService {
   getStagiaire(codeStagiaire:number):Observable<Stagiaire> {
     return of(this.stagiaires.find(stagiaire => stagiaire.CodeStagiaire === codeStagiaire));
   }
-
 }
 

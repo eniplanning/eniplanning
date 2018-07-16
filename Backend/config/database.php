@@ -74,7 +74,8 @@ return [
             'database' => env('DB_DATABASE', ''),
             'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
+            'collation' =>  env('DB_COLLATION', ''), 
+            'charset' => env('DB_CHARSET', ''), 
             'prefix' => '',
         ],
 
@@ -85,7 +86,8 @@ return [
             'database' => env('DB2_DATABASE', ''),
             'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
+            'collation' =>  env('DB_COLLATION', ''), 
+            'charset' => env('DB_CHARSET', ''), 
             'prefix' => '',
         ],
 

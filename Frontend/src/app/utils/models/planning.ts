@@ -1,5 +1,6 @@
-// Model de l'objet : Planning
-
+/*
+ * CLASS PLANNING
+ */
 export class Planning {
 
     label: string;

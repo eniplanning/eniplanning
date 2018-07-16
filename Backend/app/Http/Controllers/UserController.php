@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SignUpRequest;
 use App\Models\User;
+use Log;
 
 class UserController extends Controller
 {
@@ -14,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return User::all()->toJson();
     }
 
@@ -23,9 +26,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SignUpRequest $request)
     {
-        User::create($request->all());
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
+        $user = User::create($request->all());
     }
 
     /**
@@ -35,7 +39,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {
+    {   
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$user.')');
         return $user->toJson();
     }
 
@@ -43,22 +48,14 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.','.$user.')');
         $user->update($request->all());
+        return $user->toJson();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-    }
+    
 }

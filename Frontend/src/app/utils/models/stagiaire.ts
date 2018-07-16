@@ -1,5 +1,6 @@
-// Model de l'objet : Stagiaire
-
+/*
+ * CLASS STAGIAIRE
+ */
 import { Planning } from './planning';
 
 export class Stagiaire {
