@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -25,11 +26,8 @@ class User extends Authenticatable implements JWTSubject
         'role_id',
     ];
 
-    protected $visible = ['id', 'firstname', 'name', 'email', 'is_active', 'role_id'];
-    protected $connection = 'eniplanning';
-    protected $table = 'users';
-    protected $primaryKey = 'id';
-    
+    protected $dateFormat = 'Y-d-m H:i:s';
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -39,7 +37,8 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public function planning(){
+    public function planning()
+    {
         return $this->hasOne('App\Models\Planning');
     }
 
@@ -47,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtoupper($value);
@@ -57,7 +56,6 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes['firstname'] = strtoupper($value);
     }
-   
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

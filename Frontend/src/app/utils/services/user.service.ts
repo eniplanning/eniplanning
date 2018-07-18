@@ -51,8 +51,8 @@ export class UserService {
 
 
   updateUser(user: User) {
-    //console.log('user', JSON.stringify(user));
-    //console.log('url =', API.userAPI + '/' + user.id);
+    console.log('user', JSON.stringify(user));
+    console.log('url =', API.userAPI + '/' + user.id);
     return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
       data=>{
         console.log(data);

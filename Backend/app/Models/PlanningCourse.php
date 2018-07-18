@@ -25,6 +25,8 @@ class PlanningCourse extends Model
         'code_location'
     ];
 
+    protected $dateFormat = 'Y-d-m H:i:s';
+
     public function planning(){
         return $this->belongsTo('App\Models\Planning', 'planning_id');
     }

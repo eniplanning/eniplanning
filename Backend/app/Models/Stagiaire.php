@@ -12,6 +12,7 @@ class Stagiaire extends Model
     protected $connection = 'enierp';
     protected $table = 'stagiaire';
     protected $primaryKey = 'CodeStagiaire';
+    protected $dateFormat = 'Y-d-m H:i:s';
 
     
     //Make it available in the json response

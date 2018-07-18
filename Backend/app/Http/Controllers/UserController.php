@@ -26,10 +26,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SignUpRequest $request)
+    // public function store(SignUpRequest $request)
+    public function store(Request $request)
     {
-        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
+        // Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
+        // $user = User::create($request->all());
         $user = User::create($request->all());
+        return $user->toJson();
     }
 
     /**

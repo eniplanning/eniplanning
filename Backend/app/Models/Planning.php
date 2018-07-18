@@ -23,18 +23,23 @@ class Planning extends Model
         'planning_id',
         'stagiaire_id',
         'formation_id',
-        'user_id'
-        ];
+        'user_id',
+    ];
 
-    public function ctrDisponibility(){
+    protected $dateFormat = 'Y-d-m H:i:s';
+
+    public function ctrDisponibility()
+    {
         return $this->hasOne('App\Models\CtrDisponibility');
     }
 
-    public function ctrExempption(){
+    public function ctrExempption()
+    {
         return $this->hasOne('App\Models\CtrExemption');
     }
 
-    public function ctrPrioritization(){
+    public function ctrPrioritization()
+    {
         return $this->hasOne('App\Models\CtrPrioritization');
     }
 }
