@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    
+
     protected $table = 'users';
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'role_id',
     ];
 
-    protected $dateFormat = 'Y-d-m H:i:s';
+    // protected $dateFormat = 'Y-d-m H:i:s';
 
     /**
      * The attributes that should be hidden for arrays.
