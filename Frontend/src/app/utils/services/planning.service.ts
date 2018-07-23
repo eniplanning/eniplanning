@@ -27,6 +27,7 @@ export class PlanningService {
   }
 
   createPlanning(planning: Planning) {
+    console.log(this.planningsAPI);
     return this.http.post(this.planningsAPI, planning);
   }
 
@@ -34,7 +35,7 @@ export class PlanningService {
     return this.http.put(this.planningsAPI + '/' + planning.planning_id, planning);
   }
 
-  deleteUser(id: number) {
+  deletePlanning(id: number) {
     return this.http.delete(this.planningsAPI + '/' + id);
   }
 }

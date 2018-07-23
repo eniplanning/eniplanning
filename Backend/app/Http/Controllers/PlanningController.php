@@ -26,6 +26,7 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
         Planning::create($request->all());
     }
 

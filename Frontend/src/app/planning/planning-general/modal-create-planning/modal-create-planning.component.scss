@@ -82,3 +82,11 @@ ul {
 .cours fa, .module fa {
     padding-right: 5px;
 }
+
+// Permet au calendrier du date picker de passer par dessus la modale !
+::ng-deep .cdk-overlay-container {
+  z-index: 1200 !important;
+}
+
+
+

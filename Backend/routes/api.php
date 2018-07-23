@@ -41,6 +41,7 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('refresh', 'AuthController@refresh');
 
+    Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
 });
 
 // Route::put('post/{id}', function ($id) {
