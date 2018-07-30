@@ -25,7 +25,8 @@ class PlanningCourseController extends Controller
      */
     public function store(Request $request)
     {
-        PlanningCourse::create($request->all());
+        $planningCourse = PlanningCourse::create($request->all());
+        return $planningCourse->toJson();
     }
 
     /**

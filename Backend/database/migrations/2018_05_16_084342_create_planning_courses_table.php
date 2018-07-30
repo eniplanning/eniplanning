@@ -16,8 +16,8 @@ class CreatePlanningCoursesTable extends Migration
         Schema::create('planning_courses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('planning_id')->unsigned();
-            $table->uuid('course_id');
-            $table->integer('complementary_course_id')->unsigned();
+            $table->uuid('course_id')->nullable();
+            $table->integer('complementary_course_id')->unsigned()->nullabled();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->float('public_price_affected')->nullable();

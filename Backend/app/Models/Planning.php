@@ -40,4 +40,9 @@ class Planning extends Model
     {
         return $this->hasOne('App\Models\CtrPrioritization');
     }
+
+    public function planningCourse()
+    {
+        return $this->hasOne('App\Models\PlanningCourse');
+    }
 }
