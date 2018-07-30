@@ -36,6 +36,7 @@ Route::group([
     Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
     Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
+    Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
 
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');

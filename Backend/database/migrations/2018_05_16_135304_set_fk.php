@@ -12,9 +12,9 @@ class SetFk extends Migration
     public function up()
     {
         Schema::table('plannings', function(Blueprint $table){
-            DB::statement("
+            /* DB::statement("
                 ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
-            ");
+            "); */
             $table->foreign('planning_id')->references('id')->on('plannings');
             // $table->foreign('stagiaire_id')->references('CodeStagiaire')->on('stagiaires');
             // $table->foreign('formation_id')->references('CodeFormation')->on('formations');
@@ -35,16 +35,16 @@ class SetFk extends Migration
             // $table->foreign('module_id')->references('IdModule')->on('Module');
         });
         Schema::table('chaining_modules', function (Blueprint $table){
-            DB::statement("
+           /*  DB::statement("
                 ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
-            ");
+            "); */
             // $table->foreign('module_id')->references('IdModule')->on('Module');
             // $table->foreign('previous_module_id')->references('IdModule')->on('Module');
         });
         Schema::table('planning_courses', function (Blueprint $table){
-            DB::statement("
+            /* DB::statement("
                 ALTER TABLE planning_courses ALTER COLUMN course_id UNIQUEIDENTIFIER;
-            ");
+            "); */
             $table->foreign('planning_id')->references('id')->on('plannings');
             // $table->foreign('course_id')->references('IdCours')->on('Cours');
             $table->foreign('complementary_course_id')->references('id')->on('complementary_courses');

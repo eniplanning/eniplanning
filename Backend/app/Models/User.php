@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $visible = ['id', 'firstname', 'name', 'email', 'is_active', 'role_id'];
-    protected $connection = 'eniplanning';
+    // protected $connection = 'eniplanning';
     protected $table = 'users';
     protected $primaryKey = 'id';
     

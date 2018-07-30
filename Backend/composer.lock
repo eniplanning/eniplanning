@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "54b6cf97cb42181b1eb014ada43d5a2c",
@@ -1622,7 +1622,6 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-<<<<<<< HEAD
             "version": "v6.1.2",
             "source": {
                 "type": "git",
@@ -1633,18 +1632,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
                 "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-=======
-            "version": "v6.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "aa899fef280b1c1aec8d5d4ac069af7f80c89a23"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/aa899fef280b1c1aec8d5d4ac069af7f80c89a23",
-                "reference": "aa899fef280b1c1aec8d5d4ac069af7f80c89a23",
->>>>>>> dev_carine
                 "shasum": ""
             },
             "require": {
@@ -1690,11 +1677,7 @@
                 "mail",
                 "mailer"
             ],
-<<<<<<< HEAD
             "time": "2018-07-13T07:04:35+00:00"
-=======
-            "time": "2018-07-04T11:12:44+00:00"
->>>>>>> dev_carine
         },
         {
             "name": "symfony/console",
@@ -3695,7 +3678,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
             "version": "7.2.7",
             "source": {
                 "type": "git",
@@ -3706,18 +3688,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8e878aff7917ef66e702e03d1359b16eee254e2c",
                 "reference": "8e878aff7917ef66e702e03d1359b16eee254e2c",
-=======
-            "version": "7.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/400a3836ee549ae6f665323ac3f21e27eac7155f",
-                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f",
->>>>>>> dev_carine
                 "shasum": ""
             },
             "require": {
@@ -3788,11 +3758,7 @@
                 "testing",
                 "xunit"
             ],
-<<<<<<< HEAD
             "time": "2018-07-15T05:20:50+00:00"
-=======
-            "time": "2018-06-21T13:13:39+00:00"
->>>>>>> dev_carine
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
