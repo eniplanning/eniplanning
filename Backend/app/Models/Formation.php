@@ -10,4 +10,5 @@ class Formation extends Model
     protected $table = 'Formation';
     protected $primaryKey = 'CodeFormation';
     protected $keyType = 'string';
+    protected $dateFormat = 'Y-d-m H:i:s';
 }

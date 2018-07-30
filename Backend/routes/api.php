@@ -19,14 +19,13 @@ use Illuminate\Http\Request;
 
 Route::group([
     'middleware' => [
-        'addHeadersCors'
         //,'role:admin'
-    ]
+    ],
 ], function () {
     Route::resource('user', 'UserController', ['except' => ['create', 'edit', 'destroy']]);
+    Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
-    Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
     Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
     Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
     Route::resource('ctrPrioritization', 'CtrPrioritizationController', ['except' => ['create', 'edit']]);
@@ -45,9 +44,6 @@ Route::group([
 
 });
 
-Route::put('post/{id}', function ($id) {
-    //
-})->middleware('auth', 'role:admin');
-
-
-
+// Route::put('post/{id}', function ($id) {
+//     //
+// })->middleware('auth', 'role:admin');

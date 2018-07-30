@@ -9,6 +9,7 @@ class Module extends Model
     protected $connection = 'enierp';
     protected $table = 'Module';
     protected $primaryKey = 'IdModule';
+    protected $dateFormat = 'Y-d-m H:i:s';
 
     public function chainingModule(){
         return $this->hasOne('App\Models\ChainingModule');

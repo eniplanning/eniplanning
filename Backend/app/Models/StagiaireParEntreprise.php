@@ -10,6 +10,7 @@ class StagiaireParEntreprise extends Model
     protected $connection = 'enierp';
     protected $table = 'StagiaireParEntreprise';
     protected $primaryKey = 'NumLien';
+    protected $dateFormat = 'Y-d-m H:i:s';
     
     
     // Liste des attributs restitués dans les tableaux d'objets

@@ -10,6 +10,7 @@ class Entreprise extends Model
     protected $connection = 'enierp';
     protected $table = 'entreprise';
     protected $primaryKey = 'CodeEntreprise';
+    protected $dateFormat = 'Y-d-m H:i:s';
     
     // Liste des attributs restitués dans les tableaux d'objets
     // https://laravel.com/docs/5.6/eloquent-serialization

@@ -13,7 +13,7 @@ class ComplementaryCourse extends Model
         'date_to_be_defined',
         'complementary_module_id'
     ];
-
+    
     public function planningCourse(){
         return $this->hasOne('App\Models\PlanningCourse');
     }
