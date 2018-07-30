@@ -17,7 +17,7 @@ class CreateCtrDisponibilitiesTable extends Migration
             $table->increments('id');
             $table->date('date_start');
             $table->date('date_end');
-            $table->boolean('is_available');
+            $table->boolean('is_available')->default(0);
             $table->integer('planning_id')->unsigned();
             $table->timestamps();
         });
