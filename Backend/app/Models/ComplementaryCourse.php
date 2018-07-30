@@ -13,8 +13,6 @@ class ComplementaryCourse extends Model
         'date_to_be_defined',
         'complementary_module_id'
     ];
-
-    protected $dateFormat = 'Y-d-m H:i:s';
     
     public function planningCourse(){
         return $this->hasOne('App\Models\PlanningCourse');

@@ -26,8 +26,6 @@ class Planning extends Model
         'user_id',
     ];
 
-    protected $dateFormat = 'Y-d-m H:i:s';
-
     public function ctrDisponibility()
     {
         return $this->hasOne('App\Models\CtrDisponibility');
