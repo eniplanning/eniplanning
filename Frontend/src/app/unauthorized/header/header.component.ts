@@ -3,6 +3,7 @@ import { LoginService } from '../../utils/services/login.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../utils/services/user.service';
 import { TokenService } from '../../utils/services/token.service';
+import { User } from '../../utils/models/user';
 
 @Component({
   selector: 'unauthorized-header',
@@ -11,26 +12,28 @@ import { TokenService } from '../../utils/services/token.service';
 })
 export class HeaderComponent implements OnInit {
 
-  username: string;
-  constructor(
-    private login: LoginService,
-    private router: Router,
-    private userService: UserService,
-    private token: TokenService,
-  ) { }
+   loggedIn: boolean;
+    loggedUser: User;
 
-  ngOnInit() {
-    this.username = localStorage.getItem('username');
-  }
+    constructor(
+      private login: LoginService,
+      private router: Router,
+      private userService: UserService,
+      private token: TokenService,
+    ) {}
 
-    
-  logout(eventLogout: MouseEvent) {
-    event.preventDefault();
-    this.login.changeAuthStatus(false);
-    this.router.navigateByUrl('/login');
-    this.userService.unsetUser();
-    this.token.remove();
-  }
+    ngOnInit() {
+      this.loggedIn = this.login.getStatus() ? true : false;
+      this.loggedUser = JSON.parse(localStorage.getItem('user'));
+    }    
+
+    logout(event: MouseEvent) {
+      event.preventDefault();
+      this.login.changeAuthStatus(false);
+      this.router.navigateByUrl('/login');
+      this.userService.unsetUser();
+      this.token.remove();
+    }
 
   redirectToMonCompte(eventCompte: MouseEvent) {
     this.router.navigateByUrl('/mon-compte');

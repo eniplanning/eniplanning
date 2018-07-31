@@ -35,11 +35,9 @@ export class LoginComponent implements OnInit {
     this.cookieService.set('user_email', this.form.email);
     return this.loginService.login(this.form).subscribe(
       data=>{
-        //console.log('login data', data);
         this.handleResponse(data);
       },
       error=>{
-        //console.log(error);
         if (error.status == '0') {
           this.error = "Echec de connexion au serveur. Veuillez contacter l'administrateur du site !";
         } else {

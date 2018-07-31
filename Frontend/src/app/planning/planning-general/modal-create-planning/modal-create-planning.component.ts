@@ -22,7 +22,12 @@ export class ModalCreatePlanningComponent implements OnInit {
     selectedLieu :      Lieu;
     nomPlanning:        string;
 
-    constructor(private logger: LoggerService, private formationService:FormationService, private lieuService:LieuService, private planningService:PlanningService)
+    constructor(
+        private logger: LoggerService,
+        private formationService:FormationService,
+        private lieuService:LieuService,
+        private planningService:PlanningService,
+        private stagiaireService: StagiaireService)
     { }
 
     ngOnInit() {
@@ -31,18 +36,15 @@ export class ModalCreatePlanningComponent implements OnInit {
     }
 
     // Récupération des formations depuis le service Formation
-    getFormation():void
-    {
+    getFormation():void {
         this.formationService.getFormations().subscribe(formation => this.formations = formation);
     }
 
-    getLieu():void
-    {
+    getLieu():void {
         this.lieuService.getLieux().subscribe(lieu => this.lieux = lieu);
     }
 
-    createPlanning():void
-    {
+    createPlanning():void {
         var planning = new Planning();
         planning.setLabel(this.nomPlanning);
         console.log(this.nomPlanning);
