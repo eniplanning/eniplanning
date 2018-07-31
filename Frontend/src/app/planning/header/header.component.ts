@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../../utils/services/user.service';
+import { LoginService } from '../../utils/services/login.service';
+import { TokenService } from '../../utils/services/token.service';
+import { User } from '../../utils/models/user';
+import { Stagiaire } from '../../utils/models/stagiaire';
+import { StagiaireService } from '../../utils/services/stagiaire.service';
 
 @Component({
   selector: 'planning-header',
@@ -7,9 +14,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+    loggedIn: boolean;
+    loggedUser: User;
+    selectedStagiaire:  Stagiaire;
 
-  ngOnInit() {
-  }
+    constructor(
+      private login: LoginService,
+      private router: Router,
+      private userService: UserService,
+      private token: TokenService,
+      private stagiaireService: StagiaireService
+    ) {}
 
+    ngOnInit() {
+      this.loggedIn = this.login.getStatus() ? true : false;
+      this.loggedUser = JSON.parse(localStorage.getItem('user'));
+      this.getSelectedStagiaire();
+    }    
+
+    logout(event: MouseEvent) {
+      event.preventDefault();
+      this.login.changeAuthStatus(false);
+      this.router.navigateByUrl('/login');
+      this.userService.unsetUser();
+      this.token.remove();
+    }
+
+    redirectToMonCompte(event: MouseEvent) {
+      event.preventDefault();
+      this.router.navigateByUrl('/mon-compte');
+    }
+
+    getSelectedStagiaire():void {
+      this.stagiaireService.sendSelectedStagiaire.subscribe(selectedStagiaire => this.selectedStagiaire = selectedStagiaire);
+    }
 }

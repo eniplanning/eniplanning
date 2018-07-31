@@ -10,6 +10,7 @@ class Cours extends Model
     protected $table = 'Cours';
     protected $primaryKey = 'IdCours';
     protected $keyType = 'string';
+    protected $dateFormat = 'Y-d-m H:i:s';
     
     public function getRouteKeyName()
     {

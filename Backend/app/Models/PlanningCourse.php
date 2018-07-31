@@ -12,7 +12,7 @@ class PlanningCourse extends Model
         'complementary_course_id',
         'is_complementary',
         'start',
-        'start',
+        'end',
         'public_price_affected',
         'label_course',
         'real_time_hour',

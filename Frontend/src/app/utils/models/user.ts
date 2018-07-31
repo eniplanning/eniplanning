@@ -1,15 +1,21 @@
+import { Deserializable } from "./deserializable";
+
 /*
  * CLASS UTILISATEUR
  */
-export class User {
+
+export class User implements Deserializable {
     id:         number;
     email:      string;
     password:   string;
     name:       string;
     firstname:  string;
-    is_active:  boolean;
+    is_active:  number;
     role_id:    number;
-   
-    constructor() {
+    username:   string;
+
+    deserialize(input: any) {
+        Object.assign(this, input);
+        return this;
     }
 }

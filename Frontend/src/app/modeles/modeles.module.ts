@@ -19,7 +19,8 @@ import { MenuModule } from '../layout/menu/menu.module';
   ],
   declarations: [
   	ModelesGeneralComponent, 
-  	PurgerModelesComponent, HeaderComponent
+    PurgerModelesComponent, 
+    HeaderComponent
   ],
   schemas: [ NO_ERRORS_SCHEMA ]
 })

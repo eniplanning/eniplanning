@@ -19,7 +19,7 @@ class addHeadersCors
     {        
         return $next($request)
             ->header('Access-Control-Allow-Origin', Config::get('app.http_client'))
-            ->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers'))
+            ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, Origin')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
 }

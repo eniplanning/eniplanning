@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Planning;
+use Log;
 
 class PlanningController extends Controller
 {
@@ -25,7 +26,12 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
-        Planning::create($request->all());
+        $request->validate([
+            'label' => 'required',
+            // 'date_start_contract'
+        ]);
+        $planning = Planning::create($request->all());
+        return $planning->toJson();
     }
 
     /**
@@ -36,7 +42,7 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        return $planning->toJson();
+        return $planning::with('planningCourse')->get()->toJson();
     }
 
     /**
@@ -48,7 +54,8 @@ class PlanningController extends Controller
      */
     public function update(Request $request, Planning $planning)
     {
-            
+        $planning->update($request->all());
+        return $planning->toJson();
     }
 
     /**
@@ -61,4 +68,16 @@ class PlanningController extends Controller
     {
         $planning->delete();
     }
+
+
+    /**
+     * Return the list of plannings that belongs to the specified user
+     *
+     * 
+     */
+    public function getByCodeStagiaire(Request $request)
+    {
+        return Planning::where('stagiaire_id', '=', $request->code)->get();
+    }
+
 }

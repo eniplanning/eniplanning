@@ -1,34 +1,79 @@
-import { HttpClient } from '@angular/common/http';
-import { Observable, of} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 import { User } from '../models/user';
-import { CONFIG } from '../../utils/config';
+import { API } from '../api';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
 
-	usersAPI = CONFIG.backend_url + 'user';
-  users: any;
+  user: any;
 
-  constructor(private http: HttpClient) {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  getUser(dataUserId: number) {
+    return this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
+      data=>{
+        this.setUser(data);
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
-
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersAPI);
+    
+  getUsers() {
+    return this.http.get<User[]>(API.userAPI);
   }
 
   createUser(user: User) {
-    return this.http.post(this.usersAPI, user);
+    return this.http.post(API.userAPI, user).subscribe(
+      data=>{
+        console.log('user created', data);
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
+
 
   updateUser(user: User) {
-    return this.http.put(this.usersAPI + '/' + user.id, user);
+    return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
+      data=>{
+        localStorage.setItem('user', JSON.stringify(user));
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
 
-  deleteUser(id: number) {
-    return this.http.delete(this.usersAPI + '/' + id);
+  handleUser(dataUserId: number) {
+    this.user = this.getUser(dataUserId);
+  }
+  
+  setUser(data) {
+    localStorage.setItem('user', JSON.stringify(data));
+  }
+
+  unsetUser() {
+    localStorage.removeItem('user');
+  }
+
+  getUserName() {
+    return JSON.parse(localStorage.getItem('user'));
   }
 }

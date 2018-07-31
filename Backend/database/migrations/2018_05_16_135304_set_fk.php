@@ -12,9 +12,9 @@ class SetFk extends Migration
     public function up()
     {
         Schema::table('plannings', function(Blueprint $table){
-            DB::statement("
-                ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
-            ");
+            // DB::statement("
+            //     ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
+            // ");
             $table->foreign('planning_id')->references('id')->on('plannings');
             // $table->foreign('stagiaire_id')->references('CodeStagiaire')->on('stagiaires');
             // $table->foreign('formation_id')->references('CodeFormation')->on('formations');
@@ -35,16 +35,16 @@ class SetFk extends Migration
             // $table->foreign('module_id')->references('IdModule')->on('Module');
         });
         Schema::table('chaining_modules', function (Blueprint $table){
-            DB::statement("
-                ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
-            ");
+            // DB::statement("
+            //     ALTER TABLE plannings ALTER COLUMN formation_id CHAR(8);
+            // ");
             // $table->foreign('module_id')->references('IdModule')->on('Module');
             // $table->foreign('previous_module_id')->references('IdModule')->on('Module');
         });
         Schema::table('planning_courses', function (Blueprint $table){
-            DB::statement("
-                ALTER TABLE planning_courses ALTER COLUMN course_id UNIQUEIDENTIFIER;
-            ");
+            // DB::statement("
+            //     ALTER TABLE planning_courses ALTER COLUMN course_id UNIQUEIDENTIFIER;
+            // ");
             $table->foreign('planning_id')->references('id')->on('plannings');
             // $table->foreign('course_id')->references('IdCours')->on('Cours');
             $table->foreign('complementary_course_id')->references('id')->on('complementary_courses');
@@ -58,23 +58,23 @@ class SetFk extends Migration
     public function down()
     {
         Schema::table('plannings', function (Blueprint $table){
-            $table->dropForeign('planning_id_foreign');
+            $table->dropForeign('plannings_planning_id_foreign');
             // $table->dropForeign('stagiaire_id_foreign');
             // $table->dropForeign('formation_id_foreign');
-            $table->dropForeign('user_id_foreign');
+            $table->dropForeign('plannings_user_id_foreign');
         });
         Schema::table('complementary_courses', function (Blueprint $table){
-            $table->dropForeign('complementary_module_id_foreign');
+            $table->dropForeign('complementary_courses_complementary_module_id_foreign');
         });
-        Schema::table('ctr_disponobilities', function (Blueprint $table){
-            $table->dropForeign('planning_id_foreign');
+        Schema::table('ctr_disponibilities', function (Blueprint $table){
+            $table->dropForeign('ctr_disponibilities_planning_id_foreign');
         });
         Schema::table('ctr_prioritizations', function (Blueprint $table){
-            $table->dropForeign('planning_id_foreign');
+            $table->dropForeign('ctr_prioritizations_planning_id_foreign');
             // $table->dropForeign('module_id_foreign');
         });
         Schema::table('ctr_exemptions', function (Blueprint $table){
-            $table->dropForeign('planning_id_foreign');
+            $table->dropForeign('ctr_exemptions_planning_id_foreign');
             // $table->dropForeign('module_id_foreign');
         });
         Schema::table('chaining_modules', function (Blueprint $table){
@@ -83,9 +83,9 @@ class SetFk extends Migration
             // $table->dropForeign('formation_id_foreign');
         });
         Schema::table('planning_courses', function (Blueprint $table){
-            $table->dropForeign('planning_id_foreign');
+            $table->dropForeign('planning_courses_planning_id_foreign');
             // $table->dropForeign('course_id_foreign');
-            $table->dropForeign('complementary_course_id_foreign');
+            $table->dropForeign('planning_courses_complementary_course_id_foreign');
         });
     }
 }
