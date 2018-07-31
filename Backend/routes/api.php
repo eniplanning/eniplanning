@@ -35,13 +35,15 @@ Route::group([
     Route::resource('complementaryModule', 'ComplementaryModuleController', ['except' => ['create', 'edit']]);
     Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
+    Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
 
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');
     Route::post('login', 'AuthController@login');
     Route::post('refresh', 'AuthController@refresh');
 
-    Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
+    Route::get('planningbystagiaire/{code}', 'PlanningController@getByCodeStagiaire');
+    
 });
 
 // Route::put('post/{id}', function ($id) {

@@ -63,4 +63,16 @@ class PlanningController extends Controller
     {
         $planning->delete();
     }
+
+
+    /**
+     * Return the list of plannings that belongs to the specified user
+     *
+     * 
+     */
+    public function getByCodeStagiaire(Request $request)
+    {
+        return Planning::where('stagiaire_id', '=', $request->code)->get();
+    }
+
 }
