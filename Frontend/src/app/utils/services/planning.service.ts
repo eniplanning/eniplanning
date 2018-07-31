@@ -36,6 +36,6 @@ export class PlanningService {
   }
 
   setSelectedPlanning(planning: Planning) {
-    localStorage.setItem('selectedPlanning', JSON.stringify(planning));
+    sessionStorage.setItem('selectedPlanning', JSON.stringify(planning));
   }
 }

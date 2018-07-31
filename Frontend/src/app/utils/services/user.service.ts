@@ -34,11 +34,11 @@ export class UserService {
     );
   }
     
-  getUsers() {
+  public getUsers() {
     return this.http.get<User[]>(API.userAPI);
   }
 
-  createUser(user: User) {
+  public createUser(user: User) {
     return this.http.post(API.userAPI, user).subscribe(
       data=>{
         console.log('user created', data);
@@ -50,10 +50,10 @@ export class UserService {
   }
 
 
-  updateUser(user: User) {
+  public updateUser(user: User) {
     return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
       data=>{
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
       },
       error=>{
         console.log(error);
@@ -61,19 +61,19 @@ export class UserService {
     );
   }
 
-  handleUser(dataUserId: number) {
+  public handleUser(dataUserId: number) {
     this.user = this.getUser(dataUserId);
   }
   
-  setUser(data) {
-    localStorage.setItem('user', JSON.stringify(data));
+  public setUser(data) {
+    sessionStorage.setItem('user', JSON.stringify(data));
   }
 
-  unsetUser() {
-    localStorage.removeItem('user');
+  public unsetUser() {
+    sessionStorage.removeItem('user');
   }
 
-  getUserName() {
-    return JSON.parse(localStorage.getItem('user'));
+  public getUserName() {
+    return JSON.parse(sessionStorage.getItem('user'));
   }
 }

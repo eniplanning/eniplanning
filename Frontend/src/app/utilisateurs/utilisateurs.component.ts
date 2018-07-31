@@ -14,7 +14,7 @@ export class UtilisateursComponent implements OnInit {
   users: User[];
   selectedUser: User;
   roles = ROLES;
-  currentUserId: String;
+  currentUser: String;
   
   constructor(
     private userService: UserService,
@@ -22,7 +22,7 @@ export class UtilisateursComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
-    this.currentUserId = sessionStorage.getItem('user_id');
+    this.currentUser = JSON.parse(sessionStorage.getItem('user'));
   }
 
   // Récupération des Utilisateurs depuis le service : user

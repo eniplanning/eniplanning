@@ -19,7 +19,7 @@ class Stagiaire extends Model
     protected $appends = ['Entreprise'];
 
     // Liste des attributs restitués dans les tableaux d'objets
-    protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Entreprise'];
+    protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Adresse1', 'CodePostal', 'Ville', 'Email', 'DateNaissance', 'Entreprise'];
     public $timestamps = false;
 
 

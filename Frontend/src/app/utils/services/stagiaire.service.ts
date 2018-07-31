@@ -25,6 +25,6 @@ export class StagiaireService {
   }
 
   setSelectedStagiaire(stagiaire: Stagiaire) {
-  	localStorage.setItem('selectedStagiaire', JSON.stringify(stagiaire));
+  	sessionStorage.setItem('selectedStagiaire', JSON.stringify(stagiaire));
   }
 }

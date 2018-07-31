@@ -55,7 +55,7 @@
                                 <td> {{ user.is_active == '1' ? 'x' : '' }} </td>
                                 <td> 
                                     <a (click) ="edit(user)">Modifier</a> 
-                                    <span *ngIf="user.id != currentUserId "> |
+                                    <span *ngIf="user.id != currentUser.id "> |
                                         <a (click)="changeStatus(user, user.is_active)">
                                             <span *ngIf="user.is_active == '1'" >Désactiver</span>
                                             <span *ngIf="user.is_active == '0'" >Activer</span>

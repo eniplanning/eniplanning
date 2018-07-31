@@ -12,7 +12,7 @@ export class UnauthorizedComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.username = localStorage.getItem('username');
+    this.username = sessionStorage.getItem('username');
   }
 
 }

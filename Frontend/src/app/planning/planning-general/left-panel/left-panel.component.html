@@ -4,8 +4,9 @@
 <div class="panel md-form">
  <div *ngIf="undefined === stagiaires">Chargement...</div>
  <div *ngIf="undefined !== stagiaires">
-    <ng-select class="custom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
-        <ng-option *ngFor="let stagiaire of stagiaires" [value]="stagiaire">{{stagiaire.Nom | uppercase}} {{stagiaire.Prenom}}</ng-option>
+    <!-- bindLabel n'accepte qu'une propriété. TODO: ajouter une propriété au modèle Stagiaire qui concatène le nom et le prénom  -->
+    <ng-select class="custom" [items]="stagiaires" [groupBy]="groupByFirstLetter" bindLabel="Nom" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
+        <ng-template ng-label-tmp let-item="item">{{item.Nom}} {{item.Prenom}}</ng-template>
     </ng-select>
   </div>
 </div>

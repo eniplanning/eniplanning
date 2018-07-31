@@ -20,6 +20,9 @@ export class LeftPanelComponent implements OnInit {
 	selectedPlanning: Planning;
 	panelStates: {};
 
+	groupByFirstLetter = (item) => item.Nom.slice(0,1);
+	labelNomPrenom = (item) => item.Nom + ' ' + item.Prenom;
+
 	constructor(
 		private logger: LoggerService,
 		private stagiaireService: StagiaireService,
@@ -34,16 +37,39 @@ export class LeftPanelComponent implements OnInit {
 			formations: false,
 			modulesComplementaires: false
 		}
+		this.loadSelectedStagiaire();
 	}
 
 	// Récupération des Stagiaires depuis le service : stagiaire
 	getStagiaires(): void {
-	   	this.stagiaireService.getStagiaires().subscribe(stagiaires => this.stagiaires = stagiaires);
+	   	this.stagiaireService.getStagiaires().subscribe(
+	   		stagiaires => this.stagiaires = stagiaires,
+	   		error => console.log(error),
+	   		() => this.stagiaires.sort(function(a, b) {
+	   			//custom sorting function, sorts by stagiaire.Nom in alphabetical order
+	   			if (a['Nom'] < b['Nom'])
+	   				return -1;
+	   			else if (a['Nom'] > b['Nom'])
+	   				return 1;
+	   			return 0
+	   		})
+	   	);
 	}
 
 	// Récupération des Plannings du stagiaire sélectionné depuis le service : planning
+	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
 	getPlanningsByStagiaire(codeStagiaire: Number): void {
-		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(plannings => this.selectedStagiaire.listPlannings = plannings);
+		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
+			plannings => this.selectedStagiaire.listPlannings = plannings,
+			error =>  console.log(error),
+			() => this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'))
+		);
+	}
+
+	// Récupère le selectedStagiaire au chargement de la page. Si il exists, il est automatiquement sélectionné dans le ng-select
+	loadSelectedStagiaire() {
+		this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
+		this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
 	}
 
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
