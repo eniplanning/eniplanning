@@ -12,22 +12,18 @@ import { CONFIG } from '../../utils/config';
 export class PlanningService {
 
 	planningsAPI = CONFIG.backend_url + 'planning';
-  plannings: any;
+  planningsByCode = CONFIG.backend_url + 'planningbystagiaire';
+  //plannings: any;
 
   constructor(private http: HttpClient) { 
-    this.plannings = this.getPlannings;
+    //this.plannings = this.getPlanningsByStagiaire;
   }
 
-  getPlannings(): Observable<Planning[]> {
-    return this.http.get<Planning[]>(this.planningsAPI);
-  }
-  
-  getPlanningsByStagiaire(codeStagiaire:number):Observable<Planning> {
-    return of(this.plannings.find(planning => planning.CodeStagiaire === codeStagiaire));
+  getPlanningsByStagiaire(codeStagiaire: Number): Observable<Planning[]> {
+    return this.http.get<Planning[]>(this.planningsByCode + '/' + codeStagiaire);
   }
 
   createPlanning(planning: Planning) {
-    console.log(this.planningsAPI);
     return this.http.post(this.planningsAPI, planning);
   }
 
@@ -35,7 +31,11 @@ export class PlanningService {
     return this.http.put(this.planningsAPI + '/' + planning.planning_id, planning);
   }
 
-  deletePlanning(id: number) {
+  deletePlanning(id: Number) {
     return this.http.delete(this.planningsAPI + '/' + id);
+  }
+
+  setSelectedPlanning(planning: Planning) {
+    localStorage.setItem('selectedPlanning', JSON.stringify(planning));
   }
 }

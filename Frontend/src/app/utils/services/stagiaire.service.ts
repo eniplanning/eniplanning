@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of} from 'rxjs';
 
@@ -11,18 +11,20 @@ import { CONFIG } from '../../utils/config';
 export class StagiaireService {
 
 	stagiairesAPI = CONFIG.backend_url + 'stagiaire';
-  stagiaires: any;
+
+	//sets and get selectedStagiaire, to be available for multiple components
+	selectedStagiaire: Stagiaire;
+	@Output() sendSelectedStagiaire: EventEmitter<Stagiaire> = new EventEmitter();
 
   constructor(private http: HttpClient) {
-    this.stagiaires = this.getStagiaires;
+    //this.stagiaires = this.getStagiaires;
   }
 
   getStagiaires(): Observable<Stagiaire[]> {
     return this.http.get<Stagiaire[]>(this.stagiairesAPI);
   }
 
-  getStagiaire(codeStagiaire:number):Observable<Stagiaire> {
-    return of(this.stagiaires.find(stagiaire => stagiaire.CodeStagiaire === codeStagiaire));
+  setSelectedStagiaire(stagiaire: Stagiaire) {
+  	localStorage.setItem('selectedStagiaire', JSON.stringify(stagiaire));
   }
 }
-

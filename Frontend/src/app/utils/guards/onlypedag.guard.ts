@@ -12,7 +12,7 @@ export class OnlyPedagGuard implements CanActivate {
     ) { }
  
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (sessionStorage.getItem('user_role') == '2' || sessionStorage.getItem('user_role') == '3' ) {
+        if (JSON.parse(localStorage.getItem('user')).role_id == '2' || JSON.parse(localStorage.getItem('user')).role_id == '3' ) {
             // logged in so return true
             return true;
         }

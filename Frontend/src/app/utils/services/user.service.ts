@@ -41,7 +41,7 @@ export class UserService {
   createUser(user: User) {
     return this.http.post(API.userAPI, user).subscribe(
       data=>{
-        console.log(data);
+        console.log('user created', data);
       },
       error=>{
         console.log(error);
@@ -51,11 +51,9 @@ export class UserService {
 
 
   updateUser(user: User) {
-    console.log('user', JSON.stringify(user));
-    console.log('url =', API.userAPI + '/' + user.id);
     return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
       data=>{
-        console.log(data);
+        localStorage.setItem('user', JSON.stringify(user));
       },
       error=>{
         console.log(error);
@@ -68,20 +66,14 @@ export class UserService {
   }
   
   setUser(data) {
-    sessionStorage.setItem('user_id', data.id);
-    sessionStorage.setItem('user_name', data.name);
-    sessionStorage.setItem('user_firstname', data.firstname);
-    sessionStorage.setItem('user_role', data.role_id);
+    localStorage.setItem('user', JSON.stringify(data));
   }
 
   unsetUser() {
-    sessionStorage.removeItem('user_id');
-    sessionStorage.removeItem('user_name');
-    sessionStorage.removeItem('user_firstname');
-    sessionStorage.removeItem('user_role');
-  } 
+    localStorage.removeItem('user');
+  }
 
   getUserName() {
-    return sessionStorage.getItem('user_firstname') + ' ' + sessionStorage.getItem('user_name');
+    return JSON.parse(localStorage.getItem('user'));
   }
 }

@@ -24,8 +24,7 @@ export class LoginService {
     return this.loggedIn.asObservable();
   }
   
-  login(data)
-  {
+  login(data) {
     return this.http.post(API.loginAPI, data);
   }
 }
