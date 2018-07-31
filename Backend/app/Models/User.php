@@ -26,8 +26,6 @@ class User extends Authenticatable implements JWTSubject
         'role_id',
     ];
 
-    // protected $dateFormat = 'Y-d-m H:i:s';
-
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -26,8 +26,12 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
-        Planning::create($request->all());
+        $request->validate([
+            'label' => 'required',
+            // 'date_start_contract'
+        ]);
+        $planning = Planning::create($request->all());
+        return $planning->toJson();
     }
 
     /**
@@ -38,7 +42,7 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        return $planning->toJson();
+        return $planning::with('planningCourse')->get()->toJson();
     }
 
     /**
@@ -50,7 +54,8 @@ class PlanningController extends Controller
      */
     public function update(Request $request, Planning $planning)
     {
-        
+        $planning->update($request->all());
+        return $planning->toJson();
     }
 
     /**

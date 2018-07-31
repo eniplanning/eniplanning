@@ -57,9 +57,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.','.$user.')');
         $user->update($request->all());
-        // return $user->toJson();
+        return $user->toJson();
     }
     
 }

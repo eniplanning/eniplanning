@@ -12,7 +12,7 @@ class PlanningCourse extends Model
         'complementary_course_id',
         'is_complementary',
         'start',
-        'start',
+        'end',
         'public_price_affected',
         'label_course',
         'real_time_hour',
@@ -24,8 +24,6 @@ class PlanningCourse extends Model
         'code_teacher',
         'code_location'
     ];
-
-    protected $dateFormat = 'Y-d-m H:i:s';
 
     public function planning(){
         return $this->belongsTo('App\Models\Planning', 'planning_id');

@@ -26,8 +26,6 @@ class Planning extends Model
         'user_id',
     ];
 
-    protected $dateFormat = 'Y-d-m H:i:s';
-
     public function ctrDisponibility()
     {
         return $this->hasOne('App\Models\CtrDisponibility');
@@ -41,5 +39,10 @@ class Planning extends Model
     public function ctrPrioritization()
     {
         return $this->hasOne('App\Models\CtrPrioritization');
+    }
+
+    public function planningCourse()
+    {
+        return $this->hasOne('App\Models\PlanningCourse');
     }
 }
