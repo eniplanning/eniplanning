@@ -50,27 +50,45 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     font-size: 13px;
 }
 
-.informations, .plannings, .formations-eni, .modules-complementaires {
+.panel-content {
     padding: 5px;
 }
 
-.informations .content-body {
+.panel-content .content-body {
     margin-bottom: 10px;
 }
 
-.informations .content-body p {
+.panel-content .content-body p {
     margin: 0 0 0 15px;
 }
 
+.active-planning {
+    color: rgb(66, 133, 244);
+    font-weight: 400;
+}
+
 ul {
-    padding-left: 15px;
+    padding-left: 10px;
     list-style-type: none;
     list-style-position: outside;
 }
 
+.list-plannings-container {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.dropdown-item   {
+    font-size: 13px;
+    line-height: 18px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
 .module-list {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 400;
     padding-left: 0;
 }
 
@@ -82,3 +100,4 @@ ul {
 .cours fa, .module fa {
     padding-right: 5px;
 }
+

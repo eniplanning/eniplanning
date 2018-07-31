@@ -10,87 +10,96 @@
   </div>
 </div>
 
-<div *ngIf="selectedStagiaire !== undefined" >
+<div *ngIf="selectedStagiaire !== undefined">
+    <!-- AFFICHAGE DU BLOC INFORMATION -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['informations'] = !panelStates['informations']" mdbWavesEffect>Informations</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['informations']">
+            <div>
+                <div class="content-body">
+                    <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
+                    <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
+                    <p>Formation suivie :</p>
+                    <p>Site :</p>
+                </div>
+                <div class="content-title">Plannings</div>
+                <div class="content-body">
+                    <!-- Affichage des plannings du stagiaire -->
+                    <ul>
+                        <li *ngFor="let planning of selectedStagiaire.listPlannings"
+                             (click)="onSelectedPlanning(planning)" 
+                             [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
+                             class="list-plannings-container" >
+                             {{ planning.label }}
+                            <!-- <fa name="ellipsis-h" size="1x"></fa> -->
+                            <div class="btn-group" mdbDropdown>
+                                <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
+                                    <fa name="ellipsis-h" size="1x"></fa>
+                                </div>
 
-<!-- AFFICHAGE DU BLOC INFORMATION -->
-<div class="panel">
-    <div class="panel-header">
-        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="informations.toggle()" mdbWavesEffect>Informations</button>
-    </div>
-    <div class="panel-content informations" [mdbCollapse]="isCollapsed" #informations="bs-collapse">
-        <div>
-            <!--div class="content-title" >Informations</div-->
-            <div class="content-body">
-                <!-- Affichage des nom et prénom du stagiaire -->
-                <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
-                <!-- Affichage de l'entreprise du stagiaire -->
-                <div *ngIf="selectedStagiaire.Entreprise !== null; then content else other_content"></div>
-                <ng-template #content><p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }} </p></ng-template>
-                <ng-template #other_content><p>Entreprise : non définie </p></ng-template>
-                <p>Formation suivie : / Site : </p>
+                                <div class="dropdown-menu dropdown-primary">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <div class="divider dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="content-title"><fa name="caret-down"></fa> Plannings</div>
+        </div>     
+    </div>
+
+    <!-- AFFICHAGE DU BLOC PLANNING -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['planning'] = !panelStates['planning']" mdbWavesEffect>Planning</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['planning']">
             <div class="content-body">
-                <!-- Affichage des plannings du stagiaire -->
-                <ul>
-                    <li *ngFor="let planning of selectedStagiaire.listPlannings"
-                         (click)="onSelectedPlanning(planning)" 
-                         [ngClass]="planning.status_selected ? ['bold-text', 'blue'] : ''">
-                         Nom du planning : {{ planning.label }}
-                        <fa name="angle-double-right" size="1x"></fa>
+                <ul class="module-list">
+                    <li class="module"><fa name="minus"></fa><span>Java de base</span>
+                        <ul class="cours-list">
+                            <li class="cours"><fa name="plus"></fa> 03/04/2018 - 13/04/2018</li>
+                            <li class="cours"><fa name="plus"></fa> 11/06/2018 - 22/06/2018</li>
+                        </ul>
+                    </li>
+                    <li class="module"><fa name="plus"></fa><span>Java avancé</span>
+                    </li>
+                    <li class="module"><fa name="plus"></fa><span>PHP Symfony</span>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>     
-</div>
-
-<!-- AFFICHAGE DU BLOC PLANNING -->
-<div class="panel">
-    <div class="panel-header">
-        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="plannings.toggle()" mdbWavesEffect>Planning</button>
     </div>
-    <div class="panel-content plannings" [mdbCollapse]="isCollapsed" #plannings="bs-collapse">
-        <div class="content-body">
-            <ul class="module-list">
-                <li class="module"><fa name="minus"></fa><span>Java de base</span>
-                    <ul class="cours-list">
-                        <li class="cours"><fa name="plus"></fa> 03/04/2018 - 13/04/2018</li>
-                        <li class="cours"><fa name="plus"></fa> 11/06/2018 - 22/06/2018</li>
-                    </ul>
-                </li>
-                <li class="module"><fa name="plus"></fa><span>Java avancé</span>
-                </li>
-                <li class="module"><fa name="plus"></fa><span>PHP Symfony</span>
-                </li>
-            </ul>
+
+    <!-- AFFICHAGE DU BLOC FORMATIONS ENI -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['formations'] = !panelStates['formations']" mdbWavesEffect>Formations ENI</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['formations']">
+            <div class="content-title">Title</div>
+            <div class="content-body">
+               Content
+            </div>
         </div>
     </div>
-</div>
 
-<!-- AFFICHAGE DU BLOC FORMATIONS ENI -->
-<div class="panel">
-    <div class="panel-header">
-        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="formationseni.toggle()" mdbWavesEffect>Formations ENI</button>
-    </div>
-    <div class="panel-content formations-eni" [mdbCollapse]="isCollapsed" #formationseni="bs-collapse">
-        <div class="content-title">Title</div>
-        <div class="content-body">
-           Content
+    <!-- AFFICHAGE DU BLOC MODULES COMPLEMENTAIRES -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['modulesComplementaires'] = !panelStates['modulesComplementaires']" mdbWavesEffect>Modules complémentaires</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['modulesComplementaires']">
+            <div class="content-title">Title</div>
+            <div class="content-body">
+               Content
+            </div>
         </div>
     </div>
-</div>
-
-<!-- AFFICHAGE DU BLOC MODULES COMPLEMENTAIRES -->
-<div class="panel">
-    <div class="panel-header">
-        <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="modulescompl.toggle()" mdbWavesEffect>Modules complémentaires</button>
-    </div>
-    <div class="panel-content modules-complementaires" [mdbCollapse]="isCollapsed" #modulescompl="bs-collapse">
-        <div class="content-title">Title</div>
-        <div class="content-body">
-           Content
-        </div>
-    </div>
-</div>
 </div>
