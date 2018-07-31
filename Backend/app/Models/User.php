@@ -35,9 +35,9 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    public function planning()
+    public function plannings()
     {
-        return $this->hasOne('App\Models\Planning');
+        return $this->hasMany(Planning::class);
     }
 
     public function setPasswordAttribute($value)

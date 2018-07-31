@@ -25,6 +25,6 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        return $formation->toJson();
+        return $formation->with('promotions')->get()->toJson();
     }
 }

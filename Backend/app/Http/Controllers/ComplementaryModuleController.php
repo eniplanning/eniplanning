@@ -25,7 +25,8 @@ class ComplementaryModuleController extends Controller
      */
     public function store(Request $request)
     {
-        ComplementaryModule::create($request->all());
+        $complementaryModule = ComplementaryModule::create($request->all());
+        return $complementaryModule->toJson();
     }
 
     /**
@@ -36,7 +37,7 @@ class ComplementaryModuleController extends Controller
      */
     public function show(ComplementaryModule $complementaryModule)
     {
-        return $complementaryModule->toJson();
+        return $complementaryModule->with('complementaryCourses')->get()->toJson();
     }
 
     /**
@@ -49,6 +50,7 @@ class ComplementaryModuleController extends Controller
     public function update(Request $request, ComplementaryModule $complementaryModule)
     {
         $complementaryModule->update($request->all());
+        return $complementaryModule->toJson();
     }
 
     /**

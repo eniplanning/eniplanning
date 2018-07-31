@@ -41,6 +41,7 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('refresh', 'AuthController@refresh');
 
+    Route::get('planningGlobal/{id}', 'PlanningController@showWithGlobal');
 });
 
 // Route::put('post/{id}', function ($id) {

@@ -11,4 +11,9 @@ class Formation extends Model
     protected $primaryKey = 'CodeFormation';
     protected $keyType = 'string';
     protected $dateFormat = 'Y-d-m H:i:s';
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class);
+    }
 }

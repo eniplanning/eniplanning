@@ -14,11 +14,13 @@ class ComplementaryCourse extends Model
         'complementary_module_id'
     ];
     
-    public function planningCourse(){
-        return $this->hasOne('App\Models\PlanningCourse');
+    public function planningCourses()
+    {
+        return $this->hasMany(PlanningCourse::class);
     }
 
-    public function complementaryModule(){
-        return $this->belongsTo('App\Models\ComplementaryModule', 'complementary_module_id');
+    public function complementaryModule()
+    {
+        return $this->hasOne(ComplementaryModule::class);
     }
 }

@@ -25,7 +25,8 @@ class ComplementaryCourseController extends Controller
      */
     public function store(Request $request)
     {
-        ComplementaryCourse::create($request->all());
+        $complementaryCourse = ComplementaryCourse::create($request->all());
+        return $complementaryCourse;
     }
 
     /**
@@ -49,6 +50,7 @@ class ComplementaryCourseController extends Controller
     public function update(Request $request, ComplementaryCourse $complementaryCourse)
     {
         $complementaryCourse->update($request->all());
+        return $complementaryCourse;
     }
 
     /**
