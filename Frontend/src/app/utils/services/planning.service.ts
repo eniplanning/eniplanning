@@ -12,7 +12,7 @@ import { CONFIG } from '../../utils/config';
 export class PlanningService {
 
 	planningsAPI = CONFIG.backend_url + 'planning';
-  planningsByCode = CONFIG.backend_url + 'planningbystagiaire';
+  planningsByCode = CONFIG.backend_url + 'planningsByStagiaire';
   //plannings: any;
 
   constructor(private http: HttpClient) { 
