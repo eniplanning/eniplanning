@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoginService } from '../utils/services/login.service';
 import { TokenService } from '../utils/services/token.service';
 import { UserService } from '../utils/services/user.service';
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private tokenService: TokenService,
     private userService: UserService,
-    private router: Router,
     private cookieService: CookieService,
   ) { }
 
@@ -34,10 +32,10 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     this.cookieService.set('user_email', this.form.email);
     return this.loginService.login(this.form).subscribe(
-      data=>{
+      data => {
         this.handleResponse(data);
       },
-      error=>{
+      erro => {
         if (error.status == '0') {
           this.error = "Echec de connexion au serveur. Veuillez contacter l'administrateur du site !";
         } else {
@@ -50,11 +48,11 @@ export class LoginComponent implements OnInit {
   handleResponse(data) {
     if (data.user_is_active == true) {
       this.tokenService.handleToken(data.access_token);
-      this.userService.handleUser(data.user_id);
-      this.loginService.changeAuthStatus(true);
-      this.router.navigateByUrl('/planning');
+      this.userService.getUser(data.user_id);
     } else {
       this.error = "Vous n'êtes pas autorisé à accéder à l'application. Veuillez contacter l'administrateur du site pour qu'il active votre compte !";
     }
   }
+
+  
 }

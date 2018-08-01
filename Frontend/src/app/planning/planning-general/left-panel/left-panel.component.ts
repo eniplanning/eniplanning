@@ -21,7 +21,6 @@ export class LeftPanelComponent implements OnInit {
 	panelStates: {};
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
-	labelNomPrenom = (item) => item.Nom + ' ' + item.Prenom;
 
 	constructor(
 		private logger: LoggerService,
@@ -69,7 +68,9 @@ export class LeftPanelComponent implements OnInit {
 	// Récupère le selectedStagiaire au chargement de la page. Si il exists, il est automatiquement sélectionné dans le ng-select
 	loadSelectedStagiaire() {
 		this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
-		this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+		if (this.selectedStagiaire != undefined) {
+			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+		}
 	}
 
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire

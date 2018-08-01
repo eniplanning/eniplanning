@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 import { User } from '../models/user';
 import { API } from '../api';
@@ -21,14 +23,19 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
+    private loginService: LoginService,
+    private router: Router,
   ) { }
 
   getUser(dataUserId: number) {
-    return this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
-      data=>{
+    this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
+      data => {
+        this.user = data;
         this.setUser(data);
+        this.loginService.changeAuthStatus(true);
+        this.router.navigateByUrl('/planning');
       },
-      error=>{
+      error => {
         console.log(error);
       }
     );
@@ -40,10 +47,10 @@ export class UserService {
 
   public createUser(user: User) {
     return this.http.post(API.userAPI, user).subscribe(
-      data=>{
+      data => {
         console.log('user created', data);
       },
-      error=>{
+      error => {
         console.log(error);
       }
     );
@@ -60,10 +67,6 @@ export class UserService {
       }
     );
   }
-
-  public handleUser(dataUserId: number) {
-    this.user = this.getUser(dataUserId);
-  }
   
   public setUser(data) {
     sessionStorage.setItem('user', JSON.stringify(data));
@@ -71,9 +74,5 @@ export class UserService {
 
   public unsetUser() {
     sessionStorage.removeItem('user');
-  }
-
-  public getUserName() {
-    return JSON.parse(sessionStorage.getItem('user'));
   }
 }

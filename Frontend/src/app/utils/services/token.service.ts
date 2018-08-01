@@ -11,8 +11,6 @@ export class TokenService {
 
   handleToken(token) {
     this.setToken(token);
-    // console.log(this.payload(token));  => retourne la valeur décodée du payload (url appel)
-    // console.log(this.isValid());
   }
 
   setToken(token) {
