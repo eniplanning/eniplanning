@@ -75,10 +75,12 @@ export class LeftPanelComponent implements OnInit {
 
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
 	public onChangeSelectedStagiaire() {
-		this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
-		this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
-		this.logger.LogConsole('stagiaire sélectionné' , this.selectedStagiaire);
-		this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
+		if (this.selectedStagiaire != null) {
+			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
+			this.logger.LogConsole('stagiaire sélectionné' , this.selectedStagiaire);
+			this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
+		}
 	}
 
 	// Mise à jour de TODO à la sélection d'un planning
