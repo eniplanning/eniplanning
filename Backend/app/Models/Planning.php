@@ -26,23 +26,23 @@ class Planning extends Model
         'user_id',
     ];
 
-    public function ctrDisponibility()
+    public function ctrDisponibilities()
     {
-        return $this->hasOne('App\Models\CtrDisponibility');
+        return $this->hasMany(CtrDisponibility::class);
     }
 
-    public function ctrExempption()
+    public function ctrExempptions()
     {
-        return $this->hasOne('App\Models\CtrExemption');
+        return $this->hasMany(CtrExemption::class);
     }
 
-    public function ctrPrioritization()
+    public function ctrPrioritizations()
     {
-        return $this->hasOne('App\Models\CtrPrioritization');
+        return $this->hasMany(CtrPrioritization::class);
     }
 
-    public function planningCourse()
+    public function planningCourses()
     {
-        return $this->hasOne('App\Models\PlanningCourse');
+        return $this->hasMany(PlanningCourse::class);
     }
 }

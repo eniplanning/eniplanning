@@ -11,15 +11,23 @@ class Module extends Model
     protected $primaryKey = 'IdModule';
     protected $dateFormat = 'Y-d-m H:i:s';
 
-    public function chainingModule(){
-        return $this->hasOne('App\Models\ChainingModule');
+    public function chainingModules()
+    {
+        return $this->hasMany(ChainingModule::class);
     }
 
-    public function ctrPrioritization(){
-        return $this->hasOne('App\Models\CtrPrioritization');
+    public function ctrPrioritizations()
+    {
+        return $this->hasMany(CtrPrioritization::class);
     }
 
-    public function ctrExemption(){
-        return $this->hasOne('App\Models\CtrExemption');
+    public function ctrExemptions()
+    {
+        return $this->hasMany(CtrExemption::class);
+    }
+
+    public function cours()
+    {
+        return $this->hasMany(Cours::class);
     }
 }

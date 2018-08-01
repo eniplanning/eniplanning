@@ -11,15 +11,15 @@ class Cours extends Model
     protected $primaryKey = 'IdCours';
     protected $keyType = 'string';
     protected $dateFormat = 'Y-d-m H:i:s';
-    
-    public function getRouteKeyName()
+
+    public function planningCourses()
     {
-        return 'IdCours';
+        return $this->hasMany(PlanningCourse::class);
     }
 
-    public function planningCourse()
+    public function modules()
     {
-        return $this->hasOne('App\Models\PlanningCourse');
+        return $this->hasMany(Module::class);
     }
 
 }

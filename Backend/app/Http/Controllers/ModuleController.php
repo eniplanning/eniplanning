@@ -25,6 +25,6 @@ class ModuleController extends Controller
      */
     public function show(Module $module)
     {
-        return $module->toJson();
+        return $module->with('cours')->get()->toJson();
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Planning;
-use Log;
+use Illuminate\Http\Request;
 
 class PlanningController extends Controller
 {
@@ -43,6 +42,16 @@ class PlanningController extends Controller
     public function show(Planning $planning)
     {
         return $planning::with('planningCourse')->get()->toJson();
+    }
+
+    public function showWithGlobal(Planning $planning)
+    {
+        return $planning->with([
+            'planningCourses',
+            'ctrDisponibilities',
+            'ctrExempptions',
+            'ctrPrioritizations',
+        ])->get()->toJson();
     }
 
     /**
