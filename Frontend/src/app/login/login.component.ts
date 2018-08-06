@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       data => {
         this.handleResponse(data);
       },
-      erro => {
+      error => {
         if (error.status == '0') {
           this.error = "Echec de connexion au serveur. Veuillez contacter l'administrateur du site !";
         } else {
