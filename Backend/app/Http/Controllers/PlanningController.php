@@ -86,7 +86,7 @@ class PlanningController extends Controller
      */
     public function getByCodeStagiaire(Request $request)
     {
-        return Planning::where('stagiaire_id', '=', $request->code)->get();
+        return Planning::where('stagiaire_id', '=', $request->code)->toJson();
     }
 
 }
