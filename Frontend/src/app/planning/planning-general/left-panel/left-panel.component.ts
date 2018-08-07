@@ -15,10 +15,10 @@ import { Planning } from '../../../utils/models/planning';
 
 export class LeftPanelComponent implements OnInit {
 
-	stagiaires: Stagiaire[];
-	selectedStagiaire: Stagiaire;
-	selectedPlanning: Planning;
-	panelStates: {};
+	stagiaires: 		Stagiaire[];
+	selectedStagiaire: 	Stagiaire;
+	selectedPlanning: 	Planning;
+	panelStates: 		{};	 //used to keep track of panels states : open or closed
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -84,7 +84,7 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 	// Mise à jour de TODO à la sélection d'un planning
-	public onSelectedPlanning(planning: Planning) {
+	public onChangeSelectedPlanning(planning: Planning) {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
 		this.logger.LogConsole('planning sélectionné' , this.selectedPlanning);

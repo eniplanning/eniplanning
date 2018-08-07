@@ -29,7 +29,6 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
       this.loggedIn = this.login.getStatus() ? true : false;
       this.loggedUser = JSON.parse(sessionStorage.getItem('user'));
-      this.getSelectedStagiaire();
     }    
 
     logout(event: MouseEvent) {
@@ -43,9 +42,5 @@ export class HeaderComponent implements OnInit {
     redirectToMonCompte(event: MouseEvent) {
       event.preventDefault();
       this.router.navigateByUrl('/mon-compte');
-    }
-
-    getSelectedStagiaire():void {
-      this.stagiaireService.sendSelectedStagiaire.subscribe(selectedStagiaire => this.selectedStagiaire = selectedStagiaire);
     }
 }

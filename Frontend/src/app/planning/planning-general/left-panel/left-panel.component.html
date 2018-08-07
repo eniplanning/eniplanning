@@ -30,11 +30,10 @@
                     <!-- Affichage des plannings du stagiaire -->
                     <ul>
                         <li *ngFor="let planning of selectedStagiaire.listPlannings"
-                             (click)="onSelectedPlanning(planning)" 
+                             (click)="onChangeSelectedPlanning(planning)" 
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
                              {{ planning.label }}
-                            <!-- <fa name="ellipsis-h" size="1x"></fa> -->
                             <div class="btn-group" mdbDropdown>
                                 <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
                                     <fa name="ellipsis-h" size="1x"></fa>

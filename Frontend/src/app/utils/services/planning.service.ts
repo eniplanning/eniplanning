@@ -13,10 +13,8 @@ export class PlanningService {
 
 	planningsAPI = CONFIG.backend_url + 'planning';
   planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
-  //plannings: any;
 
   constructor(private http: HttpClient) { 
-    //this.plannings = this.getPlanningsByStagiaire;
   }
 
   getPlanningsByStagiaire(codeStagiaire: Number): Observable<Planning[]> {
@@ -24,6 +22,7 @@ export class PlanningService {
   }
 
   createPlanning(planning: Planning) {
+    console.log(planning);
     return this.http.post(this.planningsAPI, planning);
   }
 

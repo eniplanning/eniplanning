@@ -18,6 +18,7 @@ export class ModalCreatePlanningComponent implements OnInit {
 
     formations:         Formation[];
     lieux:              Lieu[];
+    selectedStagiaire:  Stagiaire;
     selectedFormation:  Formation;
     selectedLieu :      Lieu;
     nomPlanning:        string;
@@ -33,6 +34,7 @@ export class ModalCreatePlanningComponent implements OnInit {
     ngOnInit() {
         this.getFormation();
         this.getLieu();
+        this.getSelectedStagiaire();
     }
 
     // Récupération des formations depuis le service Formation
@@ -44,11 +46,15 @@ export class ModalCreatePlanningComponent implements OnInit {
         this.lieuService.getLieux().subscribe(lieu => this.lieux = lieu);
     }
 
+    getSelectedStagiaire(): void {
+        this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
+    }
+
     createPlanning():void {
         var planning = new Planning();
         planning.setLabel(this.nomPlanning);
         console.log(this.nomPlanning);
-        this.planningService.createPlanning(planning);
+        console.log(this.planningService.createPlanning(planning));
     }
 
 }
