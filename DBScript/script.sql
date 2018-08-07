@@ -39,26 +39,16 @@ VALUES ('LOUINEAU','Rue Jacquard', '85400', 'LUCON', '02 02 02 02 02', 'www.loui
 
 
 -- INSERTION STAGIAIRES
-insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
-Email, DateNaissance, CodeRegion, DateCreation) 
-VALUES ('M.', 'BRIAND', 'Matthieu', 'Rue de la Mer', '85000', 'LA ROCHE SUR YON', 
-'mat@gmail.com', '1995-06-01', 'NT',  '2018-06-01');
-insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
-Email, DateNaissance, CodeRegion, DateCreation) 
-VALUES ('M.', 'BELAUD', 'Valentin', 'Rue de la Vendée', '44230', 'ST SEBASTIEN SUR LOIRE', 
-'val@gmail.com', Convert(datetime,'27-04-1988',103), 'NT',  Convert(datetime,'01-06-2018', 103));
-insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
-Email, DateNaissance, CodeRegion, DateCreation) 
-VALUES ('M.', 'FOUCHER', 'Baptiste', 'Route de la Beaujoire', '44300', 'NANTES', 
-'baptiste@gmail.com', Convert(datetime,'10-08-1992',103), 'NT',  Convert(datetime,'01-06-2018', 103));
-insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
-Email, DateNaissance, CodeRegion, DateCreation) 
-VALUES ('Mme', 'GEINDREAU', 'Carine', 'Rue Renan', '44000', 'NANTES', 
-'carine@gmail.com', Convert(datetime,'27-04-1975',103), 'NT',  Convert(datetime,'01-06-2018', 103));
-insert into enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, 
-Email, DateNaissance, CodeRegion, DateCreation) 
-VALUES ('Mme', 'BLIN', 'Marina', 'Place Canclaux', '44000', 'NANTES', 
-'marina@gmail.com', Convert(datetime,'29-06-1996',103), 'NT',  Convert(datetime,'01-06-2018',103));
+INSERT INTO enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, TelephoneFixe, TelephonePortable, Email, DateNaissance, CodeRegion, CodeNationalite, DateCreation) 
+VALUES ('M.', 'BRIAND', 'Matthieu', 'Rue de la Mer', '85000', 'LA ROCHE SUR YON', '0251987410', '0658954102', 'mat@gmail.com', '1995-06-01', 'NT', 'FR', '2018-06-01');
+INSERT INTO enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, TelephoneFixe, TelephonePortable, Email, DateNaissance, CodeRegion, CodeNationalite, DateCreation) 
+VALUES ('M.', 'BELAUD', 'Valentin', 'Rue de la Vendée', '44230', 'ST SEBASTIEN SUR LOIRE', '0251967425', '0696025560', 'val@gmail.com', Convert(datetime,'27-04-1988',103), 'NT', 'FR', Convert(datetime,'01-06-2018', 103));
+INSERT INTO enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, TelephoneFixe, TelephonePortable, Email, DateNaissance, CodeRegion, CodeNationalite, DateCreation) 
+VALUES ('M.', 'FOUCHER', 'Baptiste', 'Route de la Beaujoire', '44300', 'NANTES', '0251410899', '0632154785', 'baptiste@gmail.com', Convert(datetime,'10-08-1992',103), 'NT', 'FR', Convert(datetime,'01-06-2018', 103));
+INSERT INTO enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, TelephoneFixe, TelephonePortable, Email, DateNaissance, CodeRegion, CodeNationalite, DateCreation) 
+VALUES ('Mme', 'GEINDREAU', 'Carine', 'Rue Renan', '44000', 'NANTES', '0251005588', '0696471085', 'carine@gmail.com', Convert(datetime,'27-04-1975',103), 'NT', 'FR', Convert(datetime,'01-06-2018', 103));
+INSERT INTO enierp.dbo.stagiaire(Civilite, Nom, Prenom, Adresse1, Codepostal, Ville, TelephoneFixe, TelephonePortable, Email, DateNaissance, CodeRegion, CodeNationalite, DateCreation) 
+VALUES ('Mme', 'BLIN', 'Marina', 'Place Canclaux', '44000', 'NANTES', '0251648424', '0322159840', 'marina@gmail.com', Convert(datetime,'29-06-1996',103), 'NT', 'FR', Convert(datetime,'01-06-2018',103));
 
 
 -- INSERT STAGIAIRE PAR ENTREPRISE
