@@ -11,6 +11,13 @@ class Cours extends Model
     protected $primaryKey = 'IdCours';
     protected $keyType = 'string';
     protected $dateFormat = 'Y-d-m H:i:s';
+    protected $maps = [
+        'Debut' => 'date_start',
+        'Fin' => 'date_end',
+        'DureeReelleEnHeures' => 'real_time_hour',
+        'DureePrevueEnHeures' => 'expected_time_hour',
+        'DateAdefinir' => 'date_to_be_defined',
+    ];
 
     public function planningCourses()
     {

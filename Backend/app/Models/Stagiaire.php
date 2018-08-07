@@ -16,15 +16,20 @@ class Stagiaire extends Model
 
     
     //Make it available in the json response
-    protected $appends = ['Entreprise'];
+    protected $appends = ['Entreprise', 'nomComplet'];
 
     // Liste des attributs restitués dans les tableaux d'objets
-    protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Adresse1', 'CodePostal', 'Ville', 'Email', 'DateNaissance', 'Entreprise'];
+    // protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Adresse1', 'CodePostal', 'Ville', 'Email', 'DateNaissance', 'Entreprise'];
     public $timestamps = false;
 
 
     public function getEntrepriseAttribute()
     {
         return EntrepriseController::getByStagiaire($this);
+    }
+
+    public function getNomCompletAttribute()
+    {
+        return $this->Nom.$this->Prenom;
     }
 }

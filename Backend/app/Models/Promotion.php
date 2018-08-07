@@ -21,4 +21,6 @@ class Promotion extends Model
     {
         return $this->hasMany(Cours::class);
     }
+
+    // @todo : Voir l'utilité de créer un controller pour récupérer les cours via un formation en passant par la promotion
 }

@@ -20,6 +20,7 @@ class Planning extends Model
         'status',
         'is_archived',
         'is_model',
+        'is_broken',
         'planning_id',
         'stagiaire_id',
         'formation_id',
@@ -31,7 +32,7 @@ class Planning extends Model
         return $this->hasMany(CtrDisponibility::class);
     }
 
-    public function ctrExempptions()
+    public function ctrExemptions()
     {
         return $this->hasMany(CtrExemption::class);
     }

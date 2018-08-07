@@ -44,6 +44,7 @@ Route::group([
 
     Route::get('planningsByCodeStagiaire/{code}', 'PlanningController@getByCodeStagiaire');
     Route::get('planningGlobal/{id}', 'PlanningController@showWithGlobal');
+    Route::get('setPlanningBroken', 'PlanningController@setPlanningBroken');
 });
 
 // Route::put('post/{id}', function ($id) {

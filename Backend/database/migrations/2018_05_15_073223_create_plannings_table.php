@@ -28,6 +28,7 @@ class CreatePlanningsTable extends Migration
             $table->integer('status')->default(1); // 1 : brouillon ; 2 : inscrit
             $table->boolean('is_archived')->default(0); // 0 : non archivé ; 1 : archivé
             $table->boolean('is_model')->default(0); // 0 : non modèle ; 1 : est un modèle
+            $table->boolean('is_broken')->defaul(0); // 0 : Pas en défaut ; 1 : est en défaut
             $table->integer('planning_id')->unsigned()->nullable();
             $table->integer('stagiaire_id')->unsigned();
             $table->char('formation_id');

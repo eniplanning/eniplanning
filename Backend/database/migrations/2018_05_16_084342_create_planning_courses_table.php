@@ -18,13 +18,13 @@ class CreatePlanningCoursesTable extends Migration
             $table->integer('planning_id')->unsigned();
             $table->uuid('course_id')->nullable();
             $table->integer('complementary_course_id')->unsigned()->nullabled();
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->dateTime('date_start');
+            $table->dateTime('date_end');
             $table->float('public_price_affected')->nullable();
             $table->string('label_course')->nullable();
             $table->integer('real_time_hour')->nullable();
             $table->integer('expected_time_hour')->nullable();
-            $table->boolean('date_to_be_define')->nullable();
+            $table->boolean('date_to_be_defined')->nullable();
             $table->string('code_promotion')->nullable();
             $table->integer('module_id')->nullable();
             $table->string('code_room')->nullable();

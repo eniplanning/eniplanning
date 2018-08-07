@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ComplementaryCourse;
+use App\Models\Cours;
 use App\Models\Planning;
 use Illuminate\Http\Request;
 
@@ -41,7 +43,7 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        return $planning->get()->toJson();
+        return $planning->toJson();
     }
 
     /*
@@ -54,7 +56,7 @@ class PlanningController extends Controller
         //return $planning->with([
             'planningCourses',
             'ctrDisponibilities',
-            'ctrExempptions',
+            'ctrExemptions',
             'ctrPrioritizations',
         ])->get()->toJson();
     }
@@ -84,11 +86,10 @@ class PlanningController extends Controller
         $planning->delete();
     }
 
-
     /**
      * Return the list of plannings that belongs to the specified user
      *
-     * 
+     *
      */
     public function getByCodeStagiaire(Request $request)
     {
@@ -98,6 +99,32 @@ class PlanningController extends Controller
             'ctrExempptions',
             'ctrPrioritizations',
         ])->get()->toJson();
+    }
+
+    /*
+     *  TO BE COMMENTED
+     */
+    public function setPlanningBroken()
+    {
+        $plannings = Planning::with('planningCourses')->get();
+        foreach ($plannings as $planning) {
+            $x = 0;
+            do {
+                $course = $planning->planningCourses;
+                $comparedCourse = $course[$x]->course_id ? Cours::find($course[$x]->course_id) : ComplementaryCourse::find($course[$x]->course_id);
+                
+                $field = ['date_start', 'date_end', 'real_time_hour', 'expected_time_hour', 'date_to_be_define'];
+                $fx = 0;
+                do {
+                    // @todo : Vérifier que la condition fonctionne
+                    $planning->is_broken = $course[$x][$field[$fx]] != $comparedCourse[$x][$field[$fx]] ? true : false;
+                    $fx++;
+                } while (!$planning->is_broken);
+
+                $planning->save();
+                $x++;
+            } while (!$planning->is_broken);
+        }
     }
 
 }
