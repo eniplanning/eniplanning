@@ -16,7 +16,7 @@ class Stagiaire extends Model
 
     
     //Make it available in the json response
-    protected $appends = ['Entreprise', 'nomComplet'];
+    protected $appends = ['Entreprise', 'NomComplet'];
 
     // Liste des attributs restitués dans les tableaux d'objets
     // protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Adresse1', 'CodePostal', 'Ville', 'Email', 'DateNaissance', 'Entreprise'];
@@ -30,6 +30,6 @@ class Stagiaire extends Model
 
     public function getNomCompletAttribute()
     {
-        return $this->Nom.$this->Prenom;
+        return $this->Nom.' '.$this->Prenom;
     }
 }

@@ -96,7 +96,7 @@ class PlanningController extends Controller
         return Planning::where('stagiaire_id', '=', $request->code)->with([
             'planningCourses',
             'ctrDisponibilities',
-            'ctrExempptions',
+            'ctrExemptions',
             'ctrPrioritizations',
         ])->get()->toJson();
     }
