@@ -28,6 +28,6 @@ class Module extends Model
 
     public function cours()
     {
-        return $this->hasMany(Cours::class);
+        return $this->hasMany(Cours::class, 'IdModule');
     }
 }

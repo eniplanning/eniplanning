@@ -53,7 +53,6 @@ class PlanningController extends Controller
     public function showWithGlobal(Planning $planning, Request $request)
     {
         return Planning::where('id', "=", $request->id)->with([
-        //return $planning->with([
             'planningCourses',
             'ctrDisponibilities',
             'ctrExemptions',

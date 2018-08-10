@@ -61,16 +61,14 @@
         </div>
         <div class="panel-content" *ngIf="panelStates['planning']">
             <div class="content-body">
-                <ul class="module-list">
-                    <li class="module"><fa name="minus"></fa><span>Java de base</span>
-                        <ul class="cours-list">
-                            <li class="cours"><fa name="plus"></fa> 03/04/2018 - 13/04/2018</li>
-                            <li class="cours"><fa name="plus"></fa> 11/06/2018 - 22/06/2018</li>
+                <ul class="module-list fa-ul" *ngIf="formation">
+                    <li class="module" *ngFor="let module of formation.modules">
+                        <div (click)="module.visible = !module.visible"><span class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
+                        <ul class="cours-list fa-ul" *ngIf="module.visible">
+                            <li class="cours" *ngFor="let cours of module.cours">
+                                <div (click)="onClickCours(cours)"><span class="fa-li"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span>{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="module"><fa name="plus"></fa><span>Java avancé</span>
-                    </li>
-                    <li class="module"><fa name="plus"></fa><span>PHP Symfony</span>
                     </li>
                 </ul>
             </div>
