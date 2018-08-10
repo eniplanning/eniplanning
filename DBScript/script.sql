@@ -2,30 +2,32 @@
 -- ENI PLANNING ----------------------------------------
 --------------------------------------------------------
 -- INSERTION DE l'UTILISATEUR ADMIN EN  BASE (login : sollivier@campus-eni.fr, password : admin)
-INSERT INTO eniplanning.dbo.users (email, password, name, firstname, role_id)
+INSERT INTO eniplanning.users (email, password, name, firstname, role_id)
 VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2EWvOdzEzWdFhCU1kK', 'Administrateur', '', 3);
 
+
 -- INSERTION PLANNING
-INSERT INTO eniplanning.dbo.plannings
-(label, date_start_contract, date_end_contract, date_start_formation, date_end_formation,date_subscription,
-nb_weeks_formation, nb_weeks_enterprise, stagiaire_id, formation_id, user_id)
-VALUES
-('planning 1 carine', CONVERT(datetime,'01-09-2018', 103),  CONVERT(datetime,'30-09-2019', 103), CONVERT(datetime,'01-10-2018', 103), 
-CONVERT(datetime,'15-09-2019', 103), CONVERT(datetime,'18-06-2016', 103),
-2, 2, 12, '17MSI-IN', 1);
+INSERT INTO eniplanning.plannings (label, date_start_contract, date_end_contract, date_start_formation, date_end_formation,date_subscription, nb_weeks_formation, nb_weeks_enterprise, stagiaire_id, formation_id, user_id)
+VALUES('planning 1 carine', CONVERT(datetime,'01-09-2018', 103),  CONVERT(datetime,'30-09-2019', 103), CONVERT(datetime,'01-10-2018', 103), CONVERT(datetime,'15-09-2019', 103), CONVERT(datetime,'18-06-2016', 103), 2, 2, 12, '17MSI-IN', 1);
+INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
+VALUES ('test planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 10, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
+INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
+VALUES ('test2 planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 10, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
+
 
 --------------------------------------------------------
 -- ENI ERP ---------------------------------------------
 --------------------------------------------------------
 select * from enierp.dbo.Formation where LibelleLong like '%Manager%';
 select * from enierp.dbo.Stagiaire;
-select * from eniplanning.dbo.users;
+select * from eniplanning.users;
 select * from enierp.dbo.Entreprise;
 
 -- UDPATE STAGIAIRE
 UPDATE enierp.dbo.Stagiaire SET DateNaissance=CONVERT(datetime, '27/04/1975', 103), Email='carine@gmail.com' WHERE CodeStagiaire=12;
 -- DELETE STAGIAIRE
 DELETE enierp.dbo.Stagiaire WHERE CodeStagiaire=20;
+
 
 -- INSERT ENTREPRISE
 INSERT INTO enierp.dbo.Entreprise (RaisonSociale,Adresse1,CodePostal,Ville,Telephone,SiteWeb, Email, CodeRegion, CodeTypeEntreprise, CodeSecteur)
