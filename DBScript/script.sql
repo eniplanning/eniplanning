@@ -10,9 +10,9 @@ VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2E
 INSERT INTO eniplanning.plannings (label, date_start_contract, date_end_contract, date_start_formation, date_end_formation,date_subscription, nb_weeks_formation, nb_weeks_enterprise, stagiaire_id, formation_id, user_id)
 VALUES('planning 1 carine', CONVERT(datetime,'01-09-2018', 103),  CONVERT(datetime,'30-09-2019', 103), CONVERT(datetime,'01-10-2018', 103), CONVERT(datetime,'15-09-2019', 103), CONVERT(datetime,'18-06-2016', 103), 2, 2, 12, '17MSI-IN', 1);
 INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
-VALUES ('test planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 10, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
+VALUES ('test planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 12, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
 INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
-VALUES ('test2 planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 10, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
+VALUES ('test2 planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 12, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
 
 
 --------------------------------------------------------
@@ -55,10 +55,12 @@ VALUES ('Mme', 'BLIN', 'Marina', 'Place Canclaux', '44000', 'NANTES', '025164842
 
 -- INSERT STAGIAIRE PAR ENTREPRISE
 INSERT INTO enierp.dbo.StagiaireParEntreprise (CodeStagiaire,CodeEntreprise,DateLien,CodeTypeLien,DateDebutEnEts,DateFinEnEts,TitreVise)
-VALUES (???,???, CONVERT(datetime, '01/06/2018', 103), 'CDD', CONVERT(datetime, '01/09/2018', 103),CONVERT(datetime, '31/10/2019', 103),'MS2I');
+VALUES (10,4, CONVERT(datetime, '01/06/2018', 103), 'CDD', CONVERT(datetime, '01/09/2018', 103),CONVERT(datetime, '31/10/2019', 103),'MS2I');
 INSERT INTO enierp.dbo.StagiaireParEntreprise (CodeStagiaire,CodeEntreprise,DateLien,CodeTypeLien,DateDebutEnEts,DateFinEnEts,TitreVise)
-VALUES (???,???, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '01/12/2018', 103),CONVERT(datetime, '31/12/2019', 103),'MS2I');
+VALUES (11,3, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '01/12/2018', 103),CONVERT(datetime, '31/12/2019', 103),'MS2I');
 INSERT INTO enierp.dbo.StagiaireParEntreprise (CodeStagiaire,CodeEntreprise,DateLien,CodeTypeLien,DateDebutEnEts,DateFinEnEts,TitreVise)
-VALUES (???,???, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '15/08/2018', 103),CONVERT(datetime, '15/08/2020', 103),'MS2I');
+VALUES (12,2, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '15/08/2018', 103),CONVERT(datetime, '15/08/2020', 103),'MS2I');
 INSERT INTO enierp.dbo.StagiaireParEntreprise (CodeStagiaire,CodeEntreprise,DateLien,CodeTypeLien,DateDebutEnEts,DateFinEnEts,TitreVise)
-VALUES (???,???, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '01/12/2018', 103),CONVERT(datetime, '31/12/2019', 103),'MS2I');
+VALUES (13,1, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '01/12/2018', 103),CONVERT(datetime, '31/12/2019', 103),'MS2I');
+INSERT INTO enierp.dbo.StagiaireParEntreprise (CodeStagiaire,CodeEntreprise,DateLien,CodeTypeLien,DateDebutEnEts,DateFinEnEts,TitreVise)
+VALUES (14,1, CONVERT(datetime, '01/05/2018', 103), 'CDD', CONVERT(datetime, '11/11/2018', 103),CONVERT(datetime, '31/12/2019', 103),'MS2I');
