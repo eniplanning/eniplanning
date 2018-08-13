@@ -20,7 +20,7 @@ class CreatePlanningsTable extends Migration
             $table->date('date_end_contract')->nullable();
             $table->date('date_start_formation')->nullable();
             $table->date('date_end_formation')->nullable();
-            $table->date('date_inscription')->nullable();
+            $table->date('date_subscription')->nullable();
             $table->integer('nb_weeks_formation')->nullable();
             $table->integer('nb_weeks_enterprise')->nullable();
             $table->integer('limit_day_formation')->nullable();
