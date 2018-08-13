@@ -11,12 +11,9 @@ import { Formation } from '../models/formation';
 export class FormationService
 {
     formationAPI = CONFIG.backend_url + 'formation'
-    formations: any;
+    formation_Promotion_Cours = CONFIG.backend_url + 'formationGlobal'
 
-
-    constructor(private http: HttpClient)
-    {
-        this.formations = this.getFormations;
+    constructor(private http: HttpClient){
     }
 
     // Récupération de la liste des formation via le Backend
@@ -26,8 +23,8 @@ export class FormationService
     }
 
     // Récupération d'une formations en fonction de son CodeFormation
-    getFormation(codeFormation:number):Observable<Formation>
+    getFormation(codeFormation: string): Observable<Formation>
     {
-        return of(this.formations.find(formation => formation.codeFormation === codeFormation));
+        return this.http.get<Formation>(this.formation_Promotion_Cours + '/' + codeFormation);
     }
 }

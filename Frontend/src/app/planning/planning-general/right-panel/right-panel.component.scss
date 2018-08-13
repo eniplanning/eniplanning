@@ -67,11 +67,15 @@ td.day-first-letter {
 }
 
 .colored {
-	background-color: #f2f2f2;
+	background-color: #f2f2f2 !important;
 }
 
 .blue-bg {
 	background-color: cyan;
+}
+
+.green-bg {
+    background-color: #00c418;
 }
 
 .cell {

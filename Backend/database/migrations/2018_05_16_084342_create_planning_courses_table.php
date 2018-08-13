@@ -17,7 +17,7 @@ class CreatePlanningCoursesTable extends Migration
             $table->increments('id');
             $table->integer('planning_id')->unsigned();
             $table->uuid('course_id')->nullable();
-            $table->integer('complementary_course_id')->unsigned()->nullabled();
+            $table->integer('complementary_course_id')->unsigned()->nullable();
             $table->dateTime('date_start');
             $table->dateTime('date_end');
             $table->float('public_price_affected')->nullable();

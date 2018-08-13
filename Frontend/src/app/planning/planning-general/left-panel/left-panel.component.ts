@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../../../utils/services/logger.service';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
+import { FormationService } from '../../../utils/services/formation.service';
+import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Planning } from '../../../utils/models/planning';
+import { Formation } from '../../../utils/models/formation';
+import { Cours } from '../../../utils/models/cours';
+import { CoursPlanning } from '../../../utils/models/cours-planning';
 // import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
@@ -18,14 +23,17 @@ export class LeftPanelComponent implements OnInit {
 	stagiaires: 		Stagiaire[];
 	selectedStagiaire: 	Stagiaire;
 	selectedPlanning: 	Planning;
+	formation:			Formation;
 	panelStates: 		{};	 //used to keep track of panels states : open or closed
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
 	constructor(
-		private logger: LoggerService,
-		private stagiaireService: StagiaireService,
-		private planningService: PlanningService,
+		private logger: 				LoggerService,
+		private stagiaireService: 		StagiaireService,
+		private planningService: 		PlanningService,
+		private formationService:		FormationService,
+		private coursPlanningService: 	CoursPlanningService,
 	) { }
 
 	ngOnInit() {
@@ -55,38 +63,150 @@ export class LeftPanelComponent implements OnInit {
 	   	);
 	}
 
-	// Récupération des Plannings du stagiaire sélectionné depuis le service : planning
-	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
-	getPlanningsByStagiaire(codeStagiaire: Number): void {
-		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
-			plannings => this.selectedStagiaire.listPlannings = plannings,
-			error =>  console.log(error),
-			() => this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'))
-		);
-	}
 
 	// Récupère le selectedStagiaire au chargement de la page. Si il exists, il est automatiquement sélectionné dans le ng-select
 	loadSelectedStagiaire() {
 		this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
 		if (this.selectedStagiaire != undefined) {
+			this.panelStates['informations'] = true;
 			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
 		}
 	}
 
+
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
-	public onChangeSelectedStagiaire() {
+	onChangeSelectedStagiaire() {
 		if (this.selectedStagiaire != null) {
 			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
-			this.logger.LogConsole('stagiaire sélectionné' , this.selectedStagiaire);
-			this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
+			console.log('stagiaire sélectionné' , this.selectedStagiaire);
 		}
 	}
 
+
+	// Récupération des Plannings du stagiaire sélectionné depuis le service : planning
+	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
+	getPlanningsByStagiaire(codeStagiaire: Number): void {
+		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
+			plannings => {
+				this.selectedStagiaire.listPlannings = plannings;
+			},
+			error =>  console.log(error),
+			() => {
+				this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'));
+				if (this.selectedPlanning != undefined) {
+					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
+					this.selectedStagiaire.listPlannings.forEach(function(p) {
+						if (p.id == self.selectedPlanning.id) {
+							self.selectedPlanning = p;
+						}
+					});
+					this.onChangeSelectedPlanning(this.selectedPlanning);
+					this.panelStates['planning'] = true;
+				}
+			}
+		);
+	}
+
+
 	// Mise à jour de TODO à la sélection d'un planning
-	public onChangeSelectedPlanning(planning: Planning) {
+	onChangeSelectedPlanning(planning: Planning) {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
-		this.logger.LogConsole('planning sélectionné' , this.selectedPlanning);
+		console.log('planning sélectionné', this.selectedPlanning);
+
+		//Loading formation with list of modules with list of cours
+		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
+			formation => {
+				//sorting modules
+				formation.modules = []
+				formation.uniteparformation.forEach(function(u) {
+					formation.modules = formation.modules.concat(u.modules);
+				});
+				formation.uniteparformation = null;
+				formation.modules = formation.modules.sort(function(a, b) {
+					if (a.Libelle < b.Libelle)
+						return -1;
+					if (a.Libelle > b.Libelle)
+						return 1;
+					return 0;
+				});
+
+
+				//sorting cours
+				formation.modules.forEach(function(m) {
+					m.cours = m.cours.sort(function(a, b) {
+						if (a.Debut < b.Debut)
+							return -1;
+						if (a.Debut > b.Debut)
+							return 1;
+						return 0;
+					});
+				});
+				this.formation = formation;
+				console.log('formation sélectionnée',this.formation);
+			},
+			error => console.log(error)
+		);
+
+		//Drawing courses on web page
+		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
+		this.selectedPlanning.planning_courses.forEach(function(c) {
+			self.drawCoursOnPlanning(c);
+		});
+	}
+
+	onClickCours(cours) {
+		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
+			return c.module_id == cours.IdModule;
+		})
+		// if a cours from this module is already in planning_courses
+		if (old_cours != undefined) {
+			// removes it from database
+			this.coursPlanningService.deleteCours(old_cours).subscribe(
+				//if successful, removes it from the planning_courses list
+				data => {
+					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
+					this.drawCoursOnPlanning(old_cours);
+				},
+				error => console.log(error)
+			)
+		}
+
+		//if first cours clicked or clicked on a different cours
+		if (old_cours == undefined || (old_cours != undefined && old_cours.course_id != cours.IdCours)) {
+			//add cours in database
+			this.coursPlanningService.addCours(this.selectedPlanning, cours).subscribe(
+				cours => {
+					//is successfull, add clicked cours in planning_courses list
+					this.selectedPlanning.planning_courses.push(cours);
+					//and draw it on the page
+					this.drawCoursOnPlanning(cours);
+				},
+				error => console.log(error)
+			);
+		}
+	}
+
+	drawCoursOnPlanning(cours) {
+		let dateRange = []
+		let start = new Date(cours.start);
+		let end = new Date(cours.end);
+		while (start <= end) {
+			dateRange.push(new Date(start));
+			start.setDate(start.getDate() + 1);
+		}
+		
+		dateRange.forEach(function(d) {
+			let id = '' + d.getFullYear()
+						+ (d.getMonth()+1<10 ? '0'+(d.getMonth()+1) : d.getMonth()+1)
+						+ (d.getDate()<10 ? '0'+d.getDate() : d.getDate());
+			if (document.getElementById(id).parentElement.classList.contains('green-bg')) {
+				document.getElementById(id).parentElement.classList.remove('green-bg');
+			} else {
+				document.getElementById(id).parentElement.classList.add('green-bg');
+			}
+			
+		});
 	}
 }

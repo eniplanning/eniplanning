@@ -44,6 +44,6 @@ class Planning extends Model
 
     public function planningCourses()
     {
-        return $this->hasMany(PlanningCourse::class);
+        return $this->hasMany(PlanningCourse::class, 'planning_id', 'id');
     }
 }
