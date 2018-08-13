@@ -13,8 +13,8 @@ import { RightPanelComponent } from './planning-general/right-panel/right-panel.
 import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
 import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule/* , MatNativeDateModule  */} from '@angular/material';
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 // import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 
@@ -40,7 +40,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    // MatNativeDateModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
@@ -49,11 +49,11 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
         useValue: {
             notFoundText: 'Aucun stagiaire trouvé'
         }
-    },
-      { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+    }
+    //   { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
 
     //   { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    //   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    //   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
   ]
 })
 export class PlanningModule { }
