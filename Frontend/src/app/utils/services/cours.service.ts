@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, of } from 'rxjs';
 
 import { CONFIG } from '../../utils/config';
@@ -16,7 +16,4 @@ export class CoursService {
     constructor(private http: HttpClient){
     }
 
-  	addCours(planning: Planning, cours: Cours) {
-  		//TODO
-  	}
 }

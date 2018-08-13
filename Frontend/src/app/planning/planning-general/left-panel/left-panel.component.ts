@@ -3,11 +3,12 @@ import { LoggerService } from '../../../utils/services/logger.service';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
 import { FormationService } from '../../../utils/services/formation.service';
-import { CoursService } from '../../../utils/services/cours.service';
+import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
+import { CoursPlanning } from '../../../utils/models/cours-planning';
 // import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
@@ -28,11 +29,11 @@ export class LeftPanelComponent implements OnInit {
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
 	constructor(
-		private logger: 			LoggerService,
-		private stagiaireService: 	StagiaireService,
-		private planningService: 	PlanningService,
-		private formationService:	FormationService,
-		private coursService: 		CoursService,
+		private logger: 				LoggerService,
+		private stagiaireService: 		StagiaireService,
+		private planningService: 		PlanningService,
+		private formationService:		FormationService,
+		private coursPlanningService: 	CoursPlanningService,
 	) { }
 
 	ngOnInit() {
@@ -78,8 +79,7 @@ export class LeftPanelComponent implements OnInit {
 		if (this.selectedStagiaire != null) {
 			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
-			this.logger.LogConsole('stagiaire sélectionné' , this.selectedStagiaire);
-			this.logger.LogFile('stagiaire sélectionné' , this.selectedStagiaire);
+			console.log('stagiaire sélectionné' , this.selectedStagiaire);
 		}
 	}
 
@@ -90,13 +90,19 @@ export class LeftPanelComponent implements OnInit {
 		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
 			plannings => {
 				this.selectedStagiaire.listPlannings = plannings;
-				this.panelStates['planning'] = true;
 			},
 			error =>  console.log(error),
 			() => {
 				this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'));
 				if (this.selectedPlanning != undefined) {
+					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
+					this.selectedStagiaire.listPlannings.forEach(function(p) {
+						if (p.id == self.selectedPlanning.id) {
+							self.selectedPlanning = p;
+						}
+					});
 					this.onChangeSelectedPlanning(this.selectedPlanning);
+					this.panelStates['planning'] = true;
 				}
 			}
 		);
@@ -107,10 +113,11 @@ export class LeftPanelComponent implements OnInit {
 	onChangeSelectedPlanning(planning: Planning) {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
-		this.logger.LogConsole('planning sélectionné' , this.selectedPlanning);
+		console.log('planning sélectionné', this.selectedPlanning);
 
+		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
-			(formation) => {
+			formation => {
 				//sorting modules
 				formation.modules = []
 				formation.uniteparformation.forEach(function(u) {
@@ -137,17 +144,69 @@ export class LeftPanelComponent implements OnInit {
 					});
 				});
 				this.formation = formation;
-				console.log('formation sélectionnée : ',this.formation);
+				console.log('formation sélectionnée',this.formation);
 			},
 			error => console.log(error)
 		);
+
+		//Drawing courses on web page
+		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
+		this.selectedPlanning.planning_courses.forEach(function(c) {
+			self.drawCoursOnPlanning(c);
+		});
 	}
 
 	onClickCours(cours) {
-		cours.visible = !cours.visible;
-		//add the cours to the planning in database
-		this.coursService.addCours(this.selectedPlanning, cours);
-		//add the cours in the webpage calendar
+		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
+			return c.module_id == cours.IdModule;
+		})
+		// if a cours from this module is already in planning_courses
+		if (old_cours != undefined) {
+			// removes it from database
+			this.coursPlanningService.deleteCours(old_cours).subscribe(
+				//if successful, removes it from the planning_courses list
+				data => {
+					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
+					this.drawCoursOnPlanning(old_cours);
+				},
+				error => console.log(error)
+			)
+		}
 
+		//if first cours clicked or clicked on a different cours
+		if (old_cours == undefined || (old_cours != undefined && old_cours.course_id != cours.IdCours)) {
+			//add cours in database
+			this.coursPlanningService.addCours(this.selectedPlanning, cours).subscribe(
+				cours => {
+					//is successfull, add clicked cours in planning_courses list
+					this.selectedPlanning.planning_courses.push(cours);
+					//and draw it on the page
+					this.drawCoursOnPlanning(cours);
+				},
+				error => console.log(error)
+			);
+		}
+	}
+
+	drawCoursOnPlanning(cours) {
+		let dateRange = []
+		let start = new Date(cours.start);
+		let end = new Date(cours.end);
+		while (start <= end) {
+			dateRange.push(new Date(start));
+			start.setDate(start.getDate() + 1);
+		}
+		
+		dateRange.forEach(function(d) {
+			let id = '' + d.getFullYear()
+						+ (d.getMonth()+1<10 ? '0'+(d.getMonth()+1) : d.getMonth()+1)
+						+ (d.getDate()<10 ? '0'+d.getDate() : d.getDate());
+			if (document.getElementById(id).parentElement.classList.contains('green-bg')) {
+				document.getElementById(id).parentElement.classList.remove('green-bg');
+			} else {
+				document.getElementById(id).parentElement.classList.add('green-bg');
+			}
+			
+		});
 	}
 }

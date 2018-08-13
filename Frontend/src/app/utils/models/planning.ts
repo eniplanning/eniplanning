@@ -3,6 +3,8 @@
  */
 // Model de l'objet : Planning
 
+import { CoursPlanning } from './cours-planning';
+
 export class Planning {
     id:                    number
     label:                 string

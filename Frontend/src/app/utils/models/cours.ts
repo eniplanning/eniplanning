@@ -1,7 +1,7 @@
 export class Cours {
 	idCours:			string
-	debut:				number
-	fin:				number
+	debut:				Date
+	fin:				Date
 	dureeReeleEnHeures:	number
 	codePromotion:		string
 	prixPublicAffecte:	number
