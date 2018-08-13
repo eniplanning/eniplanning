@@ -10,7 +10,6 @@ class PlanningCourse extends Model
         'planning_id',
         'course_id',
         'complementary_course_id',
-        'is_complementary',
         'date_start',
         'date_end',
         'public_price_affected',
