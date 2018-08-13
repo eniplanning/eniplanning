@@ -1,0 +1,103 @@
+<!-- REPLACE BELOW PANELS BY MATERIAL-DESIGN-BOOTSTRAP CARDS : https://mdbootstrap.com/angular/components/panels/ -->
+
+<!-- BLOC SELECTION DU STAGIAIRE -->
+<div class="panel md-form">
+ <div *ngIf="undefined === stagiaires">Chargement...</div>
+ <div *ngIf="undefined !== stagiaires">
+    <!-- bindLabel n'accepte qu'une propriété. TODO: ajouter une propriété au modèle Stagiaire qui concatène le nom et le prénom  -->
+    <ng-select class="custom" [items]="stagiaires" [groupBy]="groupByFirstLetter" bindLabel="NomComplet" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
+        <ng-template ng-label-tmp let-item="item">{{item.Nom}} {{item.Prenom}}</ng-template>
+    </ng-select>
+  </div>
+</div>
+
+<div *ngIf="selectedStagiaire != null">
+    <!-- AFFICHAGE DU BLOC INFORMATION -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['informations'] = !panelStates['informations']" mdbWavesEffect>Informations</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['informations']">
+            <div>
+                <div class="content-body">
+                    <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
+                    <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
+                    <p>Formation suivie :</p>
+                    <p>Site :</p>
+                </div>
+                <div class="content-title">Plannings</div>
+                <div class="content-body">
+                    <!-- Affichage des plannings du stagiaire -->
+                    <ul>
+                        <li *ngFor="let planning of selectedStagiaire.listPlannings"
+                             (click)="onChangeSelectedPlanning(planning)" 
+                             [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
+                             class="list-plannings-container" >
+                             {{ planning.label }}
+                            <div class="btn-group" mdbDropdown>
+                                <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
+                                    <fa name="ellipsis-h" size="1x"></fa>
+                                </div>
+
+                                <div class="dropdown-menu dropdown-primary">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <div class="divider dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>     
+    </div>
+
+    <!-- AFFICHAGE DU BLOC PLANNING -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['planning'] = !panelStates['planning']" mdbWavesEffect>Planning</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['planning']">
+            <div class="content-body">
+                <ul class="module-list fa-ul" *ngIf="formation">
+                    <li class="module" *ngFor="let module of formation.modules">
+                        <div (click)="module.visible = !module.visible"><span class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
+                        <ul class="cours-list fa-ul" *ngIf="module.visible">
+                            <li class="cours" *ngFor="let cours of module.cours">
+                                <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- AFFICHAGE DU BLOC FORMATIONS ENI -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['formations'] = !panelStates['formations']" mdbWavesEffect>Formations ENI</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['formations']">
+            <div class="content-title">Title</div>
+            <div class="content-body">
+               Content
+            </div>
+        </div>
+    </div>
+
+    <!-- AFFICHAGE DU BLOC MODULES COMPLEMENTAIRES -->
+    <div class="panel">
+        <div class="panel-header">
+            <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['modulesComplementaires'] = !panelStates['modulesComplementaires']" mdbWavesEffect>Modules complémentaires</button>
+        </div>
+        <div class="panel-content" *ngIf="panelStates['modulesComplementaires']">
+            <div class="content-title">Title</div>
+            <div class="content-body">
+               Content
+            </div>
+        </div>
+    </div>
+</div>
