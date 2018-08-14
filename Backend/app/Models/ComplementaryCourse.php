@@ -9,7 +9,8 @@ class ComplementaryCourse extends Model
     protected $fillable = [
         'date_start',
         'date_end',
-        'real_duration',
+        'real_time_hour',
+        'expected_time_hour',
         'date_to_be_defined',
         'complementary_module_id'
     ];
