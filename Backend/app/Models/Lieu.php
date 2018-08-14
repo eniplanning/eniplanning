@@ -10,10 +10,4 @@ class Lieu extends Model
     protected $connection = 'enierp';
     protected $table = 'lieu';
     protected $primaryKey = 'CodeLieu';
-    protected $map = [
-        'Libelle' => 'label',
-        'Adresse' => 'address',
-        'CP' => 'zip_code',
-        'Ville' => 'city',
-    ];
 }
