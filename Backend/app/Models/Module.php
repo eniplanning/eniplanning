@@ -10,15 +10,6 @@ class Module extends Model
     protected $table = 'Module';
     protected $primaryKey = 'IdModule';
     protected $dateFormat = 'Y-d-m H:i:s';
-    protected $map = [
-        'Libelle' => 'label',
-        'DureeEnHeures' => 'time_hour',
-        'DureeEnSemaines' => 'time_week',
-        'PrixPublicEnCours' => 'current_public_price',
-        'LibelleCourt' => 'short_label',
-        'Archiver' => 'archive',
-        'TypeModule' => 'module_type',
-    ];
 
     public function chainingModules()
     {
