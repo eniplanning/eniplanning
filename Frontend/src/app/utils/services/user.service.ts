@@ -13,8 +13,6 @@ import { API } from '../api';
 
 export class UserService {
 
-  user: any;
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -22,15 +20,14 @@ export class UserService {
   };
 
   constructor(
-    private http: HttpClient,
+    private http:         HttpClient,
     private loginService: LoginService,
-    private router: Router,
+    private router:       Router,
   ) { }
 
-  getUser(dataUserId: number) {
-    this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
-      data => {
-        this.user = data;
+  getUser(userId: number) {
+    this.http.get(API.userAPI + '/' + userId, {responseType: 'json'}).subscribe(
+      (data: User) => {
         this.setUser(data);
         this.loginService.changeAuthStatus(true);
         this.router.navigateByUrl('/planning');
@@ -68,8 +65,8 @@ export class UserService {
     );
   }
   
-  public setUser(data) {
-    sessionStorage.setItem('user', JSON.stringify(data));
+  public setUser(user: User) {
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   public unsetUser() {

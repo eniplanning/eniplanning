@@ -9,10 +9,10 @@ VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2E
 -- INSERTION PLANNING
 INSERT INTO eniplanning.plannings (label, date_start_contract, date_end_contract, date_start_formation, date_end_formation,date_subscription, nb_weeks_formation, nb_weeks_enterprise, stagiaire_id, formation_id, user_id)
 VALUES('planning 1 carine', CONVERT(datetime,'01-09-2018', 103),  CONVERT(datetime,'30-09-2019', 103), CONVERT(datetime,'01-10-2018', 103), CONVERT(datetime,'15-09-2019', 103), CONVERT(datetime,'18-06-2016', 103), 2, 2, 12, '17MSI-IN', 1);
-INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
-VALUES ('test planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 12, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
-INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
-VALUES ('test2 planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, NULL, 12, '17cdi', 1, '2018-07-26 13:13:05', '2018-07-26 13:13:07');
+INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_subscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `is_broken`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`)
+VALUES ('test planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, 0, NULL, 12, '17cdi', 1);
+INSERT INTO eniplanning.plannings (`label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_subscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `is_broken`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`)
+VALUES ('test2 planning', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', '2018-07-26', 20, 5, NULL, NULL, 1, 0, 0, 0, NULL, 12, '17cdi', 1);
 
 
 --------------------------------------------------------

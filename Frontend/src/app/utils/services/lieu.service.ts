@@ -11,21 +11,13 @@ import { Lieu } from "../models/lieu";
 export class LieuService {
 
     lieuAPI = CONFIG.backend_url + 'lieu';
-    lieux: any;
 
-    constructor(private http:HttpClient)
-    {
-        this.lieux = this.getLieux;
+    constructor(private http:HttpClient){
     }
 
     getLieux(): Observable<Lieu[]>
     {
         return this.http.get<Lieu[]>(this.lieuAPI);
-    }
-
-    getLieu(codeLieu: number)
-    {
-        return of(this.lieux.find(lieu => lieu.codeLieu === codeLieu))
     }
 
 }

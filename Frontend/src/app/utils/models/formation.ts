@@ -1,26 +1,24 @@
-/*
- * CLASS FORMATION
- */
-// Model de l'objet : Formation
+import { Module } from './module';
+import { UniteParFormation } from './uniteparformation';
 
 export class Formation {
-    codeFormation:      string
-    libelleLong:        string
-    libelleCourt:       string
-    dureeEnHeures:      number
-    tauxHoraire:        number
-    codeTitre:          string
-    heuresCentre:       number
-    heuresStage:        number
-    semainesCentre:     number
-    semainesStage:      number
-    dureeEnSemaines:    number
-    archiver:           boolean
-    eCFaPasser:         boolean
-    typeFormation:      number
-    codeLieu:           number
-    uniteparformation:  any[]
-    modules:            any[]
+    CodeFormation:      string
+    LibelleLong:        string
+    LibelleCourt:       string
+    DureeEnHeures:      number
+    TauxHoraire:        number
+    CodeTitre:          string
+    HeuresCentre:       number
+    HeuresStage:        number
+    SemainesCentre:     number
+    SemainesStage:      number
+    DureeEnSemaines:    number
+    Archiver:           boolean
+    ECFaPasser:         boolean
+    TypeFormation:      number
+    CodeLieu:           number
+    uniteparformation:  UniteParFormation[]
+    Modules:            Module[]
 
     constructor(){
     }

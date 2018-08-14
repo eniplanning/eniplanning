@@ -1,11 +1,16 @@
 export class Lieu
 {
-    codeLieu:   number;
-    libelle:    string;
-    archive:    boolean;
-    adresse:    string;
-    cp:         number;
-    ville:      string;
+    CodeLieu:   		number
+    Libelle:    		string
+    archive:    		boolean
+    GestionEmmargement:	string
+    DebutAM:			string
+    FinAM:				string
+    DebutPM:			string
+    FinPM:				string
+    Adresse:    		string
+    CP:         		number
+    Ville:      		string
 
     constructor(){}
 }

@@ -21,7 +21,7 @@ class Stagiaire extends Model
 
     public function getEntrepriseAttribute()
     {
-        return EntrepriseController::getByStagiaire($this);
+        return $this->belongsToMany(Entreprise::class, 'StagiaireParEntreprise', 'CodeEntreprise', 'CodeStagiaire');
     }
 
     public function getNomCompletAttribute()
