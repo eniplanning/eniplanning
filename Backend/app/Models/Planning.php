@@ -31,7 +31,7 @@ class Planning extends Model
         return $this->hasMany(CtrDisponibility::class);
     }
 
-    public function ctrExempptions()
+    public function ctrExemptions()
     {
         return $this->hasMany(CtrExemption::class);
     }
