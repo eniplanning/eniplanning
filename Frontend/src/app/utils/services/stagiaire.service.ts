@@ -17,7 +17,6 @@ export class StagiaireService {
 	@Output() sendSelectedStagiaire: EventEmitter<Stagiaire> = new EventEmitter();
 
   constructor(private http: HttpClient) {
-    //this.stagiaires = this.getStagiaires;
   }
 
   getStagiaires(): Observable<Stagiaire[]> {
