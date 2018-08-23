@@ -11,7 +11,7 @@
     <div class="card-body">
 
         <!-- filtre de la page -->
-        <div class="row">   
+        <!--div class="row">   
         <div class="input-group md-form form-sm form-2 pl-0 mb-0">
             <input class="form-control my-0 py-1 grey-border" type="text" placeholder="Search" aria-label="Search">
             <div class="input-group-append"  >
@@ -20,7 +20,7 @@
                 </span>
             </div>
         </div>
-        </div>
+        </div-->
 
     </div>
     
@@ -54,7 +54,7 @@
                                 <td> {{ user.email }} </td> 
                                 <td> {{ user.is_active == '1' ? 'x' : '' }} </td>
                                 <td> 
-                                    <a (click) ="edit(user)">Modifier</a> 
+                                    <app-utilisateur-form action="Modifier" [selectedUser]=user></app-utilisateur-form>
                                     <span *ngIf="user.id != currentUser.id "> |
                                         <a (click)="changeStatus(user, user.is_active)">
                                             <span *ngIf="user.is_active == '1'" >Désactiver</span>

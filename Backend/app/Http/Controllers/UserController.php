@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Http\Requests\SignUpRequest;
 use App\Models\User;
@@ -26,11 +27,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(SignUpRequest $request)
-    public function store(Request $request)
+    public function store(SignUpRequest $request)
+    //public function store(Request $request)
     {
-        // Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
-        // $user = User::create($request->all());
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
         $user = User::create($request->all());
         return $user->toJson();
     }
@@ -57,8 +57,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
+        Log::info('request' .$request);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+                'email'
+            ]
+        ]);
+    
         $user->update($request->all());
         return $user->toJson();
+        
     }
-    
 }
