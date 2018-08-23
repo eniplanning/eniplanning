@@ -1,11 +1,11 @@
-<a class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">Créer</a>
+<a class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
 
 <div mdbModal #modalUserForm="mdb-modal" class="modal fade" id="modal-user-form" 
     tabindex="1200" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop:false}" >
   <div class="modal-dialog modal-fluid" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Ajouter un utilisateur</h4>
+              <h4 class="modal-title" id="myModalLabel">{{action}} un utilisateur</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalUserForm.hide()">
                   <span aria-hidden="true">×</span>
               </button>
@@ -17,45 +17,45 @@
                 <div class="card-body">
                   <form #utilisateurForm=ngForm (ngSubmit)="onSubmit()">
                       <div class="form-group row">
-                          <div class="offset-4 col-sm-7">
-                            <div class="alert alert-success" [hidden]="!confirmMsg">
-                              {{ confirmMsg }}
-                            </div>
+                          <div class="offset-4 col-sm-7"> 
+                              <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+                              <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
                           </div>
                       </div>
 
                     <div class="form-group row">
                       <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
                       <div class="col-sm-7">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Nom" [(ngModel)]="form.name" required>
-                        <div class="alert alert-danger" [hidden]="!error.name">
+                          <input type="text" name="name" class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
+                          <div class="alert alert-danger" [hidden]="!error.name">
                           {{ error.name }}
                         </div>
                       </div>
-                    </div>
+                    </div>  
 
                     <div class="form-group row">
                       <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
                       <div class="col-sm-7">
-                        <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Prénom" [(ngModel)]="form.firstname">
-                      </div>
+                          <input type="text" name="firstname" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
+                        </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
                       <div class="col-sm-7">
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="form.email" required>
-                        <div class="alert alert-danger" [hidden]="!error.email">
-                            {{ error.email }}
+                          <input type="email" name="email" class="form-control"  placeholder="Email" [(ngModel)]="selectedUser.email" value="selectedUser.email" required>
+                          <div class="alert alert-danger" [hidden]="!error.email">
+                            {{ error.email }} 
                           </div>          
                         </div>
                     </div>
+                    <div *ngIf="action == 'Créer'">
 
                     <div class="form-group row">
                       <label for="password" class="col-sm-4 col-form-label text-right">Mot de passe</label>
                       <div class="col-sm-7">
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe"
-                          [(ngModel)]="form.password" required>
+                        <input type="password" name="password" class="form-control" placeholder="Mot de passe"
+                        [(ngModel)]="selectedUser.password" value="selectedUser.password" required>
                         <div class="alert alert-danger" [hidden]="!error.password">
                           {{ error.password }}
                         </div>  
@@ -66,20 +66,22 @@
                     <div class="form-group row">
                         <label for="password_confirmation" class="col-sm-4 col-form-label text-right">Confirmation de mot de passe</label>
                         <div class="col-sm-7">
-                          <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Mot de passe"
-                            [(ngModel)]="form.password_confirmation" required>
+                          <input type="password" name="password_confirmation" class="form-control" placeholder="Mot de passe"
+                          [(ngModel)]="selectedUser.password_confirmation"  value="selectedUser.password_confirmation" required>
                           <div class="alert alert-danger" [hidden]="!error.password">
                             {{ error.password }}
                           </div>  
                         </div>
                     </div>
-              
+
+                    </div>
+
                     <div class="form-group row">
                         <label for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
                         <div class="col-sm-7">
                           <div *ngFor="let role of roles">
-                            <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline" [id]=role.id
-                                [(ngModel)]="form.role_id" [value]=role.id required>{{ role.name }}
+                            <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline"
+                                [(ngModel)]="selectedUser.role_id" [value]=role.id required>{{ role.name }}
                           </div>  
                         </div>
                     </div>

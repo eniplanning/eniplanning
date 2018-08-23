@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { User } from '../../utils/models/user';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+    currentUser: User;
+    @Input() userRole: number; 
+
   	constructor() { }
 
-  	ngOnInit() {}
+  	ngOnInit() {
+      this.currentUser = JSON.parse(sessionStorage.getItem('user'));
+      this.userRole   = this.currentUser.role_id;
+    }
 
 }

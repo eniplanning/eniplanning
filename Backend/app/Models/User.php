@@ -47,12 +47,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = strtoupper($value);
+        $this->attributes['name'] = ucwords(strtolower($value));
     }
 
     public function setFirstnameAttribute($value)
     {
-        $this->attributes['firstname'] = strtoupper($value);
+        $this->attributes['firstname'] = ucwords(strtolower($value));
     }
 
     /**
