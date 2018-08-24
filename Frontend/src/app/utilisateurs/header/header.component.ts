@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from '../../utils/services/login.service';
 import { UserService } from '../../utils/services/user.service';
 import { TokenService } from '../../utils/services/token.service';
@@ -11,6 +11,11 @@ import { User } from '../../utils/models/user';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+   @Output() refreshList = new EventEmitter<string>();
+
+    sendMessage() {
+      this.refreshList.emit();
+    }
 
     loggedIn: boolean;
     loggedUser: User;

@@ -48,4 +48,8 @@ export class UtilisateursComponent implements OnInit {
       }
     );
   }
+
+  refreshList(event){
+    this.getUsers();
+  }
 }

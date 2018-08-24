@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ROLES } from '../../utils/role';
 import { Router } from '@angular/router';
 import { RegisterService } from '../../utils/services/register.service';
@@ -12,6 +12,7 @@ import { User} from '../../utils/models/user';
 })
 
 export class UtilisateurFormComponent implements OnInit {
+  @Output() closed = new EventEmitter<string>();
 
   roles = ROLES;
   confirm_password: string = null;
@@ -36,6 +37,10 @@ export class UtilisateurFormComponent implements OnInit {
     private userService : UserService,
     private router: Router,
   ) { }
+
+  sendMessage(){
+    this.closed.emit();
+  }
 
   onSubmit() {
     this.error = [];  

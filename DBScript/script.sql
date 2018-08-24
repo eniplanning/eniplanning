@@ -3,16 +3,11 @@
 --------------------------------------------------------
 -- INSERTION DE l'UTILISATEUR ADMIN EN  BASE (login : sollivier@campus-eni.fr, password : admin)
 INSERT INTO eniplanning.dbo.users (email, password, name, firstname, role_id)
-VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2EWvOdzEzWdFhCU1kK', 'Administrateur', '', 3);
+VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2EWvOdzEzWdFhCU1kK', 'Ollivier', 'Stéphane', 3);
 
 -- INSERTION PLANNING
-INSERT INTO eniplanning.dbo.plannings
-(label, date_start_contract, date_end_contract, date_start_formation, date_end_formation,date_subscription,
-nb_weeks_formation, nb_weeks_enterprise, stagiaire_id, formation_id, user_id)
-VALUES
-('planning 1 carine', CONVERT(datetime,'01-09-2018', 103),  CONVERT(datetime,'30-09-2019', 103), CONVERT(datetime,'01-10-2018', 103), 
-CONVERT(datetime,'15-09-2019', 103), CONVERT(datetime,'18-06-2016', 103),
-2, 2, 12, '17MSI-IN', 1);
+INSERT INTO `plannings` (`id`, `label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
+VALUES (NULL, 'planning 1 carine', '2018-09-01', '2019-09-30', '2018-10-01', '2019-09-15', '2018-06-01', '2', '2', '120', '1', '1', '0', '0', NULL, '30', '17MSI-IN', '24', NULL, NULL);
 
 --------------------------------------------------------
 -- ENI ERP ---------------------------------------------

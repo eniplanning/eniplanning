@@ -1,5 +1,5 @@
 <!-- modal de création d'utilisateur -->
-<utilisateurs-header></utilisateurs-header>
+<utilisateurs-header (refreshList)="refreshList($event)" ></utilisateurs-header>
 
 <!-- titre de la page -->
 <div class="card">
@@ -54,13 +54,13 @@
                                 <td> {{ user.email }} </td> 
                                 <td> {{ user.is_active == '1' ? 'x' : '' }} </td>
                                 <td> 
-                                    <app-utilisateur-form action="Modifier" [selectedUser]=user></app-utilisateur-form>
+                                    <app-utilisateur-form (closed)="refreshList($event)" action="Modifier" [selectedUser]=user></app-utilisateur-form>
                                     <span *ngIf="user.id != currentUser.id "> |
                                         <a (click)="changeStatus(user, user.is_active)">
                                             <span *ngIf="user.is_active == '1'" >Désactiver</span>
                                             <span *ngIf="user.is_active == '0'" >Activer</span>
                                         </a>
-                                    </span>
+                                    </span> 
                                 </td>
                             </tr>
                         </tbody>
