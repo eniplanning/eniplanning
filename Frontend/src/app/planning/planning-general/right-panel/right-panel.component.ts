@@ -6,6 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   	styleUrls: ['./right-panel.component.scss']
 })
 export class RightPanelComponent implements OnInit {
+
 	public calendarDisplayRange: string;
 	data: {dateDebut: string, dateFin: string, libelle: string}[]
 
@@ -74,7 +75,7 @@ export class RightPanelComponent implements OnInit {
   	isWeekEnd(year, month, day) {
 		//new Date() is 0-based for months. Our data is 1-based. So we decrease by 1
 		let d = new Date(year, month-1, day).getDay();
-		return d == 6 || d == 0;
+		return d == 6 || d == 0; //6 = Saturday, 0 = Sunday
   	}
   
   	formatCellId(year, month, day) {

@@ -12,7 +12,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="selectedStagiaire != undefined">
                 <div class="row">
                     <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6">
                         <mat-form-field>
@@ -23,15 +23,15 @@
                 <div class="row">
                     <!-- Partie gauche de la modal de création -->
                     <div class="col-xs-12 col-md-6">
-                        <p>Stagiaire : <!-- {{selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}} --></p>
-                        <p>Entreprise :</p>
+                        <p>Stagiaire : {{ selectedStagiaire.Nom }} {{ selectedStagiaire.Prenom }}</p>
+                        <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }}</p>
                         <ng-select class="" placeholder="Choisir une formation" [(ngModel)]="selectedFormation">
                             <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
                         </ng-select>
                         <ng-select class="custom" placeholder="Choisir un site de formation">
                             <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
                         </ng-select>
-                        <ng-select class="custom" placeholder="Choisir un modèle de planning">
+                        <ng-select class="custom" placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">
 
                         </ng-select>
                     </div>
@@ -68,9 +68,12 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-error" *ngIf="selectedStagiaire == undefined">
+                Sélectionnez d'abord un stagiaire
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>
-                <button type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
+                <button *ngIf="selectedStagiaire != undefined" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
             </div>
         </div>
     </div>

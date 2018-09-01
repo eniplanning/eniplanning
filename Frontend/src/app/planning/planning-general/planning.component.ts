@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 @Component({
   selector: 'app-planning',
@@ -13,5 +15,6 @@ export class PlanningComponent implements OnInit {
 
   ngOnInit() {
     this.username = sessionStorage.getItem('username');
+    registerLocaleData(localeFr);
   }
 }

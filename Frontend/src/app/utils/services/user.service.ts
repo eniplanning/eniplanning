@@ -40,32 +40,13 @@ export class UserService {
       }
     );
   }
-    
+
   public getUsers() {
     return this.http.get<User[]>(API.userAPI);
   }
 
-  public createUser(user: User) {
-    return this.http.post(API.userAPI, user).subscribe(
-      data => {
-        console.log('user created', data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-
-  public updateUser(user: User) {
-    return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
-      data=>{
-        sessionStorage.setItem('user', JSON.stringify(user));
-      },
-      error=>{
-        console.log(error);
-      }
-    );
+  public updateUser(data: User) {
+    return this.http.put(API.userAPI + '/' + data.id, data);
   }
   
   public setUser(data) {

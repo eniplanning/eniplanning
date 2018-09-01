@@ -9,9 +9,7 @@
           <li class="nav-item active waves-light" mdbWavesEffect>
               <a class="nav-link">PLANNING</a>
           </li>
-          <div *ngIf="selectedStagiaire != undefined">
-            <app-modal-create-planning></app-modal-create-planning>
-          </div>
+          <app-modal-create-planning></app-modal-create-planning>
           <li class="nav-item waves-light" mdbWavesEffect>
               <a class="nav-link" routerLink="/planning/purger">Purger</a>
           </li>

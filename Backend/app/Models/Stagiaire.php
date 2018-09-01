@@ -16,7 +16,7 @@ class Stagiaire extends Model
 
     
     //Make it available in the json response
-    protected $appends = ['Entreprise', 'nomComplet'];
+    protected $appends = ['Entreprise', 'NomComplet'];
 
 
     public function getEntrepriseAttribute()
@@ -26,6 +26,6 @@ class Stagiaire extends Model
 
     public function getNomCompletAttribute()
     {
-        return $this->Nom.$this->Prenom;
+        return $this->Nom.' '.$this->Prenom;
     }
 }

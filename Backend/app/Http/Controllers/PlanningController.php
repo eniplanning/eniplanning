@@ -43,18 +43,23 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        return $planning::with('planningCourses')->get()->toJson();
+        return $planning->toJson();
     }
 
-    public function showWithGlobal(Planning $planning)
+    /*
+     *  Get the planning with the id specified in the request, including constraintes and courses
+     *
+     */
+    public function showWithGlobal(Planning $planning, Request $request)
     {
-        return $planning->with([
+        return Planning::where('id', "=", $request->id)->with([
             'planningCourses',
             'ctrDisponibilities',
             'ctrExemptions',
             'ctrPrioritizations',
         ])->get()->toJson();
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -87,9 +92,17 @@ class PlanningController extends Controller
      */
     public function getByCodeStagiaire(Request $request)
     {
-        return Planning::where('stagiaire_id', '=', $request->code)->get()->toJson();
+        return Planning::where('stagiaire_id', '=', $request->code)->with([
+            'planningCourses',
+            'ctrDisponibilities',
+            'ctrExemptions',
+            'ctrPrioritizations',
+        ])->get()->toJson();
     }
 
+    /*
+     *  TO BE COMMENTED
+     */
     public function setPlanningBroken()
     {
         $plannings = Planning::with('planningCourses')->get();

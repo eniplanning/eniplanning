@@ -14,10 +14,9 @@ export class StagiaireService {
 
 	//sets and get selectedStagiaire, to be available for multiple components
 	selectedStagiaire: Stagiaire;
-	@Output() sendSelectedStagiaire: EventEmitter<Stagiaire> = new EventEmitter();
+	//@Output() sendSelectedStagiaire: EventEmitter<Stagiaire> = new EventEmitter();
 
   constructor(private http: HttpClient) {
-    //this.stagiaires = this.getStagiaires;
   }
 
   getStagiaires(): Observable<Stagiaire[]> {

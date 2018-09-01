@@ -26,16 +26,26 @@ export class UtilisateursComponent implements OnInit {
   }
 
   // Récupération des Utilisateurs depuis le service : user
-	getUsers(): void {
-    this.userService.getUsers().subscribe(users => this.users = users);
-  }
-    
-  edit(user) {
-    
+	getUsers() {
+    return this.userService.getUsers().subscribe(
+        data => {
+          this.users = data;
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
   
   changeStatus(user, is_active) {
     user.is_active = (is_active == '1' ? false : true);
-    this.userService.updateUser(user);
+    this.userService.updateUser(user).subscribe(
+      data=>{
+        console.log(data);
+      },
+      error=>{ 
+        console.log(error);
+      }
+    );
   }
 }

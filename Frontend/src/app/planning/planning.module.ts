@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgSelectModule, NG_SELECT_DEFAULT_CONFIG } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
@@ -14,8 +14,6 @@ import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
 import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-
-
 
 
 @NgModule({
@@ -47,6 +45,10 @@ import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateM
         useValue: {
             notFoundText: 'Aucun stagiaire trouvé'
         }
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr'
     }
   ]
 })

@@ -17,9 +17,14 @@ class Cours extends Model
         return $this->hasMany(PlanningCourse::class);
     }
 
-    public function modules()
+    public function toModule()
     {
-        return $this->hasMany(Module::class);
+        return $this->belongsTo(Module::class, 'IdModule');
+    }
+
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class, 'CodePromotion');
     }
 
 }
