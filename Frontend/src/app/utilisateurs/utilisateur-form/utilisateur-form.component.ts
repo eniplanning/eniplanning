@@ -16,17 +16,10 @@ export class UtilisateurFormComponent implements OnInit {
 
   roles = ROLES;
   confirm_password: string = null;
+  showPasswordForm: boolean = false;
   @Input() selectedUser: User;
   @Input() action: string;
-
-  public form = {
-    email: null,
-    name: null,
-    firstname: null,
-    role_id: null,
-    password: null,
-    password_confirmation: null  
-  };
+  @Input() showPasswordButton: boolean;
 
   public confirmMsg = null;
   public errorMsg = null;
@@ -38,10 +31,12 @@ export class UtilisateurFormComponent implements OnInit {
     private router: Router,
   ) { }
 
+  // A la fermeture de la modal, envoi d'un message pour raffraichissement de la liste
   sendMessage(){
     this.closed.emit();
   }
 
+  // Validation du formulaire
   onSubmit() {
     this.error = [];  
     if(this.action == 'Créer') {
@@ -51,13 +46,21 @@ export class UtilisateurFormComponent implements OnInit {
     }
   }
 
+  // Afficher ou masquer le formulaire du password
+  changePassword(change: boolean) {
+    this.showPasswordForm = change;
+  }
 
   ngOnInit() {
+    if (this.action == 'Créer') {
+      this.showPasswordForm = true;
+    }
     if (this.selectedUser == null) {
       this.selectedUser = new User();
     }
   }
   
+  // Créer un utilisateur
   createUser() {
     console.log(this.selectedUser);
     return this.registerService.store(this.selectedUser).subscribe(
@@ -73,7 +76,9 @@ export class UtilisateurFormComponent implements OnInit {
     );
   }
 
+  // Modifier un utilisateur
   updateUser() {
+    console.log(this.selectedUser);
     return this.userService.updateUser(this.selectedUser).subscribe(
       data=>{
         this.confirmMsg = "Modifications enregistrées";
@@ -85,6 +90,7 @@ export class UtilisateurFormComponent implements OnInit {
     );
   }
 
+  // Récupération des erreurs
   handleError(error) {
     this.confirmMsg = null;
     if (error.status == '500') {

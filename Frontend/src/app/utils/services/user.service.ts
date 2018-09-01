@@ -17,7 +17,7 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type':  'application/json;charset=UTF-8'
     })
   };
 
@@ -45,8 +45,8 @@ export class UserService {
     return this.http.get<User[]>(API.userAPI);
   }
 
-  public updateUser(data: User) {
-    return this.http.put(API.userAPI + '/' + data.id, data);
+  public updateUser(data) {
+    return this.http.put(API.userAPI + '/' + data.id, data, this.httpOptions);
   }
   
   public setUser(data) {

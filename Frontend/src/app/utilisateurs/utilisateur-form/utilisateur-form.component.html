@@ -1,4 +1,5 @@
-<a class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
+<a *ngIf="action == 'Créer'" class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
+<a *ngIf="action == 'Modifier'" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
 
 <div mdbModal #modalUserForm="mdb-modal" class="modal fade" id="modal-user-form" 
     tabindex="1200" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop:false}" >
@@ -9,93 +10,96 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalUserForm.hide();sendMessage();"><!--</button>modalUserForm.hide()"-->
                   <span aria-hidden="true">×</span>
               </button>
-          </div>
-          
+          </div>          
           <div class="modal-body">
             <div class="row menu-row">
-              <!--div class="row-title align-self-center"-->
-                <div class="card-body">
-                  <form #utilisateurForm=ngForm (ngSubmit)="onSubmit()">
-                      <div class="form-group row">
-                          <div class="offset-4 col-sm-7"> 
-                              <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
-                              <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
-                          </div>
+              <div class="card-body">
+                <form #utilisateurForm=ngForm (ngSubmit)="onSubmit()">
+                  <!-- Message de confirmation ou d'erreur -->
+                  <div class="form-group row">
+                      <div class="offset-4 col-sm-7"> 
+                          <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+                          <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
                       </div>
-
-                    <div class="form-group row">
-                      <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
-                      <div class="col-sm-7">
-                          <input type="text" name="name" class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
-                          <div class="alert alert-danger" [hidden]="!error.name">
-                          {{ error.name }}
-                        </div>
+                  </div>
+                  <!-- Nom de l'utilisateur -->
+                  <div class="form-group row">
+                    <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="name" class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
+                        <div class="alert alert-danger" [hidden]="!error.name">
+                        {{ error.name }}
                       </div>
-                    </div>  
-
-                    <div class="form-group row">
-                      <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
-                      <div class="col-sm-7">
-                          <input type="text" name="firstname" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
-                        </div>
                     </div>
+                  </div>  
+                  <!-- Prénom de l'utilisateur -->                 
+                  <div class="form-group row">
+                    <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="firstname" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
+                      </div>
+                  </div>
+                  <!-- Email de l'utilisateur -->
+                  <div class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
+                    <div class="col-sm-7">
+                        <input type="email" name="email" class="form-control"  placeholder="Email" [(ngModel)]="selectedUser.email" value="selectedUser.email" required>
+                        <div class="alert alert-danger" [hidden]="!error.email">
+                          {{ error.email }} 
+                        </div>          
+                      </div>
+                  </div>
 
-                    <div class="form-group row">
-                      <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
-                      <div class="col-sm-7">
-                          <input type="email" name="email" class="form-control"  placeholder="Email" [(ngModel)]="selectedUser.email" value="selectedUser.email" required>
-                          <div class="alert alert-danger" [hidden]="!error.email">
-                            {{ error.email }} 
-                          </div>          
-                        </div>
-                    </div>
-                    <div *ngIf="action == 'Créer'">
-
+                  <!-- Mot de passe de l'utilisateur -->
+                  <div *ngIf="showPasswordForm">
                     <div class="form-group row">
                       <label for="password" class="col-sm-4 col-form-label text-right">Mot de passe</label>
                       <div class="col-sm-7">
-                        <input type="password" name="password" class="form-control" placeholder="Mot de passe"
-                        [(ngModel)]="selectedUser.password" value="selectedUser.password" required>
+                        <input type="password" name="password" class="form-control"
+                          [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
+                          [(ngModel)]="selectedUser.password" value="selectedUser.password" required>
                         <div class="alert alert-danger" [hidden]="!error.password">
                           {{ error.password }}
                         </div>  
                       </div>
                     </div>
-
-
+                    <!-- Confirmation du mot de passe -->
                     <div class="form-group row">
                         <label for="password_confirmation" class="col-sm-4 col-form-label text-right">Confirmation de mot de passe</label>
                         <div class="col-sm-7">
-                          <input type="password" name="password_confirmation" class="form-control" placeholder="Mot de passe"
-                          [(ngModel)]="selectedUser.password_confirmation"  value="selectedUser.password_confirmation" required>
+                          <input type="password" name="password_confirmation" class="form-control" 
+                            [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
+                            [(ngModel)]="selectedUser.password_confirmation"  value="selectedUser.password_confirmation" required>
                           <div class="alert alert-danger" [hidden]="!error.password">
                             {{ error.password }}
                           </div>  
                         </div>
                     </div>
-
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
-                        <div class="col-sm-7">
-                          <div *ngFor="let role of roles">
-                            <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline"
-                                [(ngModel)]="selectedUser.role_id" [value]=role.id required>{{ role.name }}
-                          </div>  
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-sm-7 offset-4">
-                        <button type="submit" class="btn btn-primary btn-sm waves-light"  data-dismiss="modal" [disabled]="!utilisateurForm.valid" mdbWavesEffect>Enregistrer</button>
+                  </div>
+                  <!-- Role de l'utilisateur -->
+                  <div class="form-group row">
+                      <label for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
+                      <div class="col-sm-7">
+                        <div *ngFor="let role of roles">
+                          <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline"
+                              [(ngModel)]="selectedUser.role_id" [value]=role.id required>{{ role.name }}
+                        </div>  
                       </div>
-                    </div>
-
-                  </form>
-                </div>
+                  </div>
+                  <!-- Validation du formulaire -->
+                  <div class="form-group row">
+                    <div class="col-sm-7 offset-4">
+                      <button type="submit" class="btn btn-primary btn-sm waves-light"  data-dismiss="modal" [disabled]="!utilisateurForm.valid" mdbWavesEffect>Enregistrer</button>
+                      <!-- Bouton modification mot de passe -->
+                      <span *ngIf="action =='Modifier'" class="col-sm-7 offset-4">
+                        <a *ngIf="showPasswordForm" class="btn btn-primary btn-sm waves-light" (click)="changePassword(false)">Conserver le mot de passe</a>
+                        <a *ngIf="!showPasswordForm" class="btn btn-primary btn-sm waves-light" (click)="changePassword(true)">Changer le mot de passe</a>
+                      </span>
+                  </div>
+                  </div>
+                </form>
               </div>
-            <!--/div-->
+            </div>
           </div>
       </div>
   </div>
