@@ -23,24 +23,24 @@
                       </div>
                   </div>
                   <!-- Nom de l'utilisateur -->
-                  <div class="form-group row">
+                  <div *ngIf="showForm" class="form-group row">
                     <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
                     <div class="col-sm-7">
-                        <input type="text" name="name" class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
+                        <input type="text" name="name" (input)="onEdit($event.target)"class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
                         <div class="alert alert-danger" [hidden]="!error.name">
                         {{ error.name }}
                       </div>
                     </div>
                   </div>  
                   <!-- Prénom de l'utilisateur -->                 
-                  <div class="form-group row">
+                  <div *ngIf="showForm"  class="form-group row">
                     <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
                     <div class="col-sm-7">
-                        <input type="text" name="firstname" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
+                        <input type="text" name="firstname" (input)="onEdit($event.target)" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
                       </div>
                   </div>
                   <!-- Email de l'utilisateur -->
-                  <div class="form-group row">
+                  <div *ngIf="showForm"  class="form-group row">
                     <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
                     <div class="col-sm-7">
                         <input type="email" name="email" class="form-control"  placeholder="Email" [(ngModel)]="selectedUser.email" value="selectedUser.email" required>
@@ -55,9 +55,9 @@
                     <div class="form-group row">
                       <label for="password" class="col-sm-4 col-form-label text-right">Mot de passe</label>
                       <div class="col-sm-7">
-                        <input type="password" name="password" class="form-control"
+                        <input type="password" name="password" (input)="onEdit($event.target)" class="form-control"
                           [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
-                          [(ngModel)]="selectedUser.password" value="selectedUser.password" required>
+                          [(ngModel)]="selectedUser.password" required>
                         <div class="alert alert-danger" [hidden]="!error.password">
                           {{ error.password }}
                         </div>  
@@ -67,9 +67,9 @@
                     <div class="form-group row">
                         <label for="password_confirmation" class="col-sm-4 col-form-label text-right">Confirmation de mot de passe</label>
                         <div class="col-sm-7">
-                          <input type="password" name="password_confirmation" class="form-control" 
+                          <input type="password" name="password_confirmation" class="form-control"
                             [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
-                            [(ngModel)]="selectedUser.password_confirmation"  value="selectedUser.password_confirmation" required>
+                            [(ngModel)]="selectedUser.password_confirmation"  required>
                           <div class="alert alert-danger" [hidden]="!error.password">
                             {{ error.password }}
                           </div>  
@@ -77,7 +77,7 @@
                     </div>
                   </div>
                   <!-- Role de l'utilisateur -->
-                  <div class="form-group row">
+                  <div *ngIf="showForm"  class="form-group row">
                       <label for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
                       <div class="col-sm-7">
                         <div *ngFor="let role of roles">
@@ -90,11 +90,10 @@
                   <div class="form-group row">
                     <div class="col-sm-7 offset-4">
                       <button type="submit" class="btn btn-primary btn-sm waves-light"  data-dismiss="modal" [disabled]="!utilisateurForm.valid" mdbWavesEffect>Enregistrer</button>
-                      <!-- Bouton modification mot de passe -->
-                      <span *ngIf="action =='Modifier'" class="col-sm-7 offset-4">
-                        <a *ngIf="showPasswordForm" class="btn btn-primary btn-sm waves-light" (click)="changePassword(false)">Conserver le mot de passe</a>
-                        <a *ngIf="!showPasswordForm" class="btn btn-primary btn-sm waves-light" (click)="changePassword(true)">Changer le mot de passe</a>
-                      </span>
+                      <a [hidden]="!showResetButton" (click)="resetInformationsCompte()" class="btn btn-primary btn-sm waves-light" dbWavesEffect>Annuler</a>
+                      <button *ngIf="showPasswordForm" [hidden]="action == 'Créer'" [disabled]="disabledPasswordButton" class="btn btn-primary btn-sm waves-light" (click)="changePassword(false)">Gestion du compte</button>
+                      <button *ngIf="!showPasswordForm" [hidden]="showResetButton" [disabled]="disabledPasswordButton" class="btn btn-primary btn-sm waves-light" (click)="changePassword(true)">Gestion du mot de passe</button>
+                     
                   </div>
                   </div>
                 </form>

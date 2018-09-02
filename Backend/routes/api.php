@@ -44,6 +44,7 @@ Route::group([
     Route::get('backend', 'StatusServiceController@backend');
     Route::get('erpstatus', 'StatusServiceController@erpStatus');
     Route::get('enidbstatus', 'StatusServiceController@eniDbStatus');
+    Route::put('userpassword/{id}', 'UserController@updatePassword');
 
     Route::get('planningsByCodeStagiaire/{code}', 'PlanningController@getByCodeStagiaire');
     Route::get('planningGlobal/{id}', 'PlanningController@showWithGlobal');

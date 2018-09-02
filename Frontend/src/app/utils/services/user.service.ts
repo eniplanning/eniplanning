@@ -28,17 +28,7 @@ export class UserService {
   ) { }
 
   getUser(dataUserId: number) {
-    this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
-      data => {
-        this.user = data;
-        this.setUser(data);
-        this.loginService.changeAuthStatus(true);
-        this.router.navigateByUrl('/planning');
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    return this.http.get<User>(API.userAPI+'/'+dataUserId);
   }
 
   public getUsers() {
@@ -47,6 +37,10 @@ export class UserService {
 
   public updateUser(data) {
     return this.http.put(API.userAPI + '/' + data.id, data, this.httpOptions);
+  }
+
+  public updateUserPassword(data) {
+    return this.http.put(API.updatePasswordAPI + '/' + data.id, data, this.httpOptions);
   }
   
   public setUser(data) {
