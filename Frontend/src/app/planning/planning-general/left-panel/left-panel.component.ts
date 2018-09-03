@@ -54,7 +54,6 @@ export class LeftPanelComponent implements OnInit {
 	   		error => console.log(error),
 	   		() => this.stagiaires.sort(function(a, b) {
 	   			//custom sorting function, sorts by stagiaire.Nom in alphabetical order
-	   			console.log(a.Nom);
 	   			if (a.Nom < b.Nom)
 	   				return -1;
 	   			else if (a.Nom > b.Nom)
@@ -120,8 +119,7 @@ export class LeftPanelComponent implements OnInit {
 		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
 			(formation: Formation) => {
 				//sorting modules
-				console.log(formation);
-				formation.Modules = []
+				formation.Modules = [];
 				formation.uniteparformation.forEach(function(u) {
 					formation.Modules = formation.Modules.concat(u.modules);
 				});
@@ -151,6 +149,12 @@ export class LeftPanelComponent implements OnInit {
 			error => console.log(error)
 		);
 
+		//Clear cours on web page from previous planning
+		let c = document.getElementsByClassName('green-bg');
+		console.log(c);
+		while (c[0]) {
+		    c[0].classList.remove('green-bg')
+		}
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {
@@ -158,7 +162,7 @@ export class LeftPanelComponent implements OnInit {
 		});
 	}
 
-	onClickCours(cours) {
+	onClickCours(cours: Cours) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
 		})
@@ -180,7 +184,7 @@ export class LeftPanelComponent implements OnInit {
 			//add cours in database
 			this.coursPlanningService.addCours(this.selectedPlanning, cours).subscribe(
 				cours => {
-					//is successfull, add clicked cours in planning_courses list
+					//if successfull, add clicked cours in planning_courses list
 					this.selectedPlanning.planning_courses.push(cours);
 					//and draw it on the page
 					this.drawCoursOnPlanning(cours);
@@ -190,10 +194,10 @@ export class LeftPanelComponent implements OnInit {
 		}
 	}
 
-	drawCoursOnPlanning(cours) {
+	drawCoursOnPlanning(cours: CoursPlanning) {
 		let dateRange = []
-		let start = new Date(cours.start);
-		let end = new Date(cours.end);
+		let start = new Date(cours.date_start);
+		let end = new Date(cours.date_end);
 		while (start <= end) {
 			dateRange.push(new Date(start));
 			start.setDate(start.getDate() + 1);

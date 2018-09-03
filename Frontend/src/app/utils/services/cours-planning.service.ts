@@ -22,15 +22,15 @@ export class CoursPlanningService {
 
   	constructor(private http: HttpClient) { }
 
-  	addCours(planning: Planning, cours) {
+  	addCours(planning: Planning, cours: Cours) {
   		let coursplanning: CoursPlanning;
   		coursplanning = {
   			id: null,
   			planning_id: planning.id,
 			course_id: cours.IdCours,
 			complementary_course_id: null,
-			start: cours.Debut,
-			end: cours.Fin,
+			date_start: cours.Debut,
+			date_end: cours.Fin,
 			public_price_affected: cours.PrixPublicAffecte,
 			label_course: cours.LibelleCours,
 			real_time_hour: cours.DureeReeleEnHeures,
