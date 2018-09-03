@@ -42,6 +42,7 @@
                                     <input matInput [(ngModel)]="selectedDebutC" [matDatepicker]="date_debut_contract"  placeholder="Date de début de contrat">
                                     <mat-datepicker-toggle matSuffix [for]="date_debut_contract"></mat-datepicker-toggle>
                                     <mat-datepicker #date_debut_contract ></mat-datepicker>
+                                    {{ selectedDebutC }}
                                 </mat-form-field>
                             </div>
                             <div class="col-12 text-center">
@@ -49,6 +50,7 @@
                                     <input matInput [(ngModel)]="selectedFinC" [matDatepicker]="date_fin_contract" placeholder="Date de fin de contrat">
                                     <mat-datepicker-toggle matSuffix [for]="date_fin_contract"></mat-datepicker-toggle>
                                     <mat-datepicker #date_fin_contract></mat-datepicker>
+                                    {{ selectedFinC }}
                                 </mat-form-field>
                             </div>
                             <div class="col-12 text-center">
@@ -56,6 +58,7 @@
                                     <input matInput [(ngModel)]="selectedDebutF" [matDatepicker]="date_debut_formation" placeholder="Date de début de formation">
                                     <mat-datepicker-toggle matSuffix [for]="date_debut_formation"></mat-datepicker-toggle>
                                     <mat-datepicker #date_debut_formation></mat-datepicker>
+                                    {{ selectedDebutF }}
                                 </mat-form-field>
                             </div>
                             <div class="col-12 text-center">
@@ -63,15 +66,16 @@
                                     <input matInput [(ngModel)]="selectedFinF" [matDatepicker]="date_fin_formation" placeholder="Date de fin de formation">
                                     <mat-datepicker-toggle matSuffix [for]="date_fin_formation"></mat-datepicker-toggle>
                                     <mat-datepicker #date_fin_formation></mat-datepicker>
+                                    {{ selectedFinF }}
                                 </mat-form-field>
                             </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="alert alert-danger col-6 offset-3" [hidden]="!errorCreatePlanning">
+                    <div class="alert alert-danger col-6 offset-3 text-center" [hidden]="!errorCreatePlanning">
                         {{ errorCreatePlanning }}
                     </div>
-                    <div class="alert alert-success col-6 offset-3" [hidden]="!successCreatePlanning">
+                    <div class="alert alert-success col-6 offset-3 text-center" [hidden]="!successCreatePlanning">
                         {{ successCreatePlanning }}
                     </div>
                 </div>

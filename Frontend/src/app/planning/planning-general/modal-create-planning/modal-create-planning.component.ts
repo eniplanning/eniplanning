@@ -26,10 +26,10 @@ export class ModalCreatePlanningComponent implements OnInit {
     selectedFormation:      Formation;
     selectedLieu :          Lieu;
     nomPlanning:            string;
-    selectedDebutC:         Date;
-    selectedFinC:           Date;
-    selectedDebutF:         Date;
-    selectedFinF:           Date;
+    selectedDebutC:         any;
+    selectedFinC:           any;
+    selectedDebutF:         any;
+    selectedFinF:           any;
     date_inscription:       Date;
     user:                   User;
     
@@ -70,6 +70,8 @@ export class ModalCreatePlanningComponent implements OnInit {
     }
 
     createPlanning():void {
+        console.log(this.selectedDebutC);
+        console.log(this.selectedDebutC.format());
 
         if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
             this.errorCreatePlanning = "Le nom du planning est obligatoire";
@@ -103,10 +105,10 @@ export class ModalCreatePlanningComponent implements OnInit {
             this.errorCreatePlanning = "";
             var planning = new Planning();
             planning.setLabel(this.nomPlanning);
-            planning.setDate_start_contract(this.selectedDebutC);
-            planning.setDate_end_contract(this.selectedFinC);
-            planning.setDate_start_formation(this.selectedDebutF);
-            planning.setDate_end_formation(this.selectedFinF);
+            planning.setDate_start_contract(this.selectedDebutC.format());
+            planning.setDate_end_contract(this.selectedFinC.format());
+            planning.setDate_start_formation(this.selectedDebutF.format());
+            planning.setDate_end_formation(this.selectedFinF.format());
             planning.setDate_inscription(this.date_inscription);
             planning.setIs_archived(false);
             planning.setIs_model(false);
