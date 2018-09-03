@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../utils/models/user';
 import { UserService } from '../utils/services/user.service';
 import { ROLES } from '../utils/role';
+import { CONFIG } from '../utils/config';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -10,6 +11,7 @@ import { ROLES } from '../utils/role';
 })
 export class UtilisateursComponent implements OnInit {
 
+  admin :string = CONFIG.email_administrateur;
   users: User[];
   selectedUser: User;
   roles = ROLES;

@@ -51,6 +51,7 @@ Route::group([
     Route::get('setPlanningBroken', 'PlanningController@setPlanningBroken');
     Route::get('getPlanningBroken', 'PlanningController@getPlanningBroken');
     Route::get('formationGlobal/{id}', 'FormationController@showWithGlobal');
+    Route::get('document/getplanning','DocumentController@getPlanning');
 });
 
 // Route::put('post/{id}', function ($id) {

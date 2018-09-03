@@ -4,6 +4,7 @@ import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
 import { FormationService } from '../../../utils/services/formation.service';
 import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
+import { DocumentService } from '../../../utils/services/document.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
@@ -34,6 +35,7 @@ export class LeftPanelComponent implements OnInit {
 		private planningService: 		PlanningService,
 		private formationService:		FormationService,
 		private coursPlanningService: 	CoursPlanningService,
+		private documentService: 		DocumentService,
 	) { }
 
 	ngOnInit() {
@@ -214,5 +216,20 @@ export class LeftPanelComponent implements OnInit {
 			}
 			
 		});
+	}
+
+	// TEST PRINT PHP TO WORD
+	getPlanning() {
+		console.log('testphpdocument');
+		this.documentService.getPlanning().subscribe(
+			data=> {
+				console.log(data);
+				var downloadUrl= URL.createObjectURL(data);
+				window.open(downloadUrl);
+			},
+			error=>{ 
+				console.log(error);
+			}
+		);
 	}
 }
