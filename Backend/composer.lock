@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bdcb013fb08c10a45ab2844711606fc",
+    "content-hash": "575c3826329c2b9341885ef8e5f682fa",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1446,6 +1446,39 @@
                 "writer"
             ],
             "time": "2018-07-14T16:59:43+00:00"
+        },
+        {
+            "name": "phprtflite/phprtflite",
+            "version": "v1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phprtflite/PHPRtfLite.git",
+                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phprtflite/PHPRtfLite/zipball/eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
+                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPRtfLite": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Steffen Zeidler",
+                    "email": "sigma_z@sigma-scripts.de"
+                }
+            ],
+            "description": "PHPRtfLite is an API enabling developers to create rtf documents with php.",
+            "time": "2014-07-04T19:43:18+00:00"
         },
         {
             "name": "psr/container",
