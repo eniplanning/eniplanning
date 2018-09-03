@@ -98,7 +98,7 @@ export class UtilisateurFormComponent implements OnInit {
   // Récupération des données en cas d'annulation des modifications
   resetInformationsCompte() {
     this.userService.getUser(this.selectedUser.id).subscribe(
-      data=>{
+      (data: User) => {
         console.log(data);
         this.error = [];
         this.selectedUser = data;

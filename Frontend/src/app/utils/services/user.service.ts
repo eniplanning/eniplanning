@@ -27,16 +27,7 @@ export class UserService {
 
 
   getUser(userId: number) {
-    this.http.get(API.userAPI + '/' + userId, {responseType: 'json'}).subscribe(
-      (data: User) => {
-        this.setUser(data);
-        this.loginService.changeAuthStatus(true);
-        this.router.navigateByUrl('/planning');
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    return this.http.get(API.userAPI + '/' + userId, {responseType: 'json'});
   }
 
   public getUsers() {
