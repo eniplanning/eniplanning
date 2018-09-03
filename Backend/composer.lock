@@ -618,18 +618,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< HEAD
-            "version": "v5.6.33",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "8a708b989adc320c451ee639d812af81f884666b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8a708b989adc320c451ee639d812af81f884666b",
-                "reference": "8a708b989adc320c451ee639d812af81f884666b",
-=======
             "version": "v5.6.37",
             "source": {
                 "type": "git",
@@ -640,7 +628,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/975e182d42403b0efdf847c05f6bfb99144f95f5",
                 "reference": "975e182d42403b0efdf847c05f6bfb99144f95f5",
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
                 "shasum": ""
             },
             "require": {
@@ -766,11 +753,7 @@
                 "framework",
                 "laravel"
             ],
-<<<<<<< HEAD
-            "time": "2018-08-09T20:36:39+00:00"
-=======
             "time": "2018-09-02T13:51:42+00:00"
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
         },
         {
             "name": "laravel/tinker",
@@ -1836,18 +1819,6 @@
         },
         {
             "name": "spatie/laravel-permission",
-<<<<<<< HEAD
-            "version": "2.14.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "5a40d8ba8b7af83ff149d075351616027a0b771f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/5a40d8ba8b7af83ff149d075351616027a0b771f",
-                "reference": "5a40d8ba8b7af83ff149d075351616027a0b771f",
-=======
             "version": "2.17.1",
             "source": {
                 "type": "git",
@@ -1858,7 +1829,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/a0e05fd4f5729d96be20dfc768c5b1a4d2586838",
                 "reference": "a0e05fd4f5729d96be20dfc768c5b1a4d2586838",
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
                 "shasum": ""
             },
             "require": {
@@ -1906,11 +1876,7 @@
                 "security",
                 "spatie"
             ],
-<<<<<<< HEAD
-            "time": "2018-08-13T15:28:03+00:00"
-=======
             "time": "2018-08-28T14:20:07+00:00"
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
         },
         {
             "name": "spatie/string",
@@ -4071,18 +4037,6 @@
         },
         {
             "name": "phpunit/phpunit",
-<<<<<<< HEAD
-            "version": "7.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f9b14c17860eccb440a0352a117a81eb754cff5a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f9b14c17860eccb440a0352a117a81eb754cff5a",
-                "reference": "f9b14c17860eccb440a0352a117a81eb754cff5a",
-=======
             "version": "7.3.3",
             "source": {
                 "type": "git",
@@ -4093,7 +4047,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
                 "reference": "1bd5629cccfb2c0a9ef5474b4ff772349e1ec898",
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
                 "shasum": ""
             },
             "require": {
@@ -4164,11 +4117,7 @@
                 "testing",
                 "xunit"
             ],
-<<<<<<< HEAD
-            "time": "2018-08-07T06:44:28+00:00"
-=======
             "time": "2018-09-01T15:49:55+00:00"
->>>>>>> c5a01b034e792c3c976858324062aed56ed1eb98
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
