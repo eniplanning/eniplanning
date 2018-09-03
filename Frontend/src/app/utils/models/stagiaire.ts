@@ -18,4 +18,9 @@ export class Stagiaire {
     constructor() {
     }
 
+    getCodeStagiaire()
+    {
+        return this.codeStagiaire;
+    }
+
 }

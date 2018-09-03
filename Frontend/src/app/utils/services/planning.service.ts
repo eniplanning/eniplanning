@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,7 +14,13 @@ export class PlanningService {
 	planningsAPI = CONFIG.backend_url + 'planning';
   planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
 
-  constructor(private http: HttpClient) { 
+httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+    })
+};
+
+  constructor(private http: HttpClient) {
   }
 
   getPlanningsByStagiaire(codeStagiaire: Number): Observable<Planning[]> {
@@ -22,8 +28,14 @@ export class PlanningService {
   }
 
   createPlanning(planning: Planning) {
-    console.log(planning);
-    return this.http.post(this.planningsAPI, planning);
+      return this.http.post(this.planningsAPI, planning).subscribe(
+          data => {
+              console.log(data);
+          },
+          error => {
+              console.log(error);
+          }
+      );
   }
 
   updatePlanning(planning: Planning) {
