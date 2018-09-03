@@ -1,71 +1,70 @@
 <!-- modal de création d'utilisateur -->
-<utilisateurs-header></utilisateurs-header>
+<utilisateurs-header (refreshList)="refreshList($event)" ></utilisateurs-header>
 
 <!-- titre de la page -->
 <div class="card">
     <h1>Gérer les Utilisateurs de l'application</h1>
 </div>
+<div class="card-body">
 
-<div class="card">
+    <!-- zone de recherche -->
+    <div class="md-form">
+        <i class="fa fa-search prefix"></i>
+        <input type="search" [(ngModel)]="searchValue" id="search" class="form-control" mdbInputDirective [mdbValidate]="false">
+        <label for="searchText">Saisissez un nom</label>
+    </div>      
 
-    <div class="card-body">
+    <!-- tableau des utilisateurs -->
+    <div>
+        <div class="table-responsive">
+            <table class="table table-responsive-md">
 
-        <!-- filtre de la page -->
-        <!--div class="row">   
-        <div class="input-group md-form form-sm form-2 pl-0 mb-0">
-            <input class="form-control my-0 py-1 grey-border" type="text" placeholder="Search" aria-label="Search">
-            <div class="input-group-append"  >
-                <span class="input-group-text waves-effect grey lighten-3" id="basic-addon1">
-                    <a><i class="fa fa-search text-grey" aria-hidden="true"></i></a>
-                </span>
-            </div>
+                <!-- entete des colonnes -->
+                <thead>
+                    <tr>
+                        <th>Nom <mdb-icon (click)="sortBy('name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th>Prénom <mdb-icon (click)="sortBy('firstname')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th>Email <mdb-icon (click)="sortBy('email')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th>Role <mdb-icon (click)="sortBy('role_id')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th style="width: 10%">Actif    <mdb-icon (click)="sortBy('is_active')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>    
+                        <th style="width: 10%"></th>
+                        <th style="width: 10%"></th>
+                    </tr>
+                </thead>
+
+                <!-- contenu du tableau -->
+                <tbody *ngIf="undefined !== users"> 
+                    <tr *ngFor="let user of search()" >
+                        <td> {{ user.name }} </td> 
+                        <td> {{ user.firstname }} </td> 
+                        <td> {{ user.email }} </td> 
+                        <td [ngSwitch]="user.role_id">
+                            <span *ngSwitchCase="1">Utilisateur</span>
+                            <span *ngSwitchCase="2">Responsable Pédagogique</span>
+                            <span *ngSwitchCase="3">Administrateur</span>
+                        </td> 
+                        <td *ngIf="user.is_active == '1'"></td>
+                        <td *ngIf="user.is_active == '0'"><i class="fa fa-lock"></i></td>
+                        <!-- Modification du compte utilisateur -->
+                        <td> 
+                            <app-utilisateur-form *ngIf="user.email != 'administrateur@eniplanning.fr'" 
+                                (closed)="refreshList($event)" action="Modifier"  showPasswordButton="true" [selectedUser]=user>
+                            </app-utilisateur-form> 
+                        </td>
+                        <!-- Activation du compte utilisateur -->
+                        <td> 
+                            <span *ngIf="user.email != 'administrateur@eniplanning.fr'">
+                                <span *ngIf="user.id != currentUser.id"> 
+                                    <a (click)="changeStatus(user, user.is_active)">
+                                        <span *ngIf="user.is_active == '1'" >Désactiver</span>
+                                        <span *ngIf="user.is_active == '0'" >Activer</span>
+                                    </a>
+                                </span>
+                            </span> 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        </div-->
-
     </div>
-    
-    </div>
-
-    <div class="card-body">
-
-            <div class="row">
-                <div class="table-responsive">
-                    <div class="table-wrapper-2">
-                        <table class="table table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Role</th>
-                                <th>Email</th>
-                                <th>Actif</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="undefined !== users"> 
-                            <tr *ngFor="let user of users"  [value]="users">
-                                <td> {{ user.name }} </td> 
-                                <td> {{ user.firstname }} </td> 
-                                <td [ngSwitch]="user.role_id">
-                                    <span *ngSwitchCase="1">Utilisateur</span>
-                                    <span *ngSwitchCase="2">Responsable Pédagogique</span>
-                                    <span *ngSwitchCase="3">Administrateur</span>
-                                </td> 
-                                <td> {{ user.email }} </td> 
-                                <td> {{ user.is_active == '1' ? 'x' : '' }} </td>
-                                <td> 
-                                    <app-utilisateur-form action="Modifier" [selectedUser]=user></app-utilisateur-form>
-                                    <span *ngIf="user.id != currentUser.id "> |
-                                        <a (click)="changeStatus(user, user.is_active)">
-                                            <span *ngIf="user.is_active == '1'" >Désactiver</span>
-                                            <span *ngIf="user.is_active == '0'" >Activer</span>
-                                        </a>
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
+</div>
