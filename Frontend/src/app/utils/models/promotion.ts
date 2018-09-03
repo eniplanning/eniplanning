@@ -2,13 +2,13 @@ import { Cours } from './cours';
 
 export class Promotion
 {
-	codePromotion: 		string
-	libelle: 			string
-	debut:				Date
-	fin:				Date
-	codeFormation:		string
-	prixPublicAffecte:	number
-	prixPECAffecte:		number
-	prixFinanceAffecte:	number
-	cours: 				Cours[];
+	CodePromotion: 		string
+	Libelle: 			string
+	Debut:				Date
+	Fin:				Date
+	CodeFormation:		string
+	PrixPublicAffecte:	number
+	PrixPECAffecte:		number
+	PrixFinanceAffecte:	number
+	Cours: 				Cours[];
 }

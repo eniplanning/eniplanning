@@ -52,11 +52,11 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  handleResponse(data) {
+  handleResponse(data) { 
     if (data.user_is_active == true) {
       this.tokenService.handleToken(data.access_token);
       this.userService.getUser(data.user_id).subscribe(
-        data => {
+        (data: User) => {
           this.currentUser = data;
           this.userService.setUser(this.currentUser);
           this.loginService.changeAuthStatus(true);

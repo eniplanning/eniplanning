@@ -40,7 +40,7 @@ export class MonCompteComponent implements OnInit {
   onSubmit(){
     if(this.editCompte) {
       return this.userService.updateUser(this.user).subscribe(
-        data=>{
+        (data: User) => {
           this.confirmMsg = 'Votre compte a été modifié avec succès.'
           this.userService.setUser(data);
           this.currentUser = JSON.parse(sessionStorage.getItem('user')); 
@@ -104,7 +104,7 @@ export class MonCompteComponent implements OnInit {
   // Récupération des données en cas d'annulation des modifications
   resetInformationsCompte() {
     this.userService.getUser(this.currentUser.id).subscribe(
-      data=>{
+      (data: User) => {
         console.log(data);
         this.error = [];
         this.user = data;

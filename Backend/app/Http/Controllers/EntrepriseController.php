@@ -13,22 +13,22 @@ use Illuminate\Support\Facades\DB;
 
 class EntrepriseController extends Controller
 {
-
-    /**
-     * Récuperer une Entreprise à partir d'un stagiaire.
-     * @param  Stagiaire = Instance de Stagiaire
-     * @return \Illuminate\Http\Response = Instance de Entreprise
-     */
-    static function getByStagiaire(Stagiaire $stagiaire)
-    {
-        $stagiaireParEntreprise = StagiaireParEntrepriseController::getByStagiaire($stagiaire);
-        $entreprise = null;
-        if (!is_null($stagiaireParEntreprise))
-        {
-            $entreprise = Entreprise::where('codeEntreprise', [$stagiaireParEntreprise->CodeEntreprise])->first();
-        }
-        return $entreprise;
-    }
+    //NOT USED ANYMORE. USING BELONGSTOMANY ON STAGIAIRE MODEL = ONLY 1 LINE
+    // /**
+    //  * Récuperer une Entreprise à partir d'un stagiaire.
+    //  * @param  Stagiaire = Instance de Stagiaire
+    //  * @return \Illuminate\Http\Response = Instance de Entreprise
+    //  */
+    // static function getByStagiaire(Stagiaire $stagiaire)
+    // {
+    //     $stagiaireParEntreprise = StagiaireParEntrepriseController::getByStagiaire($stagiaire);
+    //     $entreprise = null;
+    //     if (!is_null($stagiaireParEntreprise))
+    //     {
+    //         $entreprise = Entreprise::where('codeEntreprise', [$stagiaireParEntreprise->CodeEntreprise])->first();
+    //     }
+    //     return $entreprise;
+    // }
     
     /**
      * Display a listing of the resource.

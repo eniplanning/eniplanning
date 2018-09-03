@@ -3,8 +3,8 @@ export class CoursPlanning {
 	planning_id:				number
 	course_id:					string
 	complementary_course_id:	number
-	start:						Date
-	end:						Date
+	date_start:					Date
+	date_end:					Date
 	public_price_affected:		number
 	label_course:				string
 	real_time_hour:				number

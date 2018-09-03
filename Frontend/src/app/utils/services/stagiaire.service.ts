@@ -12,10 +12,6 @@ export class StagiaireService {
 
 	stagiairesAPI = CONFIG.backend_url + 'stagiaire';
 
-	//sets and get selectedStagiaire, to be available for multiple components
-	selectedStagiaire: Stagiaire;
-	//@Output() sendSelectedStagiaire: EventEmitter<Stagiaire> = new EventEmitter();
-
   constructor(private http: HttpClient) {
   }
 

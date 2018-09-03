@@ -11,7 +11,7 @@ export class Planning {
     ctr_disponibilities:   any[]
     ctr_exemptions:        any[]
     ctr_prioritizations:   any[]
-    planning_courses:      any[]
+    planning_courses:      CoursPlanning[]
     date_start_contract:   Date
     date_end_contract:     Date
     date_start_formation:  Date

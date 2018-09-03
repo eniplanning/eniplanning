@@ -29,7 +29,7 @@
                 <div class="content-body">
                     <!-- Affichage des plannings du stagiaire -->
                     <ul>
-                        <li *ngFor="let planning of selectedStagiaire.listPlannings"
+                        <li *ngFor="let planning of selectedStagiaire.ListPlannings"
                              (click)="onChangeSelectedPlanning(planning)" 
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
@@ -62,7 +62,7 @@
         <div class="panel-content" *ngIf="panelStates['planning']">
             <div class="content-body">
                 <ul class="module-list fa-ul" *ngIf="formation">
-                    <li class="module" *ngFor="let module of formation.modules">
+                    <li class="module" *ngFor="let module of formation.Modules">
                         <div (click)="module.visible = !module.visible"><span class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
                         <ul class="cours-list fa-ul" *ngIf="module.visible">
                             <li class="cours" *ngFor="let cours of module.cours">

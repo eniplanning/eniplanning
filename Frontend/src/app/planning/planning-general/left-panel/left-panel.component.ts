@@ -50,13 +50,13 @@ export class LeftPanelComponent implements OnInit {
 	// Récupération des Stagiaires depuis le service : stagiaire
 	getStagiaires(): void {
 	   	this.stagiaireService.getStagiaires().subscribe(
-	   		stagiaires => this.stagiaires = stagiaires,
+	   		(stagiaires: Stagiaire[]) => this.stagiaires = stagiaires,
 	   		error => console.log(error),
 	   		() => this.stagiaires.sort(function(a, b) {
 	   			//custom sorting function, sorts by stagiaire.Nom in alphabetical order
-	   			if (a['Nom'] < b['Nom'])
+	   			if (a.Nom < b.Nom)
 	   				return -1;
-	   			else if (a['Nom'] > b['Nom'])
+	   			else if (a.Nom > b.Nom)
 	   				return 1;
 	   			return 0
 	   		})
@@ -88,15 +88,15 @@ export class LeftPanelComponent implements OnInit {
 	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
 	getPlanningsByStagiaire(codeStagiaire: Number): void {
 		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
-			plannings => {
-				this.selectedStagiaire.listPlannings = plannings;
+			(plannings: Planning[]) => {
+				this.selectedStagiaire.ListPlannings = plannings;
 			},
 			error =>  console.log(error),
 			() => {
 				this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'));
 				if (this.selectedPlanning != undefined) {
 					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
-					this.selectedStagiaire.listPlannings.forEach(function(p) {
+					this.selectedStagiaire.ListPlannings.forEach(function(p) {
 						if (p.id == self.selectedPlanning.id) {
 							self.selectedPlanning = p;
 						}
@@ -117,14 +117,14 @@ export class LeftPanelComponent implements OnInit {
 
 		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
-			formation => {
+			(formation: Formation) => {
 				//sorting modules
-				formation.modules = []
+				formation.Modules = [];
 				formation.uniteparformation.forEach(function(u) {
-					formation.modules = formation.modules.concat(u.modules);
+					formation.Modules = formation.Modules.concat(u.modules);
 				});
 				formation.uniteparformation = null;
-				formation.modules = formation.modules.sort(function(a, b) {
+				formation.Modules = formation.Modules.sort(function(a, b) {
 					if (a.Libelle < b.Libelle)
 						return -1;
 					if (a.Libelle > b.Libelle)
@@ -134,7 +134,7 @@ export class LeftPanelComponent implements OnInit {
 
 
 				//sorting cours
-				formation.modules.forEach(function(m) {
+				formation.Modules.forEach(function(m) {
 					m.cours = m.cours.sort(function(a, b) {
 						if (a.Debut < b.Debut)
 							return -1;
@@ -149,6 +149,12 @@ export class LeftPanelComponent implements OnInit {
 			error => console.log(error)
 		);
 
+		//Clear cours on web page from previous planning
+		let c = document.getElementsByClassName('green-bg');
+		console.log(c);
+		while (c[0]) {
+		    c[0].classList.remove('green-bg')
+		}
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {
@@ -156,7 +162,7 @@ export class LeftPanelComponent implements OnInit {
 		});
 	}
 
-	onClickCours(cours) {
+	onClickCours(cours: Cours) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
 		})
@@ -178,7 +184,7 @@ export class LeftPanelComponent implements OnInit {
 			//add cours in database
 			this.coursPlanningService.addCours(this.selectedPlanning, cours).subscribe(
 				cours => {
-					//is successfull, add clicked cours in planning_courses list
+					//if successfull, add clicked cours in planning_courses list
 					this.selectedPlanning.planning_courses.push(cours);
 					//and draw it on the page
 					this.drawCoursOnPlanning(cours);
@@ -188,10 +194,10 @@ export class LeftPanelComponent implements OnInit {
 		}
 	}
 
-	drawCoursOnPlanning(cours) {
+	drawCoursOnPlanning(cours: CoursPlanning) {
 		let dateRange = []
-		let start = new Date(cours.start);
-		let end = new Date(cours.end);
+		let start = new Date(cours.date_start);
+		let end = new Date(cours.date_end);
 		while (start <= end) {
 			dateRange.push(new Date(start));
 			start.setDate(start.getDate() + 1);

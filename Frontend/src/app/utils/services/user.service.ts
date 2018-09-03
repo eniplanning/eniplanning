@@ -13,8 +13,6 @@ import { API } from '../api';
 
 export class UserService {
 
-  user: any;
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json;charset=UTF-8'
@@ -22,13 +20,14 @@ export class UserService {
   };
 
   constructor(
-    private http: HttpClient,
+    private http:         HttpClient,
     private loginService: LoginService,
-    private router: Router,
+    private router:       Router,
   ) { }
 
-  getUser(dataUserId: number) {
-    return this.http.get<User>(API.userAPI+'/'+dataUserId);
+
+  getUser(userId: number) {
+    return this.http.get(API.userAPI + '/' + userId, {responseType: 'json'});
   }
 
   public getUsers() {
@@ -43,8 +42,8 @@ export class UserService {
     return this.http.put(API.updatePasswordAPI + '/' + data.id, data, this.httpOptions);
   }
   
-  public setUser(data) {
-    sessionStorage.setItem('user', JSON.stringify(data));
+  public setUser(user: User) {
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   public unsetUser() {

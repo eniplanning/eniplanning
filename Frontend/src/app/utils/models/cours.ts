@@ -1,15 +1,15 @@
 export class Cours {
-	idCours:			string
-	debut:				Date
-	fin:				Date
-	dureeReeleEnHeures:	number
-	codePromotion:		string
-	prixPublicAffecte:	number
-	idModule:			number
-	libelleCours:		string
-	dureePrevueEnHeures:number
-	dateADefinir:		boolean
-	codeSalle:			string
-	codeFormateur:		number
-	codeLieu:			number
+	Debut:				Date
+	Fin:				Date
+	DureeReeleEnHeures:	number
+	CodePromotion:		string
+	IdCours:			string
+	PrixPublicAffecte:	number
+	IdModule:			number
+	LibelleCours:		string
+	DureePrevueEnHeures:number
+	DateADefinir:		boolean
+	CodeSalle:			string
+	CodeFormateur:		number
+	CodeLieu:			number
 }

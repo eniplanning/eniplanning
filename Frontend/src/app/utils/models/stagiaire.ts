@@ -1,19 +1,18 @@
-/*
- * CLASS STAGIAIRE
- */
 import { Planning } from './planning';
+import { Entreprise } from './entreprise';
 
 export class Stagiaire {
-    codeStagiaire:      number;
-    civilite:           string;
-    nom:                string;
-    prenom:             string;
-    adresse:			string;
-    codePostal:			number;
-    ville:				string;
-    email:				string;
-    dateNaissance:		Date;
-    listPlannings:      Planning[];
+    CodeStagiaire:      number
+    Civilite:           string
+    Nom:                string
+    Prenom:             string
+    Adresse:			string
+    CodePostal:			number
+    Ville:				string
+    Email:				string
+    DateNaissance:		Date
+    Entreprise:         Entreprise
+    ListPlannings:      Planning[]
 
     constructor() {
     }

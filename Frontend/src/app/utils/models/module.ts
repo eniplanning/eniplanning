@@ -5,14 +5,14 @@ import { Cours } from './cours';
 // Model de l'objet : Module
 
 export class Module {
-    idModule:           number
-    libelle:			string
-    dureeEnHeures:		number
-    dureeEnSemaines:	number
-    prixPublicEnCours:	number
-    libelleCourt:		string
-    archiver:			boolean
-    typeModule:			number
+    IdModule:           number
+    Libelle:			string
+    DureeEnHeures:		number
+    DureeEnSemaines:	number
+    PrixPublicEnCours:	number
+    LibelleCourt:		string
+    Archiver:			boolean
+    TypeModule:			number
     cours:              Cours[]
 
     constructor(){
