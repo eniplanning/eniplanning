@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
@@ -15,6 +16,7 @@ import { HeaderComponent } from './header/header.component';
     AngularFontAwesomeModule,
     MonCompteRoutingModule,
     MenuModule,
+    FormsModule,
   ],
   declarations: [
   	MonCompteComponent,

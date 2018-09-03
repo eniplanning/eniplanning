@@ -11,10 +11,4 @@ class Entreprise extends Model
     protected $table = 'entreprise';
     protected $primaryKey = 'CodeEntreprise';
     protected $dateFormat = 'Y-d-m H:i:s';
-    
-    // Liste des attributs restitués dans les tableaux d'objets
-    // https://laravel.com/docs/5.6/eloquent-serialization
-    protected $visible = ['CodeEntreprise', 'RaisonSociale', 'Adresse1', 'CodePostal', 'Ville'];
-    public $timestamps = false;
-
 }

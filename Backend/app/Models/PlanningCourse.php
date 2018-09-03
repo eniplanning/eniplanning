@@ -13,7 +13,7 @@ class PlanningCourse extends Model
         'date_start',
         'date_end',
         'public_price_affected',
-        'label_course',
+        'short_label',
         'real_time_hour',
         'expected_time_hour',
         'date_to_be_define',
