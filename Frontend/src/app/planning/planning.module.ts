@@ -13,7 +13,7 @@ import { RightPanelComponent } from './planning-general/right-panel/right-panel.
 import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
 import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
 
 
 @NgModule({
@@ -48,6 +48,10 @@ import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateM
     },
     {
       provide: LOCALE_ID,
+      useValue: 'fr'
+    },
+    {
+      provide: MAT_DATE_LOCALE,
       useValue: 'fr'
     }
   ]

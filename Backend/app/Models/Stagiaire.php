@@ -18,10 +18,6 @@ class Stagiaire extends Model
     //Make it available in the json response
     protected $appends = ['Entreprise', 'NomComplet'];
 
-    // Liste des attributs restitués dans les tableaux d'objets
-    // protected $visible = ['CodeStagiaire', 'Civilite', 'Nom', 'Prenom', 'Adresse1', 'CodePostal', 'Ville', 'Email', 'DateNaissance', 'Entreprise'];
-    public $timestamps = false;
-
 
     public function getEntrepriseAttribute()
     {

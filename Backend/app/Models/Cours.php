@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Cours extends Model
 {
@@ -10,14 +12,16 @@ class Cours extends Model
     protected $table = 'Cours';
     protected $primaryKey = 'IdCours';
     protected $keyType = 'string';
-    protected $dateFormat = 'Y-d-m H:i:s';
-    protected $maps = [
-        'Debut' => 'date_start',
-        'Fin' => 'date_end',
-        'DureeReelleEnHeures' => 'real_time_hour',
-        'DureePrevueEnHeures' => 'expected_time_hour',
-        'DateAdefinir' => 'date_to_be_defined',
-    ];
+
+    public function getDebutAttribute($value)
+    {   
+        return (new Carbon($value))->format('Y-m-d H:i:s');
+    }
+    
+    public function getFinAttribute($value)
+    {
+        return (new Carbon($value))->format('Y-m-d H:i:s');
+    }
 
     public function planningCourses()
     {
