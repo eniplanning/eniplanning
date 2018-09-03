@@ -17,7 +17,7 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type':  'application/json;charset=UTF-8'
     })
   };
 
@@ -28,44 +28,19 @@ export class UserService {
   ) { }
 
   getUser(dataUserId: number) {
-    this.http.get(API.userAPI+'/'+dataUserId, {responseType: 'json'}).subscribe(
-      data => {
-        this.user = data;
-        this.setUser(data);
-        this.loginService.changeAuthStatus(true);
-        this.router.navigateByUrl('/planning');
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    return this.http.get<User>(API.userAPI+'/'+dataUserId);
   }
-    
+
   public getUsers() {
     return this.http.get<User[]>(API.userAPI);
   }
 
-  public createUser(user: User) {
-    return this.http.post(API.userAPI, user).subscribe(
-      data => {
-        console.log('user created', data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+  public updateUser(data) {
+    return this.http.put(API.userAPI + '/' + data.id, data, this.httpOptions);
   }
 
-
-  public updateUser(user: User) {
-    return this.http.put(API.userAPI + '/' + user.id, user, this.httpOptions).subscribe(
-      data=>{
-        sessionStorage.setItem('user', JSON.stringify(user));
-      },
-      error=>{
-        console.log(error);
-      }
-    );
+  public updateUserPassword(data) {
+    return this.http.put(API.updatePasswordAPI + '/' + data.id, data, this.httpOptions);
   }
   
   public setUser(data) {

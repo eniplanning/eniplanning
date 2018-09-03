@@ -48,7 +48,7 @@
 			        </div>
             	</div>
 
-            	<div class="row menu-row">
+            	<div  *ngIf="userRole > 1"  class="row menu-row">
             		<div class="row-title align-self-center col-lg-3 col-xs-12">
             			Responsable pédagogique
 	            	</div>
@@ -62,9 +62,9 @@
 			        </div>
             	</div>
 
-            	<div class="row menu-row">
+            	<div *ngIf="userRole > 2" class="row menu-row">
             		<div class="row-title align-self-center col-lg-3 col-xs-12">
-            			Administrateur
+            			Administrateur 
 	            	</div>
 	            	<div class=" row col-lg-9 col-xs-12">
 		                <div class="menu-link col-2">

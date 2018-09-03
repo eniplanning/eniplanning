@@ -10,7 +10,7 @@
                 <a class="nav-link">UTILISATEURS</a>
             </li>
             <li class="nav-item waves-light" mdbWavesEffect>
-                <app-utilisateur-form></app-utilisateur-form>
+                <app-utilisateur-form (closed)="sendMessage($event)" action="Créer" showPasswordButton="false"></app-utilisateur-form>
             </li>
         </ul>
         
