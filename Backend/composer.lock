@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "575c3826329c2b9341885ef8e5f682fa",
+    "content-hash": "346ad34ea3b5f5c5fce82aa1d6d8ae28",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -615,6 +615,148 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "jstewmc/chunker",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jstewmc/chunker.git",
+                "reference": "ebd1555fd13a83d88f4b59722d1ab835a240ca4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jstewmc/chunker/zipball/ebd1555fd13a83d88f4b59722d1ab835a240ca4d",
+                "reference": "ebd1555fd13a83d88f4b59722d1ab835a240ca4d",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jstewmc\\Chunker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jack Clayton",
+                    "email": "clayjs0@gmail.com"
+                }
+            ],
+            "description": "Chunk a very large file or string with PHP (multi-byte safe)",
+            "keywords": [
+                "chunk",
+                "file",
+                "multi-byte",
+                "php",
+                "string"
+            ],
+            "time": "2015-07-03T22:35:43+00:00"
+        },
+        {
+            "name": "jstewmc/rtf",
+            "version": "v0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jstewmc/rtf.git",
+                "reference": "4ad8296ec33d8b8d0850281e394f84c02ee61a8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jstewmc/rtf/zipball/4ad8296ec33d8b8d0850281e394f84c02ee61a8e",
+                "reference": "4ad8296ec33d8b8d0850281e394f84c02ee61a8e",
+                "shasum": ""
+            },
+            "require": {
+                "jstewmc/chunker": "0.1.0",
+                "jstewmc/stream": "0.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jstewmc\\Rtf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jack Clayton",
+                    "email": "clayjs0@gmail.com"
+                }
+            ],
+            "description": "Read and write Rich Text Format (RTF) documents with PHP",
+            "keywords": [
+                "format",
+                "lex",
+                "parse",
+                "php",
+                "read",
+                "render",
+                "rich",
+                "rtf",
+                "text",
+                "write"
+            ],
+            "time": "2015-09-17T19:30:55+00:00"
+        },
+        {
+            "name": "jstewmc/stream",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jstewmc/stream.git",
+                "reference": "30b5c36b3983e4cf41acb2abc1309f4dbc72a6d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jstewmc/stream/zipball/30b5c36b3983e4cf41acb2abc1309f4dbc72a6d6",
+                "reference": "30b5c36b3983e4cf41acb2abc1309f4dbc72a6d6",
+                "shasum": ""
+            },
+            "require": {
+                "jstewmc/chunker": "0.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jstewmc\\Stream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jack Clayton",
+                    "email": "clayjs0@gmail.com"
+                }
+            ],
+            "description": "Stream a very large text file or string character-by-character",
+            "keywords": [
+                "character",
+                "file",
+                "php",
+                "split",
+                "stream",
+                "string"
+            ],
+            "time": "2015-07-06T14:42:56+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1446,39 +1588,6 @@
                 "writer"
             ],
             "time": "2018-07-14T16:59:43+00:00"
-        },
-        {
-            "name": "phprtflite/phprtflite",
-            "version": "v1.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phprtflite/PHPRtfLite.git",
-                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phprtflite/PHPRtfLite/zipball/eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
-                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PHPRtfLite": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Steffen Zeidler",
-                    "email": "sigma_z@sigma-scripts.de"
-                }
-            ],
-            "description": "PHPRtfLite is an API enabling developers to create rtf documents with php.",
-            "time": "2014-07-04T19:43:18+00:00"
         },
         {
             "name": "psr/container",
@@ -3756,6 +3865,39 @@
                 }
             ],
             "time": "2017-07-14T14:27:02+00:00"
+        },
+        {
+            "name": "phprtflite/phprtflite",
+            "version": "v1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phprtflite/PHPRtfLite.git",
+                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phprtflite/PHPRtfLite/zipball/eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
+                "reference": "eef76d965fc7a0cb4c7342f229f67ad4793c61c2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPRtfLite": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Steffen Zeidler",
+                    "email": "sigma_z@sigma-scripts.de"
+                }
+            ],
+            "description": "PHPRtfLite is an API enabling developers to create rtf documents with php.",
+            "time": "2014-07-04T19:43:18+00:00"
         },
         {
             "name": "phpspec/prophecy",

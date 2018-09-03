@@ -4,6 +4,7 @@ import { AuthGuard } from './utils/guards/auth.guard';
 import { LoggedGuard } from './utils/guards/logged.guard';
 import { OnlyPedagGuard } from './utils/guards/onlypedag.guard';
 import { OnlyAdminGuard } from './utils/guards/onlyadmin.guard';
+import { NoChangeAllowed } from './utils/guards/nochangeallowed.guard';
 
 //Lazy loading. Real routes are defined in each module (modulename-routing.module)
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
 	{
 		path: 'mon-compte',
 		loadChildren: './mon-compte/mon-compte.module#MonCompteModule',
-		canActivate: [AuthGuard] 
+		canActivate: [AuthGuard, NoChangeAllowed] 
 	},
 	{
 		path: 'modules-complementaires',

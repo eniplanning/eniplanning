@@ -15,7 +15,7 @@ export class DocumentService {
     headers: new HttpHeaders({
       'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
       'Accept-Encoding':'gzip, deflate, br',
-      'Response-Type': 'blob',
+      'Response-Type': 'blob, text/plain, Application/msword',
       //'Access-Control-Allow-Origin':'http://localhost:4200',
       'Access-Control-Allow-Methods': 'GET',
       'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
@@ -23,7 +23,7 @@ export class DocumentService {
     })
   };
 
-  /*Accept-Encoding: gzip, deflate, br
+  /*
 Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7
 Connection: keep-alive
 Cookie: application=ENIPLANNING; user_email=administrateur%40eniplanning.fr; user_password=P%40%24%24w0rd
@@ -37,6 +37,7 @@ Upgrade-Insecure-Requests: 1
   ) { }
 
   getPlanning() {
-    return this.http.get(API.getPlanningAPI);
+    return this.http.get(API.getPlanningAPI, 
+      {responseType: 'text'});
   }
 }

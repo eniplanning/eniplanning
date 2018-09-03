@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../models/user';
+import { ROLES } from '../role';
+import { CONFIG } from '../config';
  
 @Injectable({ providedIn: 'root' })
-export class OnlyAdminGuard implements CanActivate {
+export class NoChangeAllowed implements CanActivate {
  
     constructor(
         private router: Router,
@@ -10,7 +14,7 @@ export class OnlyAdminGuard implements CanActivate {
  
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        if (JSON.parse(sessionStorage.getItem('user')).role_id == '3') {
+        if (JSON.parse(sessionStorage.getItem('user')).email != CONFIG.email_administrateur) {
             // logged in so return true
             return true;
         }

@@ -1,10 +1,9 @@
 --------------------------------------------------------
 -- ENI PLANNING ----------------------------------------
 --------------------------------------------------------
--- INSERTION DE l'UTILISATEUR ADMIN EN  BASE (login : sollivier@campus-eni.fr, password : admin)
-INSERT INTO eniplanning.dbo.users (email, password, name, firstname, role_id)
-VALUES ('sollivier@campus-eni.fr', '$2y$10$TfcJCjUv1N6IOxhpm0PLI.MzSlBCYFr3p0y2EWvOdzEzWdFhCU1kK', 'Ollivier', 'Stéphane', 3);
-
+-- INSERTION DE l'UTILISATEUR ADMIN EN  BASE (login : administrateur@eniplanning.fr, password : P@$$w0rd)
+INSERT INTO users (email, password, name, firstname, role_id)
+VALUES ('administrateur@eniplanning.fr', '$2y$10$mMAHg8hgmiNhYmnTfXfhFupO/tN/yHZ6HJEozEh8yDNOMmleUW.0a', 'Compte', 'Administrateur', 3); 
 -- INSERTION PLANNING
 INSERT INTO `plannings` (`id`, `label`, `date_start_contract`, `date_end_contract`, `date_start_formation`, `date_end_formation`, `date_inscription`, `nb_weeks_formation`, `nb_weeks_enterprise`, `limit_day_formation`, `num_version`, `status`, `is_archived`, `is_model`, `planning_id`, `stagiaire_id`, `formation_id`, `user_id`, `created_at`, `updated_at`)
 VALUES (NULL, 'planning 1 carine', '2018-09-01', '2019-09-30', '2018-10-01', '2019-09-15', '2018-06-01', '2', '2', '120', '1', '1', '0', '0', NULL, '30', '17MSI-IN', '24', NULL, NULL);
