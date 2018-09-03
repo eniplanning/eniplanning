@@ -31,8 +31,10 @@ export class ModalCreatePlanningComponent implements OnInit {
     selectedDebutF:         Date;
     selectedFinF:           Date;
     date_inscription:       Date;
-    user: User
-    // user_id: number
+    user:                   User;
+    
+    errorCreatePlanning:    String;
+    successCreatePlanning:  String;
 
     constructor(
         private logger: LoggerService,
@@ -48,8 +50,6 @@ export class ModalCreatePlanningComponent implements OnInit {
         this.getLieu();
         this.getSelectedStagiaire();
         this.getUser();
-        console.log(JSON.parse(sessionStorage.getItem('user')));
-        // console.log(this.selectedStagiaire.CodeStagiaire);
     }
 
     // Récupération des formations depuis le service Formation
@@ -70,25 +70,59 @@ export class ModalCreatePlanningComponent implements OnInit {
     }
 
     createPlanning():void {
-        var planning = new Planning();
-        planning.setLabel(this.nomPlanning);
-        planning.setDate_start_contract(this.selectedDebutC);
-        planning.setDate_end_contract(this.selectedFinC);
-        planning.setDate_start_formation(this.selectedDebutF);
-        planning.setDate_end_formation(this.selectedFinF);
-        planning.setDate_inscription(this.date_inscription);
-        planning.setIs_archived(false);
-        planning.setIs_model(false);
-        // planning.setPlanning_id(3);
-        planning.setStagiaire_id(this.selectedStagiaire.CodeStagiaire);
-        planning.setFormation_id(this.selectedFormation.CodeFormation);
-        planning.setUser_id(this.user.id);
-        console.log(formatDate(this.selectedDebutC, "yyy-MM-dd", "FR"));
-        console.log(this.selectedFinC);
-        console.log(this.selectedDebutF);
-        console.log(this.selectedFinF);
-        console.log(planning);
-        console.log(this.planningService.createPlanning(planning));
-    }
 
+        if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
+            this.errorCreatePlanning = "Le nom du planning est obligatoire";
+        }
+        else if (this.selectedFormation == undefined) {
+            this.errorCreatePlanning = "La formation est obligatoire";
+        }
+        else if (this.selectedLieu == undefined) {
+            this.errorCreatePlanning = "Le lieu de formation est obligatoire";
+        }
+        else if (this.selectedDebutC == undefined) {
+            this.errorCreatePlanning = "La date de début de contrat est obligatoire";
+        }
+        else if (this.selectedFinC == undefined) {
+            this.errorCreatePlanning = "La date de fin de contrat est obligatoire";
+        }
+        else if (this.selectedFinC < this.selectedDebutC) {
+            this.errorCreatePlanning = "La date de fin de contrat doit être postérieure à la date de début de contrat";
+        }
+        else if (this.selectedDebutF == undefined) {
+            this.errorCreatePlanning = "La date de début de formation est obligatoire";
+        }
+        else if (this.selectedFinF == undefined) {
+            this.errorCreatePlanning = "La date de fin de formation est obligatoire";
+        }
+        else if (this.selectedFinF < this.selectedDebutF) {
+            this.errorCreatePlanning = "La date de fin de formation doit être postérieure à la date de début de formation";
+        }
+        else {
+            //tous les champs sont remplis correctement
+            this.errorCreatePlanning = "";
+            var planning = new Planning();
+            planning.setLabel(this.nomPlanning);
+            planning.setDate_start_contract(this.selectedDebutC);
+            planning.setDate_end_contract(this.selectedFinC);
+            planning.setDate_start_formation(this.selectedDebutF);
+            planning.setDate_end_formation(this.selectedFinF);
+            planning.setDate_inscription(this.date_inscription);
+            planning.setIs_archived(false);
+            planning.setIs_model(false);
+            planning.setStagiaire_id(this.selectedStagiaire.CodeStagiaire);
+            planning.setFormation_id(this.selectedFormation.CodeFormation);
+            planning.setUser_id(this.user.id);
+            this.planningService.createPlanning(planning).subscribe(
+                (planning: Planning) => {
+                    this.successCreatePlanning = "La planning a bien été crée";
+                    console.log(planning);
+                },
+                error => console.log(error)
+            );
+        }
+
+
+        
+    }
 }

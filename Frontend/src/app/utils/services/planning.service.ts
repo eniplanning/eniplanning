@@ -27,15 +27,8 @@ httpOptions = {
     return this.http.get<Planning[]>(this.planningsByCode + '/' + codeStagiaire);
   }
 
-  createPlanning(planning: Planning) {
-      return this.http.post(this.planningsAPI, planning).subscribe(
-          data => {
-              console.log(data);
-          },
-          error => {
-              console.log(error);
-          }
-      );
+  createPlanning(planning: Planning): Observable<Planning> {
+      return this.http.post<Planning>(this.planningsAPI, planning);
   }
 
   updatePlanning(planning: Planning) {
