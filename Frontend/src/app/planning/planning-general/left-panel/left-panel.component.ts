@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../../../utils/services/logger.service';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
+import { DocumentService } from '../../../utils/services/document.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Planning } from '../../../utils/models/planning';
 // import { PLANNINGS } from '../../../utils/mocks/planning';
@@ -26,6 +27,7 @@ export class LeftPanelComponent implements OnInit {
 		private logger: LoggerService,
 		private stagiaireService: StagiaireService,
 		private planningService: PlanningService,
+		private documentService: DocumentService,
 	) { }
 
 	ngOnInit() {
@@ -88,5 +90,20 @@ export class LeftPanelComponent implements OnInit {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
 		this.logger.LogConsole('planning sélectionné' , this.selectedPlanning);
+	}
+
+	// TEST PRINT PHP TO WORD
+	getPlanning() {
+		console.log('testphpdocument');
+		this.documentService.getPlanning().subscribe(
+			data=> {
+				console.log(data);
+				var downloadUrl= URL.createObjectURL(data);
+				window.open(downloadUrl);
+			},
+			error=>{ 
+				console.log(error);
+			}
+		);
 	}
 }

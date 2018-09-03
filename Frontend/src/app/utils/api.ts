@@ -7,4 +7,5 @@ export const API = {
     'backendstatusAPI' : (CONFIG.backend_url + 'backend'), 
     'eniDBstatusAPI' : (CONFIG.backend_url + 'enidbstatus'), 
     'erpDBstatusAPI' : (CONFIG.backend_url + 'erpstatus'), 
+    'getPlanningAPI' : (CONFIG.backend_url + 'document/getplanning')
 };
