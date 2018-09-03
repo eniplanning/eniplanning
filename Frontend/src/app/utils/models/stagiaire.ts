@@ -19,7 +19,7 @@ export class Stagiaire {
 
     getCodeStagiaire()
     {
-        return this.codeStagiaire;
+        return this.CodeStagiaire;
     }
 
 }
