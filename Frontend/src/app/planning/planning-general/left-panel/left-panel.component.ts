@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../../../utils/services/logger.service';
+import { Router } from '@angular/router';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
 import { FormationService } from '../../../utils/services/formation.service';
@@ -35,6 +36,7 @@ export class LeftPanelComponent implements OnInit {
 		private formationService:		FormationService,
 		private coursPlanningService: 	CoursPlanningService,
 		private documentService: 		DocumentService,
+		private router:					Router,
 	) { }
 
 	ngOnInit() {
@@ -219,16 +221,13 @@ export class LeftPanelComponent implements OnInit {
 
 	
 
-	// TEST PRINT PHP TO WORD
-	getPlanning() {
-		console.log('testphpdocument');
+	// TEST PRINT PHP TO RTF
+	getPlanningRtf() {
 		this.documentService.getPlanning().subscribe(
 			res => {
 			console.log('start download:',res);
-			var url = window.URL.createObjectURL(new Blob([res], { type: "application/octet-stream" });
-			console.log('url créée:'+ url);
+			var url = window.URL.createObjectURL(new Blob([res.text()], { type: "application/octet-stream" }));
 			var a = document.createElement('a');
-			console.log('a créée:'+ a);
 			document.body.appendChild(a);
 			a.setAttribute('style', 'display: none');
 			a.href = url;
@@ -241,5 +240,29 @@ export class LeftPanelComponent implements OnInit {
 		}, () => {
 			console.log('Completed file download.')
 		});
+	}
+	
+	// TEST PRINT TO PDF
+	getPlanningPDF() {
+		this.documentService.downloadPDF().subscribe(res => {
+			const fileURL = URL.createObjectURL(res);
+			window.open(fileURL, '_blank');
+		  });
+	}
+
+	// TEST PRINT TO HTML
+	generatedHTMLPlanning(idPlanning:number) {
+		this.planningService.getPlanningsById(idPlanning).subscribe(
+			data => {
+				console.log('generatedHTMLPlanning');	
+				//this.selectedPlanning = data;
+				this.router.navigateByUrl('/planning/generate-html');				
+				
+			},
+			error => {
+				console.log('problème de réception du planning');
+			}
+		)
+		
 	}
 }

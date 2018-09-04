@@ -24,7 +24,9 @@
                     <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
                     <p>Formation suivie :</p>
                     <p>Site :</p>
-                    <a (click)="getPlanning()">testDocumentOdt</a>
+                    <a (click)="getPlanningRtf()">testDocumentRTF</a>
+                    <a (click)="getPlanningPdf()">testDocumentPDF</a>
+                    <a (click)="getPlanningHtml()">testDocumentHTML</a>
                 </div>
                 <div class="content-title">Plannings</div>
                 <div class="content-body">
@@ -37,11 +39,11 @@
                              {{ planning.label }}
                             <div class="btn-group" mdbDropdown>
                                 <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
-                                    <fa name="ellipsis-h" size="1x"></fa>
+                                    xxxxx<fa name="ellipsis-h" size="1x"></fa>
                                 </div>
 
                                 <div class="dropdown-menu dropdown-primary">
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" (click)="generatedHTMLPlanning(planning.id)">Visualiser</a>
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Action</a>
                                     <div class="divider dropdown-divider"></div>

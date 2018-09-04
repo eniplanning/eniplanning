@@ -27,6 +27,10 @@ httpOptions = {
     return this.http.get<Planning[]>(this.planningsByCode + '/' + codeStagiaire);
   }
 
+  getPlanningsById(idPlanning: Number): Observable<Planning> {
+    return this.http.get<Planning>(this.planningsAPI + '/' + idPlanning);
+  }
+
   createPlanning(planning: Planning): Observable<Planning> {
       return this.http.post<Planning>(this.planningsAPI, planning);
   }
