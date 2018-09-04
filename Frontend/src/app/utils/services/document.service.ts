@@ -37,7 +37,7 @@ Upgrade-Insecure-Requests: 1
   ) { }
 
   getPlanning() {
-    return this.http.get(API.getPlanningAPI, 
-      {responseType: 'text'});
+    return this.http.get(API.getPlanningAPI,
+      {responseType: 'blob' as 'json'});
   }
 }

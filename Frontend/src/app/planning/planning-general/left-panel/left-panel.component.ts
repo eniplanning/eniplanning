@@ -10,7 +10,6 @@ import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
 import { CoursPlanning } from '../../../utils/models/cours-planning';
-// import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
 @Component({
@@ -222,14 +221,20 @@ export class LeftPanelComponent implements OnInit {
 	getPlanning() {
 		console.log('testphpdocument');
 		this.documentService.getPlanning().subscribe(
-			data=> {
+			data=> { 
 				console.log(data);
-				var downloadUrl= URL.createObjectURL(data);
-				window.open(downloadUrl);
+				this.downloadFile(data);
 			},
 			error=>{ 
 				console.log(error);
 			}
 		);
 	}
+
+	downloadFile(data: Blob){
+		console.log('donwload file en cours');
+		var blob = new Blob([data], { type: 'text/csv' });
+		var url= window.URL.createObjectURL(blob);
+		window.open(url);
+	  }
 }

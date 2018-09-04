@@ -32,12 +32,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form.email = this.cookieService.get('user_email');
-    this.form.password = this.cookieService.get('user_password');
   }
 
   onSubmit(){
     this.cookieService.set('user_email', this.form.email);
-    this.cookieService.set('user_password', this.form.password);
     return this.loginService.login(this.form).subscribe(
       data => {
         this.handleResponse(data);
