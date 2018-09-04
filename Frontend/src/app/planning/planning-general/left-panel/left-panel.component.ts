@@ -217,24 +217,29 @@ export class LeftPanelComponent implements OnInit {
 		});
 	}
 
+	
+
 	// TEST PRINT PHP TO WORD
 	getPlanning() {
 		console.log('testphpdocument');
 		this.documentService.getPlanning().subscribe(
-			data=> { 
-				console.log(data);
-				this.downloadFile(data);
-			},
-			error=>{ 
-				console.log(error);
-			}
-		);
+			res => {
+			console.log('start download:',res);
+			var url = window.URL.createObjectURL(new Blob([res], { type: "application/octet-stream" });
+			console.log('url créée:'+ url);
+			var a = document.createElement('a');
+			console.log('a créée:'+ a);
+			document.body.appendChild(a);
+			a.setAttribute('style', 'display: none');
+			a.href = url;
+			a.download = 'sample.rtf';
+			a.click();
+			window.URL.revokeObjectURL(url);
+			a.remove(); // remove the element
+		}, error => {
+			console.log('download error:', error);
+		}, () => {
+			console.log('Completed file download.')
+		});
 	}
-
-	downloadFile(data: Blob){
-		console.log('donwload file en cours');
-		var blob = new Blob([data], { type: 'text/csv' });
-		var url= window.URL.createObjectURL(blob);
-		window.open(url);
-	  }
 }

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +26,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     // MatCheckboxModule,
     // MatDatepickerModule,
     // MatNativeDateModule
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpModule
 	]
 })
 export class AngularMaterialModule {}
