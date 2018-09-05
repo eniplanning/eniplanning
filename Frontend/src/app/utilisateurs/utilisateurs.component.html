@@ -10,7 +10,7 @@
     <!-- zone de recherche -->
     <div class="md-form">
         <i class="fa fa-search prefix"></i>
-        <input type="search" [(ngModel)]="searchValue" id="search" class="form-control" mdbInputDirective [mdbValidate]="false">
+        <input type="search" [(ngModel)]="searchValue" id="searchText" class="form-control" mdbInputDirective [mdbValidate]="false">
         <label for="searchText">Saisissez un nom</label>
     </div>      
 
@@ -26,7 +26,7 @@
                         <th>Prénom <mdb-icon (click)="sortBy('firstname')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
                         <th>Email <mdb-icon (click)="sortBy('email')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
                         <th>Role <mdb-icon (click)="sortBy('role_id')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
-                        <th style="width: 10%"  style="text-align: center">Actif    <mdb-icon (click)="sortBy('is_active')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>    
+                        <th style="width: 10%"  style="text-align: center">Autorisation d'accès    <mdb-icon (click)="sortBy('is_active')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>    
                         <th style="width: 10%"></th>
                         <th style="width: 10%"></th>
                     </tr>

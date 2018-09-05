@@ -13,21 +13,17 @@ use Illuminate\Http\Request;
 |
  */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::group([
     'middleware' => [
-        //,'role:admin'
+        
     ],
 ], function () {
-    Route::resource('user', 'UserController', ['except' => ['create', 'edit', 'destroy']]);
-    Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
+
+    Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
     Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
-    Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
     Route::resource('ctrPrioritization', 'CtrPrioritizationController', ['except' => ['create', 'edit']]);
     Route::resource('ctrExemption', 'CtrExemptionController', ['except' => ['create', 'edit']]);
     Route::resource('ctrDisponibility', 'CtrDisponibilityController', ['except' => ['create', 'edit']]);
@@ -37,23 +33,32 @@ Route::group([
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
     Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
 
+    // UserController Routes
+    Route::resource('user', 'UserController', ['except' => ['create', 'edit', 'destroy']]);
+    Route::put('userpassword/{id}', 'UserController@updatePassword');
+
+    // AuthController Routes
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');
     Route::post('login', 'AuthController@login');
     Route::post('refresh', 'AuthController@refresh');
+
+    // StatusServiceController Routes
     Route::get('backend', 'StatusServiceController@backend');
     Route::get('erpstatus', 'StatusServiceController@erpStatus');
     Route::get('enidbstatus', 'StatusServiceController@eniDbStatus');
-    Route::put('userpassword/{id}', 'UserController@updatePassword');
 
+    // PlanningController Routes
+    Route::resource('planning', 'PlanningController', ['except' => ['create', 'edit']]);
     Route::get('planningsByCodeStagiaire/{code}', 'PlanningController@getByCodeStagiaire');
     Route::get('planningGlobal/{id}', 'PlanningController@showWithGlobal');
     Route::get('setPlanningBroken', 'PlanningController@setPlanningBroken');
     Route::get('getPlanningBroken', 'PlanningController@getPlanningBroken');
+
+    // FormationController Routes
     Route::get('formationGlobal/{id}', 'FormationController@showWithGlobal');
+    Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
+
+    // DocumentController Routes
     Route::get('document/getplanning','DocumentController@getPlanning');
 });
-
-// Route::put('post/{id}', function ($id) {
-//     //
-// })->middleware('auth', 'role:admin');

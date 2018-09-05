@@ -6,6 +6,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { DatePipe } from '@angular/common';
 import {
   //MatButtonModule
  } from '@angular/material';
@@ -51,6 +52,7 @@ export class AngularMaterialModule {}
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
     CookieService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })
