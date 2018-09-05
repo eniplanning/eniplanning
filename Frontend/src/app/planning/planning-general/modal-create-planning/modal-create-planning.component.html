@@ -1,4 +1,4 @@
-<li class="nav-item waves-light" mdbWavesEffect>
+<li class="nav-item waves-light" mdbWavesEffect *ngIf="selectedStagiaire != undefined">
     <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="createModal.show()" >Créer</a>
 </li>
 
@@ -7,7 +7,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="creaModalLabel">Paramètres du planning</h5>
+                <h5 class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -79,9 +79,6 @@
                         {{ successCreatePlanning }}
                     </div>
                 </div>
-            </div>
-            <div class="modal-error" *ngIf="selectedStagiaire == undefined">
-                Sélectionnez d'abord un stagiaire
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>

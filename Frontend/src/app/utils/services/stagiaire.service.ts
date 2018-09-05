@@ -1,6 +1,6 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of} from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { Stagiaire } from '../models/stagiaire';
 import { CONFIG } from '../../utils/config';
@@ -11,6 +11,7 @@ import { CONFIG } from '../../utils/config';
 export class StagiaireService {
 
 	stagiairesAPI = CONFIG.backend_url + 'stagiaire';
+  selectedStagiaire = new BehaviorSubject<Stagiaire>(null);
 
   constructor(private http: HttpClient) {
   }
@@ -21,5 +22,6 @@ export class StagiaireService {
 
   setSelectedStagiaire(stagiaire: Stagiaire) {
   	sessionStorage.setItem('selectedStagiaire', JSON.stringify(stagiaire));
+    this.selectedStagiaire.next(stagiaire);
   }
 }

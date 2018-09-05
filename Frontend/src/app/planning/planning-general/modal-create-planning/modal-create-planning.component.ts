@@ -41,15 +41,18 @@ export class ModalCreatePlanningComponent implements OnInit {
         private formationService:FormationService,
         private lieuService:LieuService,
         private planningService:PlanningService,
-        private stagiaireService: StagiaireService)
-    { }
+        private stagiaireService: StagiaireService
+    ){}
 
     ngOnInit() {
         registerLocaleData(localeFr);
         this.getFormation();
         this.getLieu();
-        this.getSelectedStagiaire();
         this.getUser();
+        this.stagiaireService.selectedStagiaire.subscribe(
+            (stagiaire: Stagiaire) => this.selectedStagiaire = stagiaire
+        );
+        this.getSelectedStagiaire();
     }
 
     // Récupération des formations depuis le service Formation
@@ -61,18 +64,18 @@ export class ModalCreatePlanningComponent implements OnInit {
         this.lieuService.getLieux().subscribe(lieu => this.lieux = lieu);
     }
 
-    getSelectedStagiaire(): void {
-        this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
-    }
-
     getUser(): void{
         this.user = JSON.parse(sessionStorage.getItem('user'));
     }
 
-    createPlanning():void {
-        console.log(this.selectedDebutC);
-        console.log(this.selectedDebutC.format());
+    getSelectedStagiaire() {
+        let unparsedSelectedStagiaire = sessionStorage.getItem('selectedStagiaire');
+        if (unparsedSelectedStagiaire != 'undefined') {
+            this.selectedStagiaire = JSON.parse(unparsedSelectedStagiaire);
+        }
+    }
 
+    createPlanning():void {
         if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
             this.errorCreatePlanning = "Le nom du planning est obligatoire";
         }
@@ -117,14 +120,13 @@ export class ModalCreatePlanningComponent implements OnInit {
             planning.setUser_id(this.user.id);
             this.planningService.createPlanning(planning).subscribe(
                 (planning: Planning) => {
-                    this.successCreatePlanning = "La planning a bien été crée";
-                    console.log(planning);
+                    this.successCreatePlanning = "Le planning a bien été crée";
+                    console.log('planning crée', planning);
                 },
                 error => console.log(error)
             );
         }
-
-
-        
     }
+
+
 }

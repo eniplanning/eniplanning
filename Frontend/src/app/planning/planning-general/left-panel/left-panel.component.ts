@@ -10,7 +10,6 @@ import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
 import { CoursPlanning } from '../../../utils/models/cours-planning';
-// import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
 @Component({
@@ -66,12 +65,20 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 
-	// Récupère le selectedStagiaire au chargement de la page. Si il exists, il est automatiquement sélectionné dans le ng-select
+	// Récupère le selectedStagiaire au chargement de la page. Si il existe, il est automatiquement sélectionné dans le ng-select
 	loadSelectedStagiaire() {
-		this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
-		if (this.selectedStagiaire != undefined) {
+		//Fist time we visit the page on a new session, sessionStorage.getItem returns the string 'undefined', so JSON.parse throw an error
+		let unparsedSelectedStagiaire = sessionStorage.getItem('selectedStagiaire');
+		if (unparsedSelectedStagiaire != 'undefined' && unparsedSelectedStagiaire != 'null') {
+			this.selectedStagiaire = JSON.parse(unparsedSelectedStagiaire);
+		}
+		if (this.selectedStagiaire != null) {
 			this.panelStates['informations'] = true;
-			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+		}
+		else {
+			this.stagiaireService.selectedStagiaire.next(this.selectedStagiaire);
+			this.planningService.setSelectedPlanning(null);
 		}
 	}
 
@@ -79,10 +86,20 @@ export class LeftPanelComponent implements OnInit {
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
 	onChangeSelectedStagiaire() {
 		if (this.selectedStagiaire != null) {
-			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
+			this.planningService.setSelectedPlanning(null);
 			console.log('stagiaire sélectionné' , this.selectedStagiaire);
 		}
+	}
+
+	//Lorsqu'on vide le ng-Select, on vide la valeur de selectedStagiaire, de selectedPlanning, et on effac les cours dessinés à l'écran
+	onClearSelectedStagiaire() {
+		this.selectedStagiaire = null;
+		this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
+
+		this.selectedPlanning = null;
+		this.planningService.setSelectedPlanning(this.selectedPlanning);
 	}
 
 
@@ -90,13 +107,14 @@ export class LeftPanelComponent implements OnInit {
 	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
 	getPlanningsByStagiaire(codeStagiaire: Number): void {
 		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
-			(plannings: Planning[]) => {
-				this.selectedStagiaire.ListPlannings = plannings;
-			},
+			(plannings: Planning[]) => this.selectedStagiaire.ListPlannings = plannings,
 			error =>  console.log(error),
 			() => {
-				this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'));
-				if (this.selectedPlanning != undefined) {
+				let unparsedSelectedPlanning = sessionStorage.getItem('selectedPlanning');
+				if (unparsedSelectedPlanning != 'undefined') {
+					this.selectedPlanning = JSON.parse(unparsedSelectedPlanning);
+				}
+				if (this.selectedPlanning != null) {
 					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 					this.selectedStagiaire.ListPlannings.forEach(function(p) {
 						if (p.id == self.selectedPlanning.id) {
@@ -120,6 +138,7 @@ export class LeftPanelComponent implements OnInit {
 		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
 			(formation: Formation) => {
+				console.log(formation);
 				//sorting modules
 				formation.Modules = [];
 				formation.uniteparformation.forEach(function(u) {
@@ -146,17 +165,11 @@ export class LeftPanelComponent implements OnInit {
 					});
 				});
 				this.formation = formation;
-				console.log('formation sélectionnée',this.formation);
+				console.log('formation sélectionnée', this.formation);
 			},
 			error => console.log(error)
 		);
-
-		//Clear cours on web page from previous planning
-		let c = document.getElementsByClassName('green-bg');
-		console.log(c);
-		while (c[0]) {
-		    c[0].classList.remove('green-bg')
-		}
+		
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {

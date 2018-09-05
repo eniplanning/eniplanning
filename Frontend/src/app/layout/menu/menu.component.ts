@@ -16,9 +16,7 @@ export class MenuComponent implements OnInit {
 
   	ngOnInit() {
       this.currentUser = JSON.parse(sessionStorage.getItem('user'));
-      console.log(this.currentUser);
       this.userRole  = this.currentUser.role_id;
-      console.log(this.currentUser);
     }
 
 }
