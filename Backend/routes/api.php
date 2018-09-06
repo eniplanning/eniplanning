@@ -20,7 +20,10 @@ Route::group([
     ],
 ], function () {
 
+    // ActivityLogController Routes
+    Route::post('activity-log/purge', 'ActivityLogController@purge');
     Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
+
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
     Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);

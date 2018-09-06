@@ -11,8 +11,9 @@ import { User } from '../../utils/models/user';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-   @Output() refreshList = new EventEmitter<string>();
-
+  
+    // Raffraichir la liste
+    @Output() refreshList = new EventEmitter<string>();
     sendMessage() {
       this.refreshList.emit();
     }
