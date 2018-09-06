@@ -63,7 +63,22 @@ export class LogsComponent implements OnInit {
       },
       error => {
         console.log(error);
-      }
+      },
+      () => this.activityLogs.sort(function(a, b) {
+        //custom sorting function, sorts by stagiaire.Nom in alphabetical order
+        if (a.properties > b.properties)
+          return -1;
+        else if (a.properties < b.properties)
+          return 1;
+        return 0
+      })
     );
   }
+
+  
+  // Raffraichissement de la liste après purge
+  refreshList(event){
+    this.getActivityLogs();  
+  }
+  
 }

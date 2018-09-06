@@ -45,7 +45,10 @@
 
                                 <div class="dropdown-menu dropdown-primary">
                                     <!-- <a class="dropdown-item" (click)="generatedHTMLPlanning(planning)">Visualiser -->
-                                    <generate-html planning="selectedPlanning"></generate-html>
+                                    <generate-html
+                                        [planning]="selectedPlanning"
+                                        [formation]="formation">
+                                    </generate-html>
                                     <!-- </a> -->
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Action</a>
