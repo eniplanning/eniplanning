@@ -21,4 +21,9 @@ class Formation extends Model
     {
     	return $this->hasMany(UniteParFormation::class, 'CodeFormation');
     }
+
+    public function titre()
+    {
+        return $this->hasOne(Formation::class, 'CodeFormation');
+    }
 }

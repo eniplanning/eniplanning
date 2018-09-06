@@ -32,10 +32,13 @@ class FormationController extends Controller
 
     public function showWithGlobal(Formation $formation, Request $request)
     {   
-        Config::set('database.default', 'enierp');  //Only set database.default for current request
+        // Config::set('database.default', 'enierp');  //Only set database.default for current request
 
-        return Formation::where('CodeFormation', "=", $request->id)->with([
+        // return Formation::where('CodeFormation', "=", $request->id)->with([
+        return $formation->with([
+            'promotions',
             'uniteparformation.modules.cours',
+            'titre'
         ])->get()->first()->toJson();
     }
 }
