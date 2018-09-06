@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { DatePipe } from '@angular/common';
 import {
   //MatButtonModule
  } from '@angular/material';
@@ -25,7 +27,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     // MatCheckboxModule,
     // MatDatepickerModule,
     // MatNativeDateModule
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpModule
 	]
 })
 export class AngularMaterialModule {}
@@ -49,6 +52,7 @@ export class AngularMaterialModule {}
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
     CookieService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

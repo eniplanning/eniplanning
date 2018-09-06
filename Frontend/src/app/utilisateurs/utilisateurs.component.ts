@@ -3,6 +3,9 @@ import { User } from '../utils/models/user';
 import { UserService } from '../utils/services/user.service';
 import { ROLES } from '../utils/role';
 import { CONFIG } from '../utils/config';
+import { ActivityLog } from '../utils/models/activitylog';
+import { ActivityLogService } from '../utils/services/activitylog.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -18,9 +21,12 @@ export class UtilisateursComponent implements OnInit {
   currentUser: String;
   private sorted = false;
   searchValue: string;
+  activityLog: ActivityLog;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private activityLogService: ActivityLogService,
+    private datePipe: DatePipe,
   ) { } 
 
   ngOnInit() {
@@ -61,6 +67,7 @@ export class UtilisateursComponent implements OnInit {
     user.is_active = (is_active == 1 ? 0 : 1);
     return this.userService.updateUser(user).subscribe(
       data=>{
+        this.createActivityLog((user.is_active ? 'Activer' : 'Désactiver'), user);
         console.log(data);
       },
       error=>{ 
@@ -72,6 +79,7 @@ export class UtilisateursComponent implements OnInit {
   // Raffraichissement de la liste après modification d'un utilisateur
   refreshList(event){
     this.getUsers();
+    if (this.users != null) { this.sortBy('name') };
   }
 
   // Tri des utilisateurs par type
@@ -89,4 +97,20 @@ export class UtilisateursComponent implements OnInit {
     this.sorted = !this.sorted;
   }
 
+  // Journalisation de l'activité
+  createActivityLog(action: string, user: User) {
+    this.activityLog = new ActivityLog();
+    this.activityLog.log_name = JSON.parse(sessionStorage.getItem('user')).name+ ' '+ JSON.parse(sessionStorage.getItem('user')).firstname;
+    this.activityLog.description = user.email + ' : ' + user.firstname + ' ' + user.name;
+    this.activityLog.subject_id=null;
+    this.activityLog.subject_type=action;
+    this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
+    this.activityLog.causer_type='Utilisateur';
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd hh:ss");
+    this.activityLogService.storeActivityLog(this.activityLog).subscribe(
+      data => console.log("log d'activité enregistré"), 
+      error => console.log("erreur d'enregistrement du log d'activité: "+ error)
+    );
+    this.activityLog = null;
+  }
 }

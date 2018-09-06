@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../../../utils/services/logger.service';
+import { Router } from '@angular/router';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
 import { FormationService } from '../../../utils/services/formation.service';
@@ -35,6 +36,7 @@ export class LeftPanelComponent implements OnInit {
 		private formationService:		FormationService,
 		private coursPlanningService: 	CoursPlanningService,
 		private documentService: 		DocumentService,
+		private router:					Router,
 	) { }
 
 	ngOnInit() {
@@ -231,18 +233,50 @@ export class LeftPanelComponent implements OnInit {
 		});
 	}
 
-	// TEST PRINT PHP TO WORD
-	getPlanning() {
-		console.log('testphpdocument');
+	
+
+	// TEST PRINT PHP TO RTF
+	getPlanningRtf() {
 		this.documentService.getPlanning().subscribe(
-			data=> {
-				console.log(data);
-				var downloadUrl= URL.createObjectURL(data);
-				window.open(downloadUrl);
+			res => {
+			console.log('start download:',res);
+			var url = window.URL.createObjectURL(new Blob([res.text()], { type: "application/octet-stream" }));
+			var a = document.createElement('a');
+			document.body.appendChild(a);
+			a.setAttribute('style', 'display: none');
+			a.href = url;
+			a.download = 'sample.rtf';
+			a.click();
+			window.URL.revokeObjectURL(url);
+			a.remove(); // remove the element
+		}, error => {
+			console.log('download error:', error);
+		}, () => {
+			console.log('Completed file download.')
+		});
+	}
+	
+	// TEST PRINT TO PDF
+	getPlanningPDF() {
+		this.documentService.downloadPDF().subscribe(res => {
+			const fileURL = URL.createObjectURL(res);
+			window.open(fileURL, '_blank');
+		  });
+	}
+
+	// TEST PRINT TO HTML
+	generatedHTMLPlanning(planning:Planning) {
+		console.log('idPlanning = '+planning.id);
+		this.planningService.getPlanningsById(planning.id).subscribe(
+			data => {
+				console.log('generatedHTMLPlanning');	
+				//this.selectedPlanning = data;
+				this.router.navigateByUrl('/planning/generate-html?id='+planning.id+'target=_blank');	
 			},
-			error=>{ 
-				console.log(error);
+			error => {
+				console.log('problème de réception du planning');
 			}
-		);
+		)
+		
 	}
 }

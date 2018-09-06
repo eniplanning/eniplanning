@@ -15,7 +15,7 @@ import { MenuModule } from '../layout/menu/menu.module';
 import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MAT_DATE_FORMATS } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
-
+import { GenerateHtmlComponent } from './planning-general/generate-html/generate-html.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-
     RightPanelComponent,
     PurgerPlanningComponent,
     HeaderComponent,
-    ModalCreatePlanningComponent
+    ModalCreatePlanningComponent,
+    GenerateHtmlComponent
   ],
   imports: [
     CommonModule,

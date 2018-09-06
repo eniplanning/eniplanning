@@ -7,5 +7,7 @@ export const API = {
     'backendstatusAPI' : (CONFIG.backend_url + 'backend'), 
     'eniDBstatusAPI' : (CONFIG.backend_url + 'enidbstatus'), 
     'erpDBstatusAPI' : (CONFIG.backend_url + 'erpstatus'), 
-    'getPlanningAPI' : (CONFIG.backend_url + 'document/getplanning')
+    'getPlanningAPI' : (CONFIG.backend_url + 'document/getplanning'),
+    'storeActivityLogAPI' : (CONFIG.backend_url + 'activity-log'),
+    'getActivityLogsAPI' : (CONFIG.backend_url + 'activity-log'),
 };

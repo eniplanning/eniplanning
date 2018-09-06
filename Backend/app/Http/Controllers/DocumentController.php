@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 // use PhpOffice\PhpWord\Style\Font; 
 use Jstewmc\Rtf\Document;
 use Jstewmc\Rtf\Element;
+use Jstewmc\Rtf\Style;
 use Log;
 
 class DocumentController extends Controller
@@ -31,42 +32,14 @@ class DocumentController extends Controller
      */
     public function getPlanning()
     {
-
-        $document = new Document('{\b foo\b0}');
-        
-        
-
+        $title = '{ENI PLANNING}';
+        $document = new Document($title);
         $document->save(storage_path('planning.rtf'));   // puts contents "{\b foo\b0}"
-        
-
-        echo $document;           // prints "{\b foo\b0}"
-        echo (string) $document;  // prints "{\b foo\b0}"
-        echo ''.$document;        // prints "{\b foo\b0}" $phpWord = new PhpWord();
-/*
-        $section = $phpWord->addSection();
-
-
-        $description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
-
-        //$section->addImage("http://itsolutionstuff.com/frontTheme/images/logo.png");
-        $section->addText($description);
-
-
-        $objWriter = IOFactory::createWriter($phpWord, 'rtf');
-        try {
-            $objWriter->save(storage_path('helloWorld.rtf'));
-        } catch (Exception $e) {
+  
+        return response()
+            ->download(storage_path('planning.rtf'), 'planning.rtf')
+            ->deleteFileAfterSend(true);
         }
-*/
-
-        return response()->download(storage_path('planning.rtf'));
-    }
 
 
     /**

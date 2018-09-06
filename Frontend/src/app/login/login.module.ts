@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule } from '@angular/forms'; 
+import { DatePipe } from '@angular/common';
 
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login.component';

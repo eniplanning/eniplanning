@@ -24,7 +24,9 @@
                     <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
                     <p>Formation suivie :</p>
                     <p>Site :</p>
-                    <a (click)="getPlanning()">testDocumentOdt</a>
+                    <a (click)="getPlanningRtf()">testDocumentRTF</a>
+                    <a (click)="getPlanningPdf()">testDocumentPDF</a>
+                    <a (click)="getPlanningHtml()">testDocumentHTML</a>
                 </div>
                 <div class="content-title">Plannings</div>
                 <div class="content-body">
@@ -35,13 +37,16 @@
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
                              {{ planning.label }}
-                            <div class="btn-group" mdbDropdown>
-                                <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
-                                    <fa name="ellipsis-h" size="1x"></fa>
-                                </div>
+                            <div class="btn-group col-span-3" mdbDropdown>
+                                <a mdbDropdownToggle class="waves-light" mdbWavesEffect>
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true">xxx</i>
+                                        <!-- <fa name="ellipsis-h" size="1x"></fa> -->  
+                                </a>
 
                                 <div class="dropdown-menu dropdown-primary">
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    <!-- <a class="dropdown-item" (click)="generatedHTMLPlanning(planning)">Visualiser -->
+                                    <generate-html planning="selectedPlanning"></generate-html>
+                                    <!-- </a> -->
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Action</a>
                                     <div class="divider dropdown-divider"></div>
