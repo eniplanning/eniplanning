@@ -251,13 +251,13 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 	// TEST PRINT TO HTML
-	generatedHTMLPlanning(idPlanning:number) {
-		this.planningService.getPlanningsById(idPlanning).subscribe(
+	generatedHTMLPlanning(planning:Planning) {
+		console.log('idPlanning = '+planning.id);
+		this.planningService.getPlanningsById(planning.id).subscribe(
 			data => {
 				console.log('generatedHTMLPlanning');	
 				//this.selectedPlanning = data;
-				this.router.navigateByUrl('/planning/generate-html');				
-				
+				this.router.navigateByUrl('/planning/generate-html?id='+planning.id+'target=_blank');	
 			},
 			error => {
 				console.log('problème de réception du planning');

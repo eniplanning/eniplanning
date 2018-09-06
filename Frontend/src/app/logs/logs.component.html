@@ -1,7 +1,7 @@
 <logs-header></logs-header>
 
 <!-- titre de la page -->
-<div class="card">
+<div class="card" (eventSorted)="onSortedEvent(event)">
     <h1>Logs</h1>
 </div>
 <div class="card-body">
@@ -23,9 +23,9 @@
                 <!-- entete des colonnes -->
                 <thead>
                     <tr>
-                        <th id="col20">Date <mdb-icon (click)="sortBy('name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
-                        <th id="col20">Utilisateur <mdb-icon (click)="sortBy('name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
-                        <th id="col60">Détail de l'activité <mdb-icon (click)="sortBy('name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th id="col20">Date <mdb-icon (click)="sortBy('properties')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th id="col20">Utilisateur <mdb-icon (click)="sortBy('log_name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th id="col60">Détail de l'activité <mdb-icon (click)="sortBy('causer_type')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
                     </tr>
                 </thead>
 
@@ -35,6 +35,7 @@
                         <td id="col20" class="text-center">{{ activityLog.properties }}</td>
                         <td id="col20" class="text-center">{{ activityLog.log_name }}</td> 
                         <td id="col60">{{ activityLog.causer_type }} ({{ activityLog.description }}) => {{ activityLog.subject_type }} </td>
+                        <!-- <td id="col60">{{ activityLog.detail }} </td> -->
                     </tr>
                 </tbody>
             </table>

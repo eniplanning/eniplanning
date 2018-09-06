@@ -3,7 +3,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas'; 
 
 @Component({
-  selector: 'app-generate-html',
+  selector: 'generate-html',
   templateUrl: './generate-html.component.html',
   styleUrls: ['./generate-html.component.scss']
 })
@@ -23,8 +23,8 @@ export class GenerateHtmlComponent implements OnInit {
     html2canvas(data).then(canvas => {  
       
       // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
+      var imgWidth = 210;   
+      var pageHeight = 350;    
       var imgHeight = canvas.height * imgWidth / canvas.width;  
       var heightLeft = imgHeight;  
   

@@ -25,13 +25,8 @@ export class LogsComponent implements OnInit {
   
   // Filtrer les utilisateurs lors de la recherche (par nom)
   filterUser(datas, value) {
+    this.sortBy('properties');
     return datas.filter(singleItem => singleItem['description'].toLowerCase().includes(value.toLowerCase()));
-    // return datas.filter(singleItem => {
-    //   var columns = ['log_name', 'description', 'subject_type','causer_type','properties'];
-    //   columns.forEach(column => {
-    //     singleItem[column].toLowerCase().includes(value.toLowerCase());
-    //   });
-    // });
   }
 
   // Rechercher automatiquement à la saisie d'une activité
