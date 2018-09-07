@@ -7,6 +7,8 @@ use App\Models\Planning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Param;
+use Faker\Provider\ka_GE\DateTime;
+use Illuminate\Support\Carbon;
 
 class FormationController extends Controller
 {
@@ -49,6 +51,17 @@ class FormationController extends Controller
      */
     public function showByPeriodLieu(Formation $formation, Planning $planning)
     {
+        Log::info('date.start.after');
+        Log::info($planning->date_start_formation);
+        Log::info('date.end.after');
+        Log::info($planning->date_end_formation);
+        $start = (new Carbon($planning->date_start_formation))->format('Y-d-m');
+        $end = (new Carbon($planning->date_end_formation))->format('Y-d-m');
+        Log::info('date.start.after');
+        Log::info($start);
+        Log::info('date.end.after');
+        Log::info($end);
+
         return Formation::with(['uniteparformation.modules.cours' => function ($query) use ($planning) {
             $query
                 ->where('Cours.CodeLieu', '=', $planning->lieu_id)
