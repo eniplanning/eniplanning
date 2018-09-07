@@ -31,8 +31,17 @@ class Module extends Model
         return $this->hasMany(Cours::class, 'IdModule');
     }
 
-    public function uniteparformations()
+    public function coursPeriode()
     {
-        return $this->belongsToMany(UniteParFormation::class, 'ModuleParUnite', 'IdUnite', 'IdModule');
+        return $this->hasMany(Cours::class, 'IdModule');
+        // return $this->hasMany(Cours::class, 'IdModule')
+        //     ->where('Cours.Debut', '>=', '2018-01-01')
+        //     ->where('Cours.Fin', '<=', '2018-01-06')
+        //     ->where('Cours.CodeLieu', '=', '1');
     }
+
+    // public function uniteparformations()
+    // {
+    //     return $this->belongsToMany(UniteParFormation::class, 'ModuleParUnite', 'IdUnite', 'IdModule');
+    // }
 }

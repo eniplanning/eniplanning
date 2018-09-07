@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Formation;
+use App\Models\Planning;
 use Illuminate\Http\Request;
-use PhpParser\Node\Param;
 use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Param;
 
 class FormationController extends Controller
 {
@@ -32,36 +33,27 @@ class FormationController extends Controller
 
     public function showWithGlobal(Formation $formation, Request $request)
     {
-        // Config::set('database.default', 'enierp');  //Only set database.default for current request
-
-        // return Formation::where('CodeFormation', "=", $request->id)->with([
         return $formation->with([
             'promotions',
-            'uniteparformation.module.cours',
+            'uniteparformation.modules.cours',
             'titre',
         ])->get()->first()->toJson();
     }
 
     /**
-     * Display the specified resource.
+     * Récupère les cours en fonction de la formation, du lieu et de la periode d'alternance
      *
-     * @param  String $id
-     * @param  String $action
-     * @param  String $date
-     * @param  String $end
+     * @param  Formation $formation
+     * @param  Planning $planning
      * @return \Illuminate\Http\Response
      */
-    public function showWithCoursPeriod($id, $start, $end)
+    public function showByPeriodLieu(Formation $formation, Planning $planning)
     {
-        $formation = Formation::find($id);
-        
-        Log::info('FormationController.showWithCoursPeriod.$formation->CodeLieu');
-        Log::info($formation->CodeFormation);
-        
-        $formation
-            // ->where('uniteparformation.modules.cours.CodeLieu', '=', $formation->CodeLieu)
-            ->whereDate('uniteparformation->module->cours->Debut', '>=', $start)
-            ->whereDate('uniteparformation->module->cours->Fin', '<=', $end)
-            ->get()->first()->toJson();
+        return Formation::with(['uniteparformation.modules.cours' => function ($query) use ($planning) {
+            $query
+                ->where('Cours.CodeLieu', '=', $planning->lieu_id)
+                ->whereDate('Cours.Debut', '>=', $planning->date_start_formation)
+                ->whereDate('Cours.Fin', '<=', $planning->date_end_formation);
+        }])->get()->find($formation->CodeFormation)->toJson();
     }
 }
