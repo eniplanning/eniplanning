@@ -6,7 +6,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ActivityLog;
+use DateTime;
 use Log;
+use Illuminate\Support\Facades\DB;
 
 /**
  * ActivityLog Controller Class
@@ -62,5 +64,18 @@ class ActivityLogController extends Controller
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.' '.$logActivity.')');
         $activityLog->update($request->all());
         return $activityLog->toJson();
+    }
+    
+    /**
+     * Delete the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  ActivityLog  $activityLog
+     * @return \Illuminate\Http\Response
+     */
+    public function purge(Request $request) 
+    {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
+        return DB::table('activity_logs')->where('id', '>', '0')->delete();
     }
 }   

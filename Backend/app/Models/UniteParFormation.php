@@ -15,5 +15,6 @@ class UniteParFormation extends Model
     public function modules()
     {
         return $this->belongsToMany(Module::class, 'ModuleParUnite', 'IdUnite', 'IdModule');
+        // return $this->belongsToMany(Module::class, 'ModuleParUnite', 'IdUnite', 'IdModule');
     }
 }

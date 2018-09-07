@@ -33,6 +33,7 @@ class CreatePlanningsTable extends Migration
             $table->integer('stagiaire_id')->unsigned();
             $table->char('formation_id');
             $table->integer('user_id')->unsigned();
+            $table->integer('lieu_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ import { Formation } from '../models/formation';
 export class FormationService
 {
     formationAPI = CONFIG.backend_url + 'formation'
-    formation_Promotion_Cours = CONFIG.backend_url + 'formationGlobal'
+    formation_Promotion_Cours = CONFIG.backend_url + 'formationByPeriodLieu'
 
     constructor(private http: HttpClient){
     }

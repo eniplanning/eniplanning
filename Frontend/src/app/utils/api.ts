@@ -10,4 +10,5 @@ export const API = {
     'getPlanningAPI' : (CONFIG.backend_url + 'document/getplanning'),
     'storeActivityLogAPI' : (CONFIG.backend_url + 'activity-log'),
     'getActivityLogsAPI' : (CONFIG.backend_url + 'activity-log'),
+    'purgeLogs' : (CONFIG.backend_url + 'activity-log/purge'),
 };

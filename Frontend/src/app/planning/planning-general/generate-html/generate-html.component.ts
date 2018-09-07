@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as jspdf from 'jspdf'; 
 import html2canvas from 'html2canvas'; 
+import { Planning } from '../../../utils/models/planning';
+import { Formation } from '../../../utils/models/formation';
+import { Titre } from '../../../utils/models/titre';
 
 @Component({
   selector: 'generate-html',
@@ -8,6 +11,10 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./generate-html.component.scss']
 })
 export class GenerateHtmlComponent implements OnInit {
+
+  @Input() planning: Planning;
+  @Input() formation: Formation;
+  titre: Titre; 
 
   constructor() { }
 
@@ -32,7 +39,7 @@ export class GenerateHtmlComponent implements OnInit {
       let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
       var position = 0;  
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF   
+      pdf.save(this.planning.label+'.pdf'); // Generated PDF   
       
 			var url = window.URL.createObjectURL(new Blob([pdf.text()], { type: "application/octet-stream" }));
 			var a = document.createElement('a');

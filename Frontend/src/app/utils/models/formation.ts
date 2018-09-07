@@ -1,5 +1,6 @@
 import { Module } from './module';
 import { UniteParFormation } from './uniteparformation';
+import { Titre } from './titre';
 
 export class Formation {
     CodeFormation:      string
@@ -19,6 +20,7 @@ export class Formation {
     CodeLieu:           number
     uniteparformation:  UniteParFormation[]
     Modules:            Module[]
+    Titre:              Titre[]
 
     constructor(){
     }

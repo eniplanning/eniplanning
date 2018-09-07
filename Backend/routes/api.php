@@ -20,7 +20,10 @@ Route::group([
     ],
 ], function () {
 
+    // ActivityLogController Routes
+    Route::post('activity-log/purge', 'ActivityLogController@purge');
     Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
+
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
     Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
@@ -57,6 +60,7 @@ Route::group([
 
     // FormationController Routes
     Route::get('formationGlobal/{id}', 'FormationController@showWithGlobal');
+    Route::get('formationByPeriodLieu/{formation}/{planning}', 'FormationController@showByPeriodLieu');
     Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
 
     // DocumentController Routes

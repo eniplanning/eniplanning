@@ -19,7 +19,7 @@ class Formation extends Model
 
     public function uniteparformation()
     {
-    	return $this->hasMany(UniteParFormation::class, 'CodeFormation');
+        return $this->hasMany(UniteParFormation::class, 'CodeFormation', 'CodeFormation');
     }
 
     public function titre()
