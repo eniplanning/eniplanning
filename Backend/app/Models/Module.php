@@ -30,4 +30,9 @@ class Module extends Model
     {
         return $this->hasMany(Cours::class, 'IdModule');
     }
+
+    public function uniteparformations()
+    {
+        return $this->belongsToMany(UniteParFormation::class, 'ModuleParUnite', 'IdUnite', 'IdModule');
+    }
 }

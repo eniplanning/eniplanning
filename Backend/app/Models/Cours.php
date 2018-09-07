@@ -30,7 +30,8 @@ class Cours extends Model
 
     public function toModule()
     {
-        return $this->belongsTo(Module::class, 'IdModule');
+        // return $this->belongsTo(Module::class, 'IdModule');
+        return $this->hasOne(Module::class, 'IdModule');
     }
 
     public function promotion()

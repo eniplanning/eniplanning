@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use App\Models\Formation;
+use Illuminate\Http\Request;
+use PhpParser\Node\Param;
+use Illuminate\Support\Facades\Log;
 
 class FormationController extends Controller
 {
@@ -31,14 +31,37 @@ class FormationController extends Controller
     }
 
     public function showWithGlobal(Formation $formation, Request $request)
-    {   
+    {
         // Config::set('database.default', 'enierp');  //Only set database.default for current request
 
         // return Formation::where('CodeFormation', "=", $request->id)->with([
         return $formation->with([
             'promotions',
-            'uniteparformation.modules.cours',
-            'titre'
+            'uniteparformation.module.cours',
+            'titre',
         ])->get()->first()->toJson();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  String $id
+     * @param  String $action
+     * @param  String $date
+     * @param  String $end
+     * @return \Illuminate\Http\Response
+     */
+    public function showWithCoursPeriod($id, $start, $end)
+    {
+        $formation = Formation::find($id);
+        
+        Log::info('FormationController.showWithCoursPeriod.$formation->CodeLieu');
+        Log::info($formation->CodeFormation);
+        
+        $formation
+            // ->where('uniteparformation.modules.cours.CodeLieu', '=', $formation->CodeLieu)
+            ->whereDate('uniteparformation->module->cours->Debut', '>=', $start)
+            ->whereDate('uniteparformation->module->cours->Fin', '<=', $end)
+            ->get()->first()->toJson();
     }
 }

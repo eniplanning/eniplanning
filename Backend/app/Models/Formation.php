@@ -19,11 +19,12 @@ class Formation extends Model
 
     public function uniteparformation()
     {
-    	return $this->hasMany(UniteParFormation::class, 'CodeFormation');
+        // return $this->hasMany(UniteParFormation::class, 'CodeFormation', 'CodeFormation');
+        return $this->belongsToMany(ModuleParUnite::class, 'UniteParFormation', 'CodeFormation', 'IdUniteFormation');
     }
 
     public function titre()
     {
-        return $this->hasOne(Formation::class, 'CodeFormation');
+        return $this->hasOne(Titre::class, 'CodeTitre', 'CodeTitre');
     }
 }

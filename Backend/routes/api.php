@@ -57,6 +57,7 @@ Route::group([
 
     // FormationController Routes
     Route::get('formationGlobal/{id}', 'FormationController@showWithGlobal');
+    Route::get('showWithCoursPeriod/{id}/{start}/{end}', 'FormationController@showWithCoursPeriod');
     Route::resource('formation', 'FormationController', ['except' => ['create', 'edit']]);
 
     // DocumentController Routes
