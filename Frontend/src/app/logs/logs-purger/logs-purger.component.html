@@ -1,0 +1,37 @@
+<li class="nav-item waves-light" mdbWavesEffect>
+    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="purgeModal.show()" >Purger</a>
+</li>
+
+<!-- Modal -->
+<div mdbModal #purgeModal="mdb-modal" class="modal fade" id="modal-create" tabindex="-1"
+    role="dialog" aria-labelledby="purgeModalLabel" aria-hidden="true"  [config]="{backdrop:false}">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header justify-content-center">
+                <!-- titre modal -->
+                <h5 class="modal-title" id="creaModalLabel">Purge des Logs</h5>
+
+                <!-- croix : fermeture modal -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="purgeModal.hide();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- contenu modal -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="text-center">
+                            Etes-vous sûr de vouloir supprimer tous les logs ?
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="purgeModal.hide();sendMessage();">Annuler</button>
+                <button type="button" class="btn btn-primary" (click)="deleteLogs();purgeModal.hide();">Lancer la purge</button>
+            </div>
+        </div>
+    </div>
+</div>

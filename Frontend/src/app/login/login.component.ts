@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
     this.activityLog.causer_id= (result ? (JSON.parse(sessionStorage.getItem('user')).id) : 0);
     this.activityLog.causer_type='Login';
     var date = new Date();
-    this.activityLog.properties= this.datePipe.transform(date,"yyyy-MM-dd hh:ss");
+    this.activityLog.properties= this.datePipe.transform(date,"yyyy-MM-dd hh:mm");
     this.activityLogService.storeActivityLog(this.activityLog).subscribe(
       data => console.log("log d'activité enregistré"), 
       error => console.log("erreur d'enregistrement du log d'activité: "+ error)

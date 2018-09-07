@@ -57,8 +57,16 @@ export class UtilisateursComponent implements OnInit {
         },
         error => {
           console.log(error);
-        }
-      );
+        },
+        () => this.users.sort(function(a, b) {
+          //custom sorting function, sorts by stagiaire.Nom in alphabetical order
+          if (a.name < b.name)
+            return -1;
+          else if (a.name > b.name)
+            return 1;
+          return 0
+        })
+    );
   }
 
   // Changement du statut d'un utilisateur (actif ou non)
@@ -78,8 +86,7 @@ export class UtilisateursComponent implements OnInit {
 
   // Raffraichissement de la liste après modification d'un utilisateur
   refreshList(event){
-    this.getUsers();
-    if (this.users != null) { this.sortBy('name') };
+    this.getUsers();  
   }
 
   // Tri des utilisateurs par type
@@ -106,7 +113,7 @@ export class UtilisateursComponent implements OnInit {
     this.activityLog.subject_type=action;
     this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
     this.activityLog.causer_type='Utilisateur';
-    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd hh:ss");
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd hh:mm");
     this.activityLogService.storeActivityLog(this.activityLog).subscribe(
       data => console.log("log d'activité enregistré"), 
       error => console.log("erreur d'enregistrement du log d'activité: "+ error)
