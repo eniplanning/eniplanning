@@ -11,8 +11,8 @@ class Titre extends Model
     protected $primaryKey = 'CodeTitre';
     protected $keyType = 'string';
 
-    // public function formations()
-    // {
-    //     return $this->hasMany(Formation::class, 'CodeTitre');
-    // }
+    public function formations()
+    {
+        return $this->hasMany(Formation::class, 'CodeFormation', 'CodeFormation');
+    }
 }

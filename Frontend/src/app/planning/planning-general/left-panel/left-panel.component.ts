@@ -138,7 +138,7 @@ export class LeftPanelComponent implements OnInit {
 		console.log('planning sélectionné', this.selectedPlanning);
 
 		//Loading formation with list of modules with list of cours
-		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
+		this.formationService.getFormation(this.selectedPlanning.formation_id, this.selectedPlanning.id).subscribe(
 			(formation: Formation) => {
 				console.log(formation);
 				//sorting modules

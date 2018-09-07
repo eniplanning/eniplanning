@@ -24,6 +24,6 @@ class Formation extends Model
 
     public function titre()
     {
-        return $this->hasOne(Formation::class, 'CodeFormation');
+        return $this->hasOne(Titre::class, 'CodeTitre', 'CodeTitre');
     }
 }

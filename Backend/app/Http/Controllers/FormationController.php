@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use App\Models\Formation;
+use Illuminate\Http\Request;
 
 class FormationController extends Controller
 {
@@ -30,15 +28,12 @@ class FormationController extends Controller
         return $formation->toJson();
     }
 
-    public function showWithGlobal(Formation $formation, Request $request)
-    {   
-        // Config::set('database.default', 'enierp');  //Only set database.default for current request
-
-        // return Formation::where('CodeFormation', "=", $request->id)->with([
+    public function showWithGlobal(Formation $formation)
+    {
         return $formation->with([
             'promotions',
             'uniteparformation.modules.cours',
-            'titre'
+            'titre',
         ])->get()->first()->toJson();
     }
 }

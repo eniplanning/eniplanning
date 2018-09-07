@@ -23,8 +23,8 @@ export class FormationService
     }
 
     // Récupération d'une formations en fonction de son CodeFormation
-    getFormation(codeFormation: string): Observable<Formation>
+    getFormation(codeFormation: string, codePlanning: number): Observable<Formation>
     {
-        return this.http.get<Formation>(this.formation_Promotion_Cours + '/' + codeFormation);
+        return this.http.get<Formation>(this.formation_Promotion_Cours + '/' + codeFormation + '/' + codePlanning);
     }
 }
