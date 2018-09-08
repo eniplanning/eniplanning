@@ -33,7 +33,7 @@ export class CoursPlanningService {
 			date_start: cours.Debut,
 			date_end: cours.Fin,
 			public_price_affected: cours.PrixPublicAffecte,
-			label_course: cours.LibelleCours,
+			label: cours.LibelleCours,
 			real_time_hour: cours.DureeReeleEnHeures,
 			expected_time_hour: cours.DureePrevueEnHeures,
 			date_to_be_define: cours.DateADefinir,
