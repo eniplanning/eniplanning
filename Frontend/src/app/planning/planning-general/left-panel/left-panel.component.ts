@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../../../utils/services/logger.service';
+import { Router } from '@angular/router';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
+import { LieuService } from '../../../utils/services/lieu.service';
 import { FormationService } from '../../../utils/services/formation.service';
 import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
+import { DocumentService } from '../../../utils/services/document.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
+import { Lieu } from '../../../utils/models/lieu';
 import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
 import { CoursPlanning } from '../../../utils/models/cours-planning';
-// import { PLANNINGS } from '../../../utils/mocks/planning';
 
 
 @Component({
@@ -20,11 +23,12 @@ import { CoursPlanning } from '../../../utils/models/cours-planning';
 
 export class LeftPanelComponent implements OnInit {
 
-	stagiaires: 		Stagiaire[];
-	selectedStagiaire: 	Stagiaire;
-	selectedPlanning: 	Planning;
-	formation:			Formation;
-	panelStates: 		{};	 //used to keep track of panels states : open or closed
+	stagiaires: 			Stagiaire[];
+	selectedStagiaire: 		Stagiaire;
+	selectedPlanning: 		Planning;
+	formation:				Formation;
+	libelleLieuFormation: 	String;
+	panelStates: 			{};	 //used to keep track of panels states : open or closed
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -33,7 +37,10 @@ export class LeftPanelComponent implements OnInit {
 		private stagiaireService: 		StagiaireService,
 		private planningService: 		PlanningService,
 		private formationService:		FormationService,
+		private lieuService:			LieuService,
 		private coursPlanningService: 	CoursPlanningService,
+		private documentService: 		DocumentService,
+		private router:					Router,
 	) { }
 
 	ngOnInit() {
@@ -45,13 +52,32 @@ export class LeftPanelComponent implements OnInit {
 			modulesComplementaires: false
 		}
 		this.loadSelectedStagiaire();
+		this.planningService.newPlanning.subscribe(
+			(planning: Planning) => {
+				this.onChangeSelectedStagiaire();
+				this.planningService.setSelectedPlanning(planning);
+			}
+		)
+		this.planningService.updatePlanningsList.subscribe(
+			data => {
+				this.selectedPlanning = null;
+				this.onChangeSelectedStagiaire();
+			},
+			error => console.error(error)
+		)
+	}
+
+	getLieu(code_lieu: number) {
+		this.lieuService.getLieu(code_lieu).subscribe(
+			(lieu: Lieu) => this.libelleLieuFormation = lieu.Libelle
+		);
 	}
 
 	// Récupération des Stagiaires depuis le service : stagiaire
 	getStagiaires(): void {
 	   	this.stagiaireService.getStagiaires().subscribe(
 	   		(stagiaires: Stagiaire[]) => this.stagiaires = stagiaires,
-	   		error => console.log(error),
+	   		error => console.error(error),
 	   		() => this.stagiaires.sort(function(a, b) {
 	   			//custom sorting function, sorts by stagiaire.Nom in alphabetical order
 	   			if (a.Nom < b.Nom)
@@ -64,12 +90,20 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 
-	// Récupère le selectedStagiaire au chargement de la page. Si il exists, il est automatiquement sélectionné dans le ng-select
+	// Récupère le selectedStagiaire au chargement de la page. Si il existe, il est automatiquement sélectionné dans le ng-select
 	loadSelectedStagiaire() {
-		this.selectedStagiaire = JSON.parse(sessionStorage.getItem('selectedStagiaire'));
-		if (this.selectedStagiaire != undefined) {
+		//Fist time we visit the page on a new session, sessionStorage.getItem returns the string 'undefined', so JSON.parse throw an error
+		let unparsedSelectedStagiaire = sessionStorage.getItem('selectedStagiaire');
+		if (unparsedSelectedStagiaire != 'undefined' && unparsedSelectedStagiaire != 'null') {
+			this.selectedStagiaire = JSON.parse(unparsedSelectedStagiaire);
+		}
+		if (this.selectedStagiaire != null) {
 			this.panelStates['informations'] = true;
-			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+		}
+		else {
+			this.stagiaireService.selectedStagiaire.next(this.selectedStagiaire);
+			this.planningService.setSelectedPlanning(null);
 		}
 	}
 
@@ -77,10 +111,20 @@ export class LeftPanelComponent implements OnInit {
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
 	onChangeSelectedStagiaire() {
 		if (this.selectedStagiaire != null) {
-			this.getPlanningsByStagiaire(this.selectedStagiaire['CodeStagiaire']);
+			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
-			console.log('stagiaire sélectionné' , this.selectedStagiaire);
+			this.planningService.setSelectedPlanning(null);
+			console.log('stagiaire sélectionné', this.selectedStagiaire);
 		}
+	}
+
+	//Lorsqu'on vide le ng-Select, on vide la valeur de selectedStagiaire, de selectedPlanning, et on effac les cours dessinés à l'écran
+	onClearSelectedStagiaire() {
+		this.selectedStagiaire = null;
+		this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
+
+		this.selectedPlanning = null;
+		this.planningService.setSelectedPlanning(this.selectedPlanning);
 	}
 
 
@@ -90,11 +134,19 @@ export class LeftPanelComponent implements OnInit {
 		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
 			(plannings: Planning[]) => {
 				this.selectedStagiaire.ListPlannings = plannings;
+				this.selectedStagiaire.ListPlannings.sort(function(a, b) {
+					if (a.label < b.label) return -1;
+					if (a.label > b.label) return 1;
+					return 0;
+				})
 			},
-			error =>  console.log(error),
+			error =>  console.error(error),
 			() => {
-				this.selectedPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning'));
-				if (this.selectedPlanning != undefined) {
+				let unparsedSelectedPlanning = sessionStorage.getItem('selectedPlanning');
+				if (unparsedSelectedPlanning != 'undefined') {
+					this.selectedPlanning = JSON.parse(unparsedSelectedPlanning);
+				}
+				if (this.selectedPlanning != null) {
 					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 					this.selectedStagiaire.ListPlannings.forEach(function(p) {
 						if (p.id == self.selectedPlanning.id) {
@@ -111,12 +163,16 @@ export class LeftPanelComponent implements OnInit {
 
 	// Mise à jour de TODO à la sélection d'un planning
 	onChangeSelectedPlanning(planning: Planning) {
+		if (this.selectedPlanning != null && this.selectedPlanning.id == planning.id) {
+			return;
+		}
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
+		this.getLieu(this.selectedPlanning.code_lieu);
 		console.log('planning sélectionné', this.selectedPlanning);
 
 		//Loading formation with list of modules with list of cours
-		this.formationService.getFormation(this.selectedPlanning.formation_id).subscribe(
+		this.formationService.getFormation(this.selectedPlanning.formation_id, this.selectedPlanning.id).subscribe(
 			(formation: Formation) => {
 				//sorting modules
 				formation.Modules = [];
@@ -144,17 +200,11 @@ export class LeftPanelComponent implements OnInit {
 					});
 				});
 				this.formation = formation;
-				console.log('formation sélectionnée',this.formation);
+				console.log('formation sélectionnée', this.formation);
 			},
-			error => console.log(error)
+			error => console.error(error)
 		);
-
-		//Clear cours on web page from previous planning
-		let c = document.getElementsByClassName('green-bg');
-		console.log(c);
-		while (c[0]) {
-		    c[0].classList.remove('green-bg')
-		}
+		
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {
@@ -175,7 +225,7 @@ export class LeftPanelComponent implements OnInit {
 					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
 					this.drawCoursOnPlanning(old_cours);
 				},
-				error => console.log(error)
+				error => console.error(error)
 			)
 		}
 
@@ -189,7 +239,7 @@ export class LeftPanelComponent implements OnInit {
 					//and draw it on the page
 					this.drawCoursOnPlanning(cours);
 				},
-				error => console.log(error)
+				error => console.error(error)
 			);
 		}
 	}
@@ -212,7 +262,19 @@ export class LeftPanelComponent implements OnInit {
 			} else {
 				document.getElementById(id).parentElement.classList.add('green-bg');
 			}
-			
 		});
+	}
+
+	openModalModifyPlanning() {
+		this.planningService.openModalUpdatePlanning.next([this.selectedPlanning, this.formation]);
+	}
+
+	deletePlanning() {
+		try {
+			this.planningService.deletePlanning(this.selectedPlanning);
+			this.planningService.updatePlanningsList.next(null);
+		} catch (error) {
+			console.error(error);
+		}
 	}
 }

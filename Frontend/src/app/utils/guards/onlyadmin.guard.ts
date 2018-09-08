@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { User } from '../models/user';
-import { ROLES } from '../role';
  
 @Injectable({ providedIn: 'root' })
 export class OnlyAdminGuard implements CanActivate {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Stagiaire;
 use App\Models\StagiaireParEntreprise;
+use Illuminate\Support\Facades\DB;
 
 class StagiaireParEntrepriseController extends Controller
 {
@@ -17,5 +18,22 @@ class StagiaireParEntrepriseController extends Controller
         return StagiaireParEntreprise::where('codeStagiaire', [$stagiaire->CodeStagiaire])
             ->orderBy('DateDebutEnEts', 'desc')
             ->first();
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(int $id)
+    {
+        $spe = new StagiaireParEntreprise();
+        $spe->setConnection('enierp');
+        $spe = StagiaireParEntreprise::where('CodeStagiaire', $id)
+            ->orderBy('NumLien', 'desc')
+            ->first();
+        return $spe->toJson();
     }
 }

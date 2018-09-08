@@ -3,14 +3,14 @@
 
 <!-- titre de la page -->
 <div class="card">
-    <h1>Gérer les Utilisateurs de l'application</h1>
+    <h2>Gestion des utilisateurs</h2>
 </div>
 <div class="card-body">
 
     <!-- zone de recherche -->
     <div class="md-form">
         <i class="fa fa-search prefix"></i>
-        <input type="search" [(ngModel)]="searchValue" id="search" class="form-control" mdbInputDirective [mdbValidate]="false">
+        <input type="search" [(ngModel)]="searchValue" id="searchText" class="form-control" mdbInputDirective [mdbValidate]="false">
         <label for="searchText">Saisissez un nom</label>
     </div>      
 
@@ -26,7 +26,7 @@
                         <th>Prénom <mdb-icon (click)="sortBy('firstname')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
                         <th>Email <mdb-icon (click)="sortBy('email')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
                         <th>Role <mdb-icon (click)="sortBy('role_id')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
-                        <th style="width: 10%">Actif    <mdb-icon (click)="sortBy('is_active')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>    
+                        <th style="width: 10%"  style="text-align: center">Autorisation d'accès    <mdb-icon (click)="sortBy('is_active')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>    
                         <th style="width: 10%"></th>
                         <th style="width: 10%"></th>
                     </tr>
@@ -43,19 +43,19 @@
                             <span *ngSwitchCase="2">Responsable Pédagogique</span>
                             <span *ngSwitchCase="3">Administrateur</span>
                         </td> 
-                        <td *ngIf="user.is_active == '1'"></td>
-                        <td *ngIf="user.is_active == '0'"><i class="fa fa-lock"></i></td>
+                        <td *ngIf="user.is_active == '1'" style="text-align: center"><i class="fa fa-user"></i></td>
+                        <td *ngIf="user.is_active == '0'" style="text-align: center"><i class="fa fa-lock"></i></td>
                         <!-- Modification du compte utilisateur -->
                         <td> 
-                            <app-utilisateur-form *ngIf="user.email != 'administrateur@eniplanning.fr'" 
+                            <app-utilisateur-form *ngIf="user.email != admin" 
                                 (closed)="refreshList($event)" action="Modifier"  showPasswordButton="true" [selectedUser]=user>
                             </app-utilisateur-form> 
                         </td>
                         <!-- Activation du compte utilisateur -->
                         <td> 
-                            <span *ngIf="user.email != 'administrateur@eniplanning.fr'">
-                                <span *ngIf="user.id != currentUser.id"> 
-                                    <a (click)="changeStatus(user, user.is_active)">
+                            <span *ngIf="user.email != admin">
+                                <span *ngIf="user.id != currentUser.id" > 
+                                    <a (click)="changeStatus(user, user.is_active)" >
                                         <span *ngIf="user.is_active == '1'" >Désactiver</span>
                                         <span *ngIf="user.is_active == '0'" >Activer</span>
                                     </a>

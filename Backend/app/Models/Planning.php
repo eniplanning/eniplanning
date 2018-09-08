@@ -25,6 +25,7 @@ class Planning extends Model
         'stagiaire_id',
         'formation_id',
         'user_id',
+        'code_lieu',
     ];
 
     public function ctrDisponibilities()
@@ -45,5 +46,10 @@ class Planning extends Model
     public function planningCourses()
     {
         return $this->hasMany(PlanningCourse::class, 'planning_id', 'id');
+    }
+
+    public function lieu()
+    {
+        return $this->hasOne(Planning::class, 'lieu_id');
     }
 }

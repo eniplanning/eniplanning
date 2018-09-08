@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { CONFIG } from '../../utils/config';
 import { Formation } from '../models/formation';
+import { API } from '../api';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Formation } from '../models/formation';
 export class FormationService
 {
     formationAPI = CONFIG.backend_url + 'formation'
-    formation_Promotion_Cours = CONFIG.backend_url + 'formationGlobal'
+    formation_Promotion_Cours = CONFIG.backend_url + 'formationByPeriodLieu'
 
     constructor(private http: HttpClient){
     }
@@ -22,9 +23,16 @@ export class FormationService
         return this.http.get<Formation[]>(this.formationAPI);
     }
 
-    // Récupération d'une formations en fonction de son CodeFormation
-    getFormation(codeFormation: string): Observable<Formation>
+    // Récupération d'une formation en fonction de son CodeFormation
+    getFormation(codeFormation: string, codePlanning: number): Observable<Formation>
     {
-        return this.http.get<Formation>(this.formation_Promotion_Cours + '/' + codeFormation);
+        return this.http.get<Formation>(this.formation_Promotion_Cours + '/' + codeFormation + '/' + codePlanning);
+    }
+    
+
+    // Récupération d'une formation en fonction de son CodeFormation
+    getFormationById(codeFormation: string): Observable<Formation>
+    {
+        return this.http.get<Formation>(API.formation+ '/'+codeFormation);
     }
 }

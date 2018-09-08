@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Planning } from '../../../utils/models/planning';
+import { PlanningService } from '../../../utils/services/planning.service';
 
 @Component({
   	selector: 'planning-right-panel',
@@ -7,37 +9,40 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class RightPanelComponent implements OnInit {
 
-	public calendarDisplayRange: string;
-	data: {dateDebut: string, dateFin: string, libelle: string}[]
-
 	@ViewChild('scroll', { read: ElementRef }) public scroll: ElementRef<any>;
 
-	months = [
-		{year: 2018, month: 1},
-		{year: 2018, month: 2},
-		{year: 2018, month: 3},
-		{year: 2018, month: 4},
-		{year: 2018, month: 5},
-		{year: 2018, month: 6},
-		{year: 2018, month: 7},
-		{year: 2018, month: 8},
-		{year: 2018, month: 9},
-		{year: 2018, month: 10},
-		{year: 2018, month: 11},
-		{year: 2018, month: 12}
-	];
+	calendarDisplayRange: 	String = "12";
+	selectedPlanning: 		Planning;
+	totalHours: 			Number = 0;
+
+	months: any[];
 	
-  	constructor() {}
+  	constructor(
+  		private planningService: 		PlanningService,
+  		public changeDetector: 			ChangeDetectorRef
+  	) {}
 
  	ngOnInit() {
- 		this.calendarDisplayRange = "12";
-
-		//fetch data from server
-		this.data = [
-			{dateDebut: '2018-02-05', dateFin: '2018-02-09', libelle: 'Java1'},
-			{dateDebut: '2018-04-09', dateFin: '2018-04-20', libelle: 'Java2'},
-			{dateDebut: '2018-05-25', dateFin: '2018-05-21', libelle: 'PHP'}
-		]
+ 		this.planningService.selectedPlanning.subscribe(
+ 			//things to do when selectedPlanning is updated
+            (planning: Planning) => {
+            	this.selectedPlanning = planning;
+            	if (this.selectedPlanning == null) {
+            		//disable calendar view
+            		this.months = null;
+            	}
+            	else {
+            		//constructs variable months to toggle calendar view
+	            	let startPlanning = new Date(this.selectedPlanning.date_start_formation);
+	            	let endPlanning = new Date(this.selectedPlanning.date_end_formation);
+	            	this.months = [];
+	            	for (var d = startPlanning; d <= endPlanning; d.setMonth(d.getMonth() + 1)) {
+	            		this.months.push({ year: d.getFullYear(), month: d.getMonth() + 1 });
+	            	}
+	            	this.changeDetector.detectChanges();
+            	}
+            }
+        );
   	}
 
   	setCalendarDisplayRange(months) {

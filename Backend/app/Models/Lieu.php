@@ -10,4 +10,9 @@ class Lieu extends Model
     protected $connection = 'enierp';
     protected $table = 'lieu';
     protected $primaryKey = 'CodeLieu';
+
+    public function plannings()
+    {
+        return $this->hasMany(Planning::class, 'lieu_id');
+    }
 }

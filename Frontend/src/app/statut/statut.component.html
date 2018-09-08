@@ -21,6 +21,12 @@
                 <!-- contenu du tableau -->
                 <tbody> 
                     <tr>
+                        <td> Applicatif BackEnd : LARAVEL </td> 
+                        <td [class]="backend ? 'btn-success' : 'btn-danger'" >
+                             {{ backendStatus }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td> Base de données : ENI PLANNING </td> 
                         <td [class]="eniDatabase ? 'btn-success' : 'btn-danger'" >
                             {{ eniDatabaseStatus }}
@@ -30,12 +36,6 @@
                         <td> Base de données : ERP </td> 
                         <td [class]="erpDatabase ? 'btn-success' : 'btn-danger'" >
                             {{ erpDatabaseStatus }} 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> Backend Laravel : ERP </td> 
-                        <td [class]="backend ? 'btn-success' : 'btn-danger'" >
-                             {{ backendStatus }}
                         </td>
                     </tr>
                 </tbody>

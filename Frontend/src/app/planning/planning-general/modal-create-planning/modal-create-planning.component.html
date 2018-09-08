@@ -1,5 +1,5 @@
-<li class="nav-item waves-light" mdbWavesEffect>
-    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="createModal.show()" >Créer</a>
+<li class="nav-item waves-light" mdbWavesEffect *ngIf="selectedStagiaire != undefined">
+    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="openModalNewPlanning()" >Créer</a>
 </li>
 
 <!-- Modal -->
@@ -7,16 +7,16 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="creaModalLabel">Paramètres du planning</h5>
+                <h5 class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" *ngIf="selectedStagiaire != undefined">
                 <div class="row">
-                    <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6">
+                    <div class="col-8 offset-2 pb-4">
                         <mat-form-field>
-                            <input matInput [(ngModel)]="nomPlanning" placeholder="Nom du planning">
+                            <input matInput [(ngModel)]="nomPlanning" placeholder="Nom du planning" class="col-12">
                         </mat-form-field>
                     </div>
                 </div>
@@ -25,40 +25,40 @@
                     <div class="col-xs-12 col-md-6">
                         <p>Stagiaire : {{ selectedStagiaire.Nom }} {{ selectedStagiaire.Prenom }}</p>
                         <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }}</p>
-                        <ng-select class="" placeholder="Choisir une formation" [(ngModel)]="selectedFormation">
+                        <ng-select placeholder="Choisir une formation" [(ngModel)]="selectedFormation" bindLabel="LibelleCourt">
                             <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
                         </ng-select>
-                        <ng-select class="custom" placeholder="Choisir un site de formation">
+                        <ng-select placeholder="Choisir un site de formation" [(ngModel)]="selectedLieu" bindLabel="Libelle">
                             <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
                         </ng-select>
-                        <ng-select class="custom" placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">
+                        <ng-select placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">
 
                         </ng-select>
                     </div>
                     <!-- Partie droite de la modal de création -->
                     <div class="col-xs-12 col-md-6 row">
-                            <div class="col-lg-offset-3 col-lg-9 col-md-offset-3 col-md-9">
+                            <div class="col-12 text-center">
                                 <mat-form-field>
                                     <input matInput [(ngModel)]="selectedDebutC" [matDatepicker]="date_debut_contract"  placeholder="Date de début de contrat">
                                     <mat-datepicker-toggle matSuffix [for]="date_debut_contract"></mat-datepicker-toggle>
                                     <mat-datepicker #date_debut_contract ></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-offset-3 col-lg-9 col-md-offset-3 col-md-9">
+                            <div class="col-12 text-center">
                                 <mat-form-field>
                                     <input matInput [(ngModel)]="selectedFinC" [matDatepicker]="date_fin_contract" placeholder="Date de fin de contrat">
                                     <mat-datepicker-toggle matSuffix [for]="date_fin_contract"></mat-datepicker-toggle>
                                     <mat-datepicker #date_fin_contract></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-offset-3 col-lg-9 col-md-offset-3 col-md-9">
+                            <div class="col-12 text-center">
                                 <mat-form-field>
                                     <input matInput [(ngModel)]="selectedDebutF" [matDatepicker]="date_debut_formation" placeholder="Date de début de formation">
                                     <mat-datepicker-toggle matSuffix [for]="date_debut_formation"></mat-datepicker-toggle>
                                     <mat-datepicker #date_debut_formation></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="col-lg-offset-3 col-lg-9 col-md-offset-3 col-md-9">
+                            <div class="col-12 text-center">
                                 <mat-form-field>
                                     <input matInput [(ngModel)]="selectedFinF" [matDatepicker]="date_fin_formation" placeholder="Date de fin de formation">
                                     <mat-datepicker-toggle matSuffix [for]="date_fin_formation"></mat-datepicker-toggle>
@@ -67,9 +67,14 @@
                             </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-error" *ngIf="selectedStagiaire == undefined">
-                Sélectionnez d'abord un stagiaire
+                <div class="row">
+                    <div class="alert alert-danger col-6 offset-3 text-center" [hidden]="!errorCreatePlanning">
+                        {{ errorCreatePlanning }}
+                    </div>
+                    <div class="alert alert-success col-6 offset-3 text-center" [hidden]="!successCreatePlanning">
+                        {{ successCreatePlanning }}
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>

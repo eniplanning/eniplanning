@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Log;
 
+
+/**
+ * User Controller Class
+ */
 class UserController extends Controller
 {
 
@@ -30,7 +34,6 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(SignUpRequest $request)
-    //public function store(Request $request)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.')');
         $user = User::create($request->all());
@@ -40,13 +43,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
     {   
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$user.')');
-        // dd($user);
         return $user->toJson();
     }
 
@@ -59,25 +61,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        Log::info('request :' .$request);
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.' '.$user.')');
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => [
                 'required',
                 Rule::unique('users')->ignore($user->id),
-                'email'
+                'email',
             ]
         ]);
-    
-        //$request['password'] = Hash::make($request['password']);
         $user->update($request->all());
         return $user->toJson();
-     
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource Password in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  User  $user
@@ -85,12 +83,13 @@ class UserController extends Controller
      */
     public function updatePassword(Request $request, User $user)
     {
-        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ('.$request.' '.$user.')');
         $validatedData = $request->validate([
             'password' => [
                 'required',
                 'string',
-                'confirmed'
+                'confirmed',
+                'min:6',
             ]
         ]);
         $user = User::find($request['id']);

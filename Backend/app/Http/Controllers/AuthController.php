@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Http\Controllers\UserController;
 use Log;
 
+/**
+ * Auth Controller Class
+ */
 class AuthController extends Controller
 {
     /**
@@ -45,6 +48,7 @@ class AuthController extends Controller
      */
     public function me()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return response()->json(auth()->user());
     }
 
@@ -55,6 +59,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         auth()->logout();
 
         return response()->json(['message' => 'Vous êtes déconnecté !']);
@@ -67,6 +72,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $this->respondWithToken(auth()->refresh());
     }
 

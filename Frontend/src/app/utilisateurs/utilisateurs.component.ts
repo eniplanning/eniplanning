@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../utils/models/user';
 import { UserService } from '../utils/services/user.service';
 import { ROLES } from '../utils/role';
+import { CONFIG } from '../utils/config';
+import { ActivityLog } from '../utils/models/activitylog';
+import { ActivityLogService } from '../utils/services/activitylog.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -10,15 +14,19 @@ import { ROLES } from '../utils/role';
 })
 export class UtilisateursComponent implements OnInit {
 
+  admin :string = CONFIG.email_administrateur;
   users: User[];
   selectedUser: User;
   roles = ROLES;
   currentUser: String;
   private sorted = false;
   searchValue: string;
+  activityLog: ActivityLog;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private activityLogService: ActivityLogService,
+    private datePipe: DatePipe,
   ) { } 
 
   ngOnInit() {
@@ -49,8 +57,16 @@ export class UtilisateursComponent implements OnInit {
         },
         error => {
           console.log(error);
-        }
-      );
+        },
+        () => this.users.sort(function(a, b) {
+          //custom sorting function, sorts by stagiaire.Nom in alphabetical order
+          if (a.name < b.name)
+            return -1;
+          else if (a.name > b.name)
+            return 1;
+          return 0
+        })
+    );
   }
 
   // Changement du statut d'un utilisateur (actif ou non)
@@ -59,6 +75,7 @@ export class UtilisateursComponent implements OnInit {
     user.is_active = (is_active == 1 ? 0 : 1);
     return this.userService.updateUser(user).subscribe(
       data=>{
+        this.createActivityLog((user.is_active ? 'Activer' : 'Désactiver'), user);
         console.log(data);
       },
       error=>{ 
@@ -69,7 +86,7 @@ export class UtilisateursComponent implements OnInit {
 
   // Raffraichissement de la liste après modification d'un utilisateur
   refreshList(event){
-    this.getUsers();
+    this.getUsers();  
   }
 
   // Tri des utilisateurs par type
@@ -87,4 +104,20 @@ export class UtilisateursComponent implements OnInit {
     this.sorted = !this.sorted;
   }
 
+  // Journalisation de l'activité
+  createActivityLog(action: string, user: User) {
+    this.activityLog = new ActivityLog();
+    this.activityLog.log_name = JSON.parse(sessionStorage.getItem('user')).name+ ' '+ JSON.parse(sessionStorage.getItem('user')).firstname;
+    this.activityLog.description = user.email + ' : ' + user.firstname + ' ' + user.name;
+    this.activityLog.subject_id=null;
+    this.activityLog.subject_type=action;
+    this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
+    this.activityLog.causer_type='Utilisateur';
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm", 'fr-Fr');
+    this.activityLogService.storeActivityLog(this.activityLog).subscribe(
+      data => console.log("log d'activité enregistré"), 
+      error => console.log("erreur d'enregistrement du log d'activité: "+ error)
+    );
+    this.activityLog = null;
+  }
 }

@@ -8,6 +8,9 @@ use App\Models\User;
 use Log;
 
 
+/**
+ * StatusService Controller Class
+ */
 class StatusServiceController extends Controller {
     
     use RefreshDatabase;

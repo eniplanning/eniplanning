@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/logs
 /vendor
 /.idea
 /.vscode
@@ -17,3 +18,4 @@ yarn-error.log
 /angular-tour-of-heroes/*
 /DBScript/e*
 /Installation/*
+Backend/Storage/*

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { Stagiaire } from '../../utils/models/stagiaire';
 
 @Component({
   selector: 'app-planning',
@@ -9,7 +10,7 @@ import localeFr from '@angular/common/locales/fr';
 })
 export class PlanningComponent implements OnInit {
 
-  username: string;
+  username: String;
   
   constructor() { }
 

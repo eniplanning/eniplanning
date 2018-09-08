@@ -3,14 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivityLogTable extends Migration
+class CreateActivityLogsTable extends Migration
 {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up()  
     {
-        Schema::create('activity_log', function (Blueprint $table) {
+        Schema::create('activity_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('log_name')->nullable();
             $table->text('description');
@@ -20,7 +20,6 @@ class CreateActivityLogTable extends Migration
             $table->string('causer_type')->nullable();
             $table->text('properties')->nullable();
             $table->timestamps();
-
             $table->index('log_name');
         });
     }
@@ -30,6 +29,6 @@ class CreateActivityLogTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_log');
+        Schema::drop('activity_logs');
     }
 }

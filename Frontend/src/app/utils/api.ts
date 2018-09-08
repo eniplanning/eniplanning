@@ -7,4 +7,13 @@ export const API = {
     'backendstatusAPI' : (CONFIG.backend_url + 'backend'), 
     'eniDBstatusAPI' : (CONFIG.backend_url + 'enidbstatus'), 
     'erpDBstatusAPI' : (CONFIG.backend_url + 'erpstatus'), 
+    'getPlanningAPI' : (CONFIG.backend_url + 'document/getplanning'),
+    'storeActivityLogAPI' : (CONFIG.backend_url + 'activity-log'),
+    'getActivityLogsAPI' : (CONFIG.backend_url + 'activity-log'),
+    'purgeLogs' : (CONFIG.backend_url + 'activity-log/purge'),
+    'backendTitre' : (CONFIG.backend_url + 'titre'),
+    'formation' : (CONFIG.backend_url + 'formation'),
+    'stagiaireParEntreprise':  (CONFIG.backend_url + 'stagiaireparentreprise'),
+    'entreprise':  (CONFIG.backend_url + 'entreprise'),
+    'coursPlanning':  (CONFIG.backend_url + 'planningcoursebyplanning'),
 };

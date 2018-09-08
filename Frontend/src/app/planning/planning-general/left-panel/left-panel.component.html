@@ -5,7 +5,7 @@
  <div *ngIf="undefined === stagiaires">Chargement...</div>
  <div *ngIf="undefined !== stagiaires">
     <!-- bindLabel n'accepte qu'une propriété. TODO: ajouter une propriété au modèle Stagiaire qui concatène le nom et le prénom  -->
-    <ng-select class="custom" [items]="stagiaires" [groupBy]="groupByFirstLetter" bindLabel="NomComplet" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)">
+    <ng-select class="custom" [items]="stagiaires" [groupBy]="groupByFirstLetter" bindLabel="NomComplet" [(ngModel)]="selectedStagiaire" placeholder="Stagiaire" (change)="onChangeSelectedStagiaire(selectedStagiaire)" (clear)="onClearSelectedStagiaire()">
         <ng-template ng-label-tmp let-item="item">{{item.Nom}} {{item.Prenom}}</ng-template>
     </ng-select>
   </div>
@@ -21,9 +21,8 @@
             <div>
                 <div class="content-body">
                     <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
-                    <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
-                    <p>Formation suivie :</p>
-                    <p>Site :</p>
+                    <p>Ville : {{ selectedStagiaire.Ville | titlecase }}</p>
+                    <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}}</p>
                 </div>
                 <div class="content-title">Plannings</div>
                 <div class="content-body">
@@ -34,19 +33,21 @@
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
                              {{ planning.label }}
-                            <div class="btn-group" mdbDropdown>
-                                <div mdbDropdownToggle class="waves-light" mdbWavesEffect>
-                                    <fa name="ellipsis-h" size="1x"></fa>
-                                </div>
 
+                             <!-- menu contextuel des plannings -->
+                             <div class="btn-group col-span-3" mdbDropdown>
+                                <a mdbDropdownToggle class="waves-light" mdbWavesEffect>
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                                </a>
                                 <div class="dropdown-menu dropdown-primary">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" target="_blank" [routerLink]="['generate-html', planning.id]">Visualiser</a>
+                                    <a class="dropdown-item" (click)=openModalModifyPlanning()>Modifier</a>
+                                    <a class="dropdown-item" (click)="deletePlanning()">Supprimer</a>
                                     <div class="divider dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
                             </div>
+                            
                         </li>
                     </ul>
                 </div>
@@ -61,9 +62,11 @@
         </div>
         <div class="panel-content" *ngIf="panelStates['planning']">
             <div class="content-body">
+                <div *ngIf="formation" class="text-center libelle-formation">Formation : {{formation.LibelleLong}}</div>
+                <div *ngIf="formation" class="text-center libelle-formation">Lieu de formation : {{libelleLieuFormation | titlecase}}</div>
                 <ul class="module-list fa-ul" *ngIf="formation">
                     <li class="module" *ngFor="let module of formation.Modules">
-                        <div (click)="module.visible = !module.visible"><span class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
+                        <div (click)="module.visible = !module.visible"><span *ngIf="module.cours.length > 0" class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
                         <ul class="cours-list fa-ul" *ngIf="module.visible">
                             <li class="cours" *ngFor="let cours of module.cours">
                                 <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>

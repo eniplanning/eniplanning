@@ -3,7 +3,10 @@ import { ROLES } from '../../utils/role';
 import { Router } from '@angular/router';
 import { RegisterService } from '../../utils/services/register.service';
 import { UserService } from '../../utils/services/user.service';
+import { ActivityLogService } from '../../utils/services/activitylog.service';
 import { User} from '../../utils/models/user';
+import { ActivityLog } from '../../utils/models/activitylog';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-utilisateur-form',
@@ -12,14 +15,21 @@ import { User} from '../../utils/models/user';
 })
 
 export class UtilisateurFormComponent implements OnInit {
+  
+  // A la fermeture de la modal, envoi d'un message pour raffraichissement de la liste
   @Output() closed = new EventEmitter<string>();
+  sendMessage(){
+    this.closed.emit();
+  }
 
+  
   roles = ROLES;
   confirm_password: string = null;
   showPasswordForm: boolean = false;
   showResetButton: boolean = false;
   showForm:boolean = true;
   disabledPasswordButton:boolean = false;
+  activityLog : ActivityLog = null;
   @Input() selectedUser: User;
   @Input() action: string;
   @Input() showPasswordButton: boolean;
@@ -31,13 +41,25 @@ export class UtilisateurFormComponent implements OnInit {
   constructor(
     private registerService : RegisterService,
     private userService : UserService,
+    private activityLogService: ActivityLogService,
     private router: Router,
+    private datePipe: DatePipe,
   ) { }
 
-  // A la fermeture de la modal, envoi d'un message pour raffraichissement de la liste
-  sendMessage(){
-    this.closed.emit();
+  ngOnInit() {
+    if (this.action == 'Créer') {
+      this.showPasswordForm = true;
+      this.disabledPasswordButton = true;
+      this.selectedUser = new User();
+    } else if (this.action = 'Modifier') {
+      this.disabledPasswordButton = false;
+      this.showPasswordForm = false;
+    }
+    this.showResetButton = false; 
+    this.confirmMsg = null;
+    this.errorMsg = null;
   }
+
 
   // Validation du formulaire
   onSubmit() {
@@ -53,6 +75,7 @@ export class UtilisateurFormComponent implements OnInit {
         this.updatePasswordUser();
       }
     }
+    this.createActivityLog(this.action);
     this.showResetButton = false;
   }
 
@@ -61,20 +84,6 @@ export class UtilisateurFormComponent implements OnInit {
     this.showPasswordForm = change;
     this.showForm = !this.showPasswordForm;
     this.showResetButton = false;
-    this.confirmMsg = null;
-    this.errorMsg = null;
-  }
-
-  ngOnInit() {
-    if (this.action == 'Créer') {
-      this.showPasswordForm = true;
-      this.disabledPasswordButton = true;
-      this.selectedUser = new User();
-    } else if (this.action = 'Modifier') {
-      this.disabledPasswordButton = false;
-      this.showPasswordForm = false;
-    }
-    this.showResetButton = false; 
     this.confirmMsg = null;
     this.errorMsg = null;
   }
@@ -95,7 +104,7 @@ export class UtilisateurFormComponent implements OnInit {
     );
   }
 
-  // Récupération des données en cas d'annulation des modifications
+  // Récupérer less données en cas d'annulation des modifications
   resetInformationsCompte() {
     this.userService.getUser(this.selectedUser.id).subscribe(
       (data: User) => {
@@ -158,5 +167,22 @@ export class UtilisateurFormComponent implements OnInit {
     } else {
       this.error=error.error.errors; 
     }
+  }
+
+  // Journalisation de l'activité
+  createActivityLog(action: string) {
+    this.activityLog = new ActivityLog();
+    this.activityLog.log_name = JSON.parse(sessionStorage.getItem('user')).name+ ' '+ JSON.parse(sessionStorage.getItem('user')).firstname;
+    this.activityLog.description = this.selectedUser.email+ ' ' +this.selectedUser.firstname + ' ' + this.selectedUser.name;
+    this.activityLog.subject_id=null;
+    this.activityLog.subject_type=action;
+    this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
+    this.activityLog.causer_type='Utilisateur';
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm", 'fr-Fr');
+    this.activityLogService.storeActivityLog(this.activityLog).subscribe(
+      data => console.log("log d'activité enregistré"), 
+      error => console.log("erreur d'enregistrement du log d'activité: "+ error)
+    );
+    this.activityLog = null;
   }
 }
