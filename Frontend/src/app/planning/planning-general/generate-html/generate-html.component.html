@@ -116,6 +116,66 @@
       </tbody>
     </table>
 
+<!-- ********************************************* A SUPPRIMER -->
+<!-- template semaine en entreprise -->
+<table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+    <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+      <!-- détail de la ligne si en entreprise -->
+      <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+      </tr>
+      <!-- détail de la ligne si en cours -->
+      <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+          <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+              <table style=" width:100%">
+                  <tr style=" width:100%">
+                    <td>ENI (Nantes)</td>
+                  </tr>
+                  <tr>
+                    <td>{{ cours.expected_time_hour.toString() }} heures</td>
+                  </tr>
+              </table>
+          </td>
+          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- template semaine en entreprise -->
+  <table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+      <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+        <!-- détail de la ligne si en entreprise -->
+        <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+        </tr>
+        <!-- détail de la ligne si en cours -->
+        <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+            <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                <table style=" width:100%">
+                    <tr style=" width:100%">
+                      <td>ENI (Nantes)</td>
+                    </tr>
+                    <tr>
+                      <td>{{ cours.expected_time_hour.toString() }} heures</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label }}</td>
+        </tr>
+      </tbody>
+    </table>
+<!-- ********************************************* A SUPPRIMER -->
+    
+
     <!-- dernière ligne en entreprise -->
     <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
         <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
@@ -130,3 +190,4 @@
     </table>
   </div>
 </div>
+<div style="margin-bottom:200px;"></div>
