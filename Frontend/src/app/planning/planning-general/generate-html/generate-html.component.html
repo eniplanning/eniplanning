@@ -29,10 +29,10 @@
   <div id="date_formation" style="margin: 0px; margin-top:20px; padding:5px">
     <div id="label_date_formation_debut" style="float:left; margin-left:30px">
       <span style="color:grey">Date de début (formation) : </span>
-      <span id="date_formation_debut"style="font-weight: bold"> {{ planning.date_start_formation }}</span></div>
+      <span id="date_formation_debut"style="font-weight: bold"> {{ getDisplayDate(planning.date_start_formation) }}</span></div>
     <div id="label_date_formation_fin" style="float:right; margin-right: 30px">
       <span style="color:grey">Date de fin (formation) : </span>
-      <span id="date_formation_fin" style="font-weight: bold">{{ planning.date_end_formation }}</span></div>
+      <span id="date_formation_fin" style="font-weight: bold">{{  getDisplayDate(planning.date_end_formation) }}</span></div>
   </div>
 
   <!-- heures de formations -->
@@ -56,7 +56,6 @@
 
   <!-- tableau du planning -->
   <div id="planning"   style="margin-top: 50px; padding:5px; width:19.5cm; margin-left: 25px">
-
     <!-- entête du tableau-->
     <table style="text-align:center;  width:100%; border-collapse: collapse;">
       <thead style="text-align:center; border-collapse: collapse; background-color:lightgray">
@@ -75,106 +74,60 @@
       </thead>
     </table>
 
-    <!-- template semaine en entreprise -->
+    <!-- première ligne en entreprise -->
     <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+        <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+          <!-- détail de la ligne -->
+          <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ endOfBeginEntreprise }}</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%"></td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+          </tr>
+        </tbody>
+    </table>
+
+    <!-- template semaine en entreprise -->
+    <table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
       <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
-        <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">22/09/2017</td>
+        <!-- détail de la ligne si en entreprise -->
+        <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ setMondayBefore(cours) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ setFridayBefore(cours) }}</td>
             <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">3 semaines </td>
             <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
         </tr>
-      </tbody>
-    </table>
-    
-    <!-- template semaine à l'école -->
-    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-      <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+        <!-- détail de la ligne si en cours -->
         <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-              <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                  <table style=" width:100%">
-                      <tr style=" width:100%">
-                        <td>ENI (Nantes)</td>
-                      </tr>
-                      <tr>
-                        <td>70 heures</td>
-                      </tr>
-                  </table>
-              </td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-          </tr>
+            <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                <table style=" width:100%">
+                    <tr style=" width:100%">
+                      <td>ENI (Nantes)</td>
+                    </tr>
+                    <tr>
+                      <td>{{ cours.DureeReeleEnHeures }} heures</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label_course }}</td>
+        </tr>
       </tbody>
     </table>
 
-    <!-- template semaine à l'école -->
+    <!-- dernière ligne en entreprise -->
     <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-          <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                    <table style=" width:100%">
-                        <tr style=" width:100%">
-                          <td>ENI (Nantes)</td>
-                        </tr>
-                        <tr>
-                          <td>70 heures</td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-            </tr>
+        <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+          <!-- détail de la ligne -->
+          <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ beginOfEndEntreprise }}</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%"></td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+          </tr>
         </tbody>
-      </table>
+    </table>
 
-
-
-    
-    <!-- template semaine à l'école -->
-    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-          <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                    <table style=" width:100%">
-                        <tr style=" width:100%">
-                          <td>ENI (Nantes)</td>
-                        </tr>
-                        <tr>
-                          <td>70 heures</td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-            </tr>
-        </tbody>
-      </table>
-
-
-
-    
-    <!-- template semaine à l'école -->
-    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-          <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                    <table style=" width:100%">s
-                      <tr>
-                        <td>ENI (Nantes)</td>
-                      </tr>
-                      <tr>
-                        <td>70 heures</td>
-                      </tr>
-                    </table>
-                </td>
-                <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-            </tr>
-        </tbody>
-      </table>
   </div>
 </div>

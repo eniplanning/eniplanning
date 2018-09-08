@@ -35,7 +35,11 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   entreprise: Entreprise;
   stagiaireparentreprise: StagiaireParEntreprise;
   nb_heures_formations: number;
-  cours_planning: CoursPlanning;
+  cours_planning: CoursPlanning[];
+  endOfBeginEntreprise: string;
+  beginOfEndEntreprise: string;
+  fridayBefore: string;
+  mondayAfter: string;
   
   constructor(
     private route: ActivatedRoute,
@@ -57,6 +61,64 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  // Formatage des dates pour l'affichage
+  getDisplayDate(date:Date) {
+    return this.datePipe.transform(date,"dd/MM/yyyy", 'fr-Fr');
+  }
+  
+  // Affichage de la première date en entreprise (vendredi)
+  setFirstDateEntreprise() {
+    var beforeDate = new Date(this.cours_planning[0].date_start);
+    beforeDate.setDate(beforeDate.getDate() - 3);
+    this.endOfBeginEntreprise = this.getDisplayDate(beforeDate);
+  }
+  
+  // Affichage de la dernière date en entreprise (lundi)
+  setLastDateEntreprise() {
+    var nextDate = new Date(this.cours_planning[this.cours_planning.length-1].date_end);
+    nextDate.setDate(nextDate.getDate() + 3);
+    this.beginOfEndEntreprise = this.getDisplayDate(nextDate);
+  }
+  // Affichage des dates
+  setMondayBefore(cours: CoursPlanning) {
+    var nextDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)-1].date_end);
+    nextDate.setDate(nextDate.getDate() + 3);
+    return this.getDisplayDate(nextDate);
+  }
+  
+  // Affichage des dates
+  setFridayBefore(cours: CoursPlanning) {
+    if (this.cours_planning.indexOf(cours) != 0){
+      var beforeDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)].date_start);
+      beforeDate.setDate(beforeDate.getDate() - 3);
+      return this.getDisplayDate(beforeDate);
+    }
+  }
+
+
+  // Vérifier si les cours se suivent
+  isConsecutive(cours:CoursPlanning) {
+    console.log("début du passage sur le cours :"+cours.id);
+    var indexCours = this.cours_planning.indexOf(cours);
+    console.log("indexCours:"+ indexCours);
+    if (indexCours != 0) {
+      var indexPreviouxCours = (this.cours_planning.indexOf(cours) -1);
+      var previousCours = this.cours_planning[indexPreviouxCours];
+      var date_start_convert = new Date(cours.date_start);
+      var date_previous_end_convert = new Date(previousCours.date_end);
+      var diff = Math.abs(date_start_convert.getDate() - date_previous_end_convert.getDate());
+      var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+      if (diffDays < 5) {  
+        console.log("fin passage sur le cours :"+cours.id);
+        return true;
+      }
+    }
+    console.log("fin passage sur le cours :"+cours.id);
+    console.log("fin passage sur le cours :"+ indexCours);
+    return false;
+  }
+
+  // Chargement du planning
   async getPlanning(param) {
     console.log('début de récupération du planning, id:'+param);
     return await this.planningService.getPlanningsById(param).subscribe(
@@ -78,9 +140,8 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
 	async getCoursPlanning() {
     console.log('début de récupération des cours du planning, id:'+this.planning.id);
     return await this.coursplanningService.getCours(this.planning.id).subscribe(
-      data => {
-        //this.cours_planning = data;
-        console.log('this.cours_planning returndata:'+data);
+      (data: CoursPlanning[]) => {
+        this.cours_planning = data;
       },
       error => {
         console.log("erreur de récupération des cours du planning:"+error);  
@@ -88,6 +149,8 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
       () => {
         console.log('fin de récupération des cours du planning');
         this.getStagiaire();
+        this.setFirstDateEntreprise();
+        this.setLastDateEntreprise();
       }
     );
   }
@@ -128,7 +191,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Chargement de l'entreprise 
+  // Chargement du Stagiaire par entreprise 
   async getStagiaireParEntreprise() {
     console.log("début de récupération du stagiaire par entreprise:"+this.stagiaire.CodeStagiaire);
     return await this.stagiaireParEntrepriseService.getStagiaireParEntrepriseByIdStagiaire(this.stagiaire.CodeStagiaire).subscribe(
@@ -145,6 +208,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Chargement de l'entreprise
   async getEntreprise(){
     console.log("début de l'entreprise:"+this.stagiaire.CodeStagiaire);
     return await this.entrepriseService.getEntrepriseById(this.stagiaireparentreprise.CodeEntreprise).subscribe(
@@ -185,14 +249,14 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   downloadPdf() { 
     // doc = https://stackoverflow.com/questions/51624534/download-pdf-file-angular-6-and-web-api
     // https://www.c-sharpcorner.com/article/convert-html-to-pdf-using-angular-6/
-    var data = document.getElementById('contentToConvert');  
     
     console.log('début chargement pdf');
+    var data = document.getElementById('contentToConvert');  
     html2canvas(data).then(canvas => {  
       
       // Few necessary setting options  
       var imgWidth = 210;   
-      var pageHeight = 350;    
+      var pageHeight = 300;    
       var imgHeight = canvas.height * imgWidth / canvas.width;  
       var heightLeft = imgHeight;  
   
