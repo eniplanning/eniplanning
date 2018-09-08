@@ -121,7 +121,8 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
       var date_previous_end = new Date(previousCours.date_end);
       var date_previous_end_convert = new Date(date_previous_end.setDate(date_previous_end.getDate()));
       var diff = Math.abs(date_start_convert.getTime() - date_previous_end_convert.getTime());
-      if (diff < 4) {
+      var diffDays = Math.round(diff / (1000 * 3600 * 24));
+      if (diffDays < 4) {
         return false;
       } else {
         return true;
