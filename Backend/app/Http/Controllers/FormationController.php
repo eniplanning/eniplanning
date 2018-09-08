@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Param;
 use Faker\Provider\ka_GE\DateTime;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FormationController extends Controller
 {
@@ -30,7 +31,7 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        return $formation->toJson();
+        return Formation::findOrFail(trim($formation->CodeFormation))->toJson();
     }
 
     public function showWithGlobal(Formation $formation)

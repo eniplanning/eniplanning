@@ -20,12 +20,11 @@ Route::group([
     ],
 ], function () {
 
-    // ActivityLogController Routes
-    Route::post('activity-log/purge', 'ActivityLogController@purge');
-    Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
-
+    Route::resource('stagiaireparentreprise', 'StagiaireParEntrepriseController', ['except' => ['create', 'edit']]);
+    Route::resource('entreprise', 'EntrepriseController', ['except' => ['create', 'edit']]);
+    Route::resource('titre', 'TitreController', ['except' => ['create', 'edit']]);
     Route::resource('stagiaire', 'StagiaireController', ['except' => ['create', 'edit']]);
-    Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
+    
     Route::resource('module', 'ModuleController', ['except' => ['create', 'edit']]);
     Route::resource('ctrPrioritization', 'CtrPrioritizationController', ['except' => ['create', 'edit']]);
     Route::resource('ctrExemption', 'CtrExemptionController', ['except' => ['create', 'edit']]);
@@ -35,6 +34,15 @@ Route::group([
     Route::resource('chainingModule', 'ChainingModuleController', ['except' => ['create', 'edit']]);
     Route::resource('cours', 'CoursController', ['except' => ['create', 'edit']]);
     Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
+
+    
+    // ActivityLogController Routes
+    Route::post('activity-log/purge', 'ActivityLogController@purge');
+    Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
+
+    // PlanningCourseController Routes
+    Route::get('planningcoursebyplanning/{id}', 'PlanningCourseController@getPlanningCourseByPlanningId');
+    Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
 
     // UserController Routes
     Route::resource('user', 'UserController', ['except' => ['create', 'edit', 'destroy']]);

@@ -63,4 +63,19 @@ class PlanningCourseController extends Controller
     {
         $planningCourse->delete();
     }
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getPlanningCourseByPlanningId(int $idPlanning)
+    {
+        return PlanningCourse::where('planning_id', $idPlanning)
+            ->orderBy('date_start', 'asc')
+            ->get()
+            ->toJson();
+    }
 }

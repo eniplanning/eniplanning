@@ -33,24 +33,21 @@
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
                              {{ planning.label }}
-                            <div class="btn-group col-span-3 pr-1" mdbDropdown>
-                                <a mdbDropdownToggle class="waves-light" mdbWavesEffect>
-                                        <fa name="ellipsis-h"></fa>  
-                                </a>
 
+                             <!-- menu contextuel des plannings -->
+                             <div class="btn-group col-span-3" mdbDropdown>
+                                <a mdbDropdownToggle class="waves-light" mdbWavesEffect>
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                                </a>
                                 <div class="dropdown-menu dropdown-primary">
-                                    <!-- <a class="dropdown-item" (click)="generatedHTMLPlanning(planning)">Visualiser -->
-                                    <generate-html
-                                        [planning]="selectedPlanning"
-                                        [formation]="formation">
-                                    </generate-html>
-                                    <!-- </a> -->
+                                    <a class="dropdown-item" target="_blank" [routerLink]="['generate-html', planning.id]">Visualiser</a>
                                     <a class="dropdown-item" (click)=openModalModifyPlanning()>Modifier</a>
                                     <a class="dropdown-item" (click)="deletePlanning()">Supprimer</a>
                                     <div class="divider dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
                             </div>
+                            
                         </li>
                     </ul>
                 </div>

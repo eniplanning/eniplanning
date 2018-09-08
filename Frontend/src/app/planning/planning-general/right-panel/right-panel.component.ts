@@ -19,7 +19,7 @@ export class RightPanelComponent implements OnInit {
 	
   	constructor(
   		private planningService: 		PlanningService,
-  		public changeDetector: 						ChangeDetectorRef
+  		public changeDetector: 			ChangeDetectorRef
   	) {}
 
  	ngOnInit() {
@@ -41,7 +41,6 @@ export class RightPanelComponent implements OnInit {
 	            	}
 	            	this.changeDetector.detectChanges();
             	}
-  
             }
         );
   	}
