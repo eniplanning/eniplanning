@@ -75,7 +75,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   // Chargement de la formation 
   getFormation() {
     console.log('début de récupération de la formation, id:'+this.planning.formation_id);
-    this.formationService.getFormation(this.planning.formation_id).subscribe(
+    this.formationService.getFormation(this.planning.formation_id, this.planning.id).subscribe(
       data=>{
         this.formation = data;
         console.log('this.formation:'+this.formation);
