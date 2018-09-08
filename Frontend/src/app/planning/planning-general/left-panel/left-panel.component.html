@@ -21,9 +21,8 @@
             <div>
                 <div class="content-body">
                     <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
-                    <p>Entreprise : {{ selectedStagiaire.Entreprise != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}} </p>
-                    <p>Formation suivie :</p>
-                    <p>Site :</p>
+                    <p>Ville : {{ selectedStagiaire.Ville | titlecase }}</p>
+                    <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}}</p>
                 </div>
                 <div class="content-title">Plannings</div>
                 <div class="content-body">
@@ -42,8 +41,8 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-primary">
                                     <a class="dropdown-item" target="_blank" [routerLink]="['generate-html', planning.id]">Visualiser</a>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" (click)=openModalModifyPlanning()>Modifier</a>
+                                    <a class="dropdown-item" (click)="deletePlanning()">Supprimer</a>
                                     <div class="divider dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
@@ -63,6 +62,8 @@
         </div>
         <div class="panel-content" *ngIf="panelStates['planning']">
             <div class="content-body">
+                <div *ngIf="formation" class="text-center libelle-formation">Formation : {{formation.LibelleLong}}</div>
+                <div *ngIf="formation" class="text-center libelle-formation">Lieu de formation : {{libelleLieuFormation | titlecase}}</div>
                 <ul class="module-list fa-ul" *ngIf="formation">
                     <li class="module" *ngFor="let module of formation.Modules">
                         <div (click)="module.visible = !module.visible"><span *ngIf="module.cours.length > 0" class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>

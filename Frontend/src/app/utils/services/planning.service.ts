@@ -14,6 +14,8 @@ export class PlanningService {
   planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
   selectedPlanning = new BehaviorSubject<Planning>(null);
   newPlanning = new BehaviorSubject<Planning>(null);
+  updatePlanningsList = new BehaviorSubject(null);
+  openModalUpdatePlanning = new BehaviorSubject<Array<any>>(null);
 
   httpOptions = {
       headers: new HttpHeaders({
@@ -40,14 +42,14 @@ export class PlanningService {
     return this.http.put(this.planningsAPI + '/' + planning.planning_id, planning);
   }
 
-  deletePlanning(id: Number) {
-    return this.http.delete(this.planningsAPI + '/' + id);
+  deletePlanning(planning: Planning) {
+    return this.http.delete(this.planningsAPI + '/' + planning.id);
   }
 
   setSelectedPlanning(planning: Planning) {
-    sessionStorage.setItem('selectedPlanning', JSON.stringify(planning));
     this.clearCoursOnPage();
     this.selectedPlanning.next(planning);
+    sessionStorage.setItem('selectedPlanning', JSON.stringify(planning));
   }
 
   //Clear cours on web page from previous planning

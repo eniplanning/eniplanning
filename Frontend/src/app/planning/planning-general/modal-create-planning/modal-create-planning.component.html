@@ -1,5 +1,5 @@
 <li class="nav-item waves-light" mdbWavesEffect *ngIf="selectedStagiaire != undefined">
-    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="createModal.show()" >Créer</a>
+    <a class="nav-link" data-toggle="modal" data-target="#modal-create" (click)="openModalNewPlanning()" >Créer</a>
 </li>
 
 <!-- Modal -->
@@ -25,10 +25,10 @@
                     <div class="col-xs-12 col-md-6">
                         <p>Stagiaire : {{ selectedStagiaire.Nom }} {{ selectedStagiaire.Prenom }}</p>
                         <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }}</p>
-                        <ng-select placeholder="Choisir une formation" [(ngModel)]="selectedFormation">
+                        <ng-select placeholder="Choisir une formation" [(ngModel)]="selectedFormation" bindLabel="LibelleCourt">
                             <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
                         </ng-select>
-                        <ng-select placeholder="Choisir un site de formation" [(ngModel)]="selectedLieu">
+                        <ng-select placeholder="Choisir un site de formation" [(ngModel)]="selectedLieu" bindLabel="Libelle">
                             <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
                         </ng-select>
                         <ng-select placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">

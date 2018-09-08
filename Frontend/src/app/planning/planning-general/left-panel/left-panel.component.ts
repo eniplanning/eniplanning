@@ -3,10 +3,12 @@ import { LoggerService } from '../../../utils/services/logger.service';
 import { Router } from '@angular/router';
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
 import { PlanningService } from '../../../utils/services/planning.service';
+import { LieuService } from '../../../utils/services/lieu.service';
 import { FormationService } from '../../../utils/services/formation.service';
 import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
 import { DocumentService } from '../../../utils/services/document.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
+import { Lieu } from '../../../utils/models/lieu';
 import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
@@ -21,11 +23,12 @@ import { CoursPlanning } from '../../../utils/models/cours-planning';
 
 export class LeftPanelComponent implements OnInit {
 
-	stagiaires: 		Stagiaire[];
-	selectedStagiaire: 	Stagiaire;
-	selectedPlanning: 	Planning;
-	formation:			Formation;
-	panelStates: 		{};	 //used to keep track of panels states : open or closed
+	stagiaires: 			Stagiaire[];
+	selectedStagiaire: 		Stagiaire;
+	selectedPlanning: 		Planning;
+	formation:				Formation;
+	libelleLieuFormation: 	String;
+	panelStates: 			{};	 //used to keep track of panels states : open or closed
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -34,6 +37,7 @@ export class LeftPanelComponent implements OnInit {
 		private stagiaireService: 		StagiaireService,
 		private planningService: 		PlanningService,
 		private formationService:		FormationService,
+		private lieuService:			LieuService,
 		private coursPlanningService: 	CoursPlanningService,
 		private documentService: 		DocumentService,
 		private router:					Router,
@@ -50,17 +54,30 @@ export class LeftPanelComponent implements OnInit {
 		this.loadSelectedStagiaire();
 		this.planningService.newPlanning.subscribe(
 			(planning: Planning) => {
-				this.onChangeSelectedStagiaire()
+				this.onChangeSelectedStagiaire();
 				this.planningService.setSelectedPlanning(planning);
 			}
 		)
+		this.planningService.updatePlanningsList.subscribe(
+			data => {
+				this.selectedPlanning = null;
+				this.onChangeSelectedStagiaire();
+			},
+			error => console.error(error)
+		)
+	}
+
+	getLieu(code_lieu: number) {
+		this.lieuService.getLieu(code_lieu).subscribe(
+			(lieu: Lieu) => this.libelleLieuFormation = lieu.Libelle
+		);
 	}
 
 	// Récupération des Stagiaires depuis le service : stagiaire
 	getStagiaires(): void {
 	   	this.stagiaireService.getStagiaires().subscribe(
 	   		(stagiaires: Stagiaire[]) => this.stagiaires = stagiaires,
-	   		error => console.log(error),
+	   		error => console.error(error),
 	   		() => this.stagiaires.sort(function(a, b) {
 	   			//custom sorting function, sorts by stagiaire.Nom in alphabetical order
 	   			if (a.Nom < b.Nom)
@@ -115,8 +132,15 @@ export class LeftPanelComponent implements OnInit {
 	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
 	getPlanningsByStagiaire(codeStagiaire: Number): void {
 		this.planningService.getPlanningsByStagiaire(codeStagiaire).subscribe(
-			(plannings: Planning[]) => this.selectedStagiaire.ListPlannings = plannings,
-			error =>  console.log(error),
+			(plannings: Planning[]) => {
+				this.selectedStagiaire.ListPlannings = plannings;
+				this.selectedStagiaire.ListPlannings.sort(function(a, b) {
+					if (a.label < b.label) return -1;
+					if (a.label > b.label) return 1;
+					return 0;
+				})
+			},
+			error =>  console.error(error),
 			() => {
 				let unparsedSelectedPlanning = sessionStorage.getItem('selectedPlanning');
 				if (unparsedSelectedPlanning != 'undefined') {
@@ -139,8 +163,12 @@ export class LeftPanelComponent implements OnInit {
 
 	// Mise à jour de TODO à la sélection d'un planning
 	onChangeSelectedPlanning(planning: Planning) {
+		if (this.selectedPlanning != null && this.selectedPlanning.id == planning.id) {
+			return;
+		}
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
+		this.getLieu(this.selectedPlanning.code_lieu);
 		console.log('planning sélectionné', this.selectedPlanning);
 
 		//Loading formation with list of modules with list of cours
@@ -174,7 +202,7 @@ export class LeftPanelComponent implements OnInit {
 				this.formation = formation;
 				console.log('formation sélectionnée', this.formation);
 			},
-			error => console.log(error)
+			error => console.error(error)
 		);
 		
 		//Drawing courses on web page
@@ -197,7 +225,7 @@ export class LeftPanelComponent implements OnInit {
 					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
 					this.drawCoursOnPlanning(old_cours);
 				},
-				error => console.log(error)
+				error => console.error(error)
 			)
 		}
 
@@ -211,7 +239,7 @@ export class LeftPanelComponent implements OnInit {
 					//and draw it on the page
 					this.drawCoursOnPlanning(cours);
 				},
-				error => console.log(error)
+				error => console.error(error)
 			);
 		}
 	}
@@ -234,8 +262,19 @@ export class LeftPanelComponent implements OnInit {
 			} else {
 				document.getElementById(id).parentElement.classList.add('green-bg');
 			}
-			
 		});
-		
+	}
+
+	openModalModifyPlanning() {
+		this.planningService.openModalUpdatePlanning.next([this.selectedPlanning, this.formation]);
+	}
+
+	deletePlanning() {
+		try {
+			this.planningService.deletePlanning(this.selectedPlanning);
+			this.planningService.updatePlanningsList.next(null);
+		} catch (error) {
+			console.error(error);
+		}
 	}
 }
