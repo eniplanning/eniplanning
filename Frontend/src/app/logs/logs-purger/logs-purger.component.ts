@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { registerLocaleData } from '@angular/common';
-import { NativeDateAdapter } from '@angular/material';
 import { ActivityLog } from '../../utils/models/activitylog';
 import { ActivityLogService } from '../../utils/services/activitylog.service';
 ;
@@ -57,7 +55,7 @@ export class LogsPurgerComponent implements OnInit {
     this.activityLog.subject_type='Purge';
     this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
     this.activityLog.causer_type='Log Activité' ;
-    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd hh:mm");
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm", 'fr-Fr');
     this.activityLogService.storeActivityLog(this.activityLog).subscribe(
       data => console.log("log d'activité enregistré"), 
       error => console.log("erreur d'enregistrement du log d'activité: "+ error)

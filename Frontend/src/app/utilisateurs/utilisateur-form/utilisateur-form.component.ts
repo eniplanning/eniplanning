@@ -178,7 +178,7 @@ export class UtilisateurFormComponent implements OnInit {
     this.activityLog.subject_type=action;
     this.activityLog.causer_id=JSON.parse(sessionStorage.getItem('user')).id;
     this.activityLog.causer_type='Utilisateur';
-    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd hh:mm");
+    this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm", 'fr-Fr');
     this.activityLogService.storeActivityLog(this.activityLog).subscribe(
       data => console.log("log d'activité enregistré"), 
       error => console.log("erreur d'enregistrement du log d'activité: "+ error)

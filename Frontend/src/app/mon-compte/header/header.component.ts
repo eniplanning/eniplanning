@@ -4,6 +4,7 @@ import { LoginService } from '../../utils/services/login.service';
 import { UserService } from '../../utils/services/user.service';
 import { TokenService } from '../../utils/services/token.service';
 import { User } from '../../utils/models/user';
+import { ClearsessionService } from '../../utils/services/clearsession.service';
 
 @Component({
   selector: 'mon-compte-header',
@@ -22,6 +23,7 @@ export class HeaderComponent implements OnInit {
     private router:         Router,
     private userService:    UserService,
     private tokenService:   TokenService,
+    private clearSessionService: ClearsessionService,
   ) { }
 
   ngOnInit(  ) {
@@ -42,5 +44,6 @@ export class HeaderComponent implements OnInit {
     this.userService.unsetUser();
     this.tokenService.remove();
     this.router.navigateByUrl('/login');
+    this.clearSessionService.run();
   }
 }

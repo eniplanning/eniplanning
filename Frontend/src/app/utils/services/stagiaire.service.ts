@@ -20,6 +20,10 @@ export class StagiaireService {
     return this.http.get<Stagiaire[]>(this.stagiairesAPI);
   }
 
+  getStagiaireById(stagiaireId: number): Observable<Stagiaire> {
+    return this.http.get<Stagiaire>(this.stagiairesAPI+ '/' + stagiaireId, {responseType: 'json'});
+  }
+
   setSelectedStagiaire(stagiaire: Stagiaire) {
   	sessionStorage.setItem('selectedStagiaire', JSON.stringify(stagiaire));
     this.selectedStagiaire.next(stagiaire);

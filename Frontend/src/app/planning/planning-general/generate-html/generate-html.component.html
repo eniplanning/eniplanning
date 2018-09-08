@@ -1,20 +1,65 @@
-<a class="dropdown-item nav-link" data-toggle="modal" data-target="#planningHtml" (click)="createModal.show()" >Visualiser</a>
-
+<!-- <a class="dropdown-item nav-link" data-toggle="modal" data-target="#planningHtml" (click)="createModal.show()" >Visualiser</a> -->
+<!-- <a class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="createModal.show()">Imprimer</a> -->
 
 <!-- Modal -->
-<div mdbModal #createModal="mdb-modal" class="modal fade" id="planningHtml"
-   tabindex="-1" role="dialog" aria-labelledby="creaModalLabel" aria-hidden="true" [config]="{backdrop:false}">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <div>
-          <div>
+<!-- <div mdbModal #createModal="mdb-modal" class="modal fade" id="planningHtml" -->
+   <!-- tabindex="-1" role="dialog" aria-labelledby="creaModalLabel" aria-hidden="true" [config]="{backdrop:false}"> -->
+  <!-- <div class="modal-dialog modal-dialog-centered modal-lg" role="document"> -->
+    <!-- <div class="modal-content"> -->
+        
+        <!-- header -->
+        <!-- <div class="modal-header justify-content-center"> -->
+          <div class="row menu-row">
             <!-- impression pdf -->
             <a id="downloadPDF" class="btn btn-warning" (click)="downloadPdf()">Télécharger au format pdf</a>
             <!-- fermeture modal -->
-            <button type="button" class="btn btn-blue-grey float-right" data-dismiss="modal" (click)="createModal.hide()">Fermer</button>
+            <!-- <button type="button" class="btn btn-blue-grey float-right" data-dismiss="modal"
+              (click)="createModal.hide()">Fermer</button> -->
           </div>
+        <!-- </div> -->
 
+        <!-- contenu -->
+        <!-- <div class="modal-body"> -->
+
+          <!-- choix du stagiaire -->
+          <!-- <div *ngIf="showStagiaireForm"  class="row menu-row">
+            <div class="card-body">
+              <div class="form-group row">
+                <label for="name" class="col-sm-3 col-form-label text-right" >Choisissez un stagiaire</label>
+                <span class ="custom col-sm-6 panel" *ngIf="undefined === stagiaires">Chargement...</span>
+                <div class ="custom col-sm-6 panel" *ngIf="undefined !== stagiaires">
+                  <ng-select [items]="stagiaires" [groupBy]="groupByFirstLetter" bindLabel="NomComplet" 
+                    [(ngModel)]="stagiaire" (change)="onChangeSelectedStagiaire(stagiaire)">
+                    <ng-template ng-label-tmp let-item="item">{{item.Nom}} {{item.Prenom}}</ng-template>
+                  </ng-select>  
+                </div>
+                <div class="col-sm-2">
+                  <input *ngIf="showValider" type="submit" class="btn btn-primary btn-sm waves-light" 
+                    value="Valider" data-dismiss="modal" (click)="changeStagiaire()"/> 
+                </div>
+              </div>
+            </div>
+          </div>-->
+
+          <!-- choix du planning -->
+          <!-- <div *ngIf="showPlanningForm"  class="row menu-row">
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="name" class="col-sm-3 col-form-label text-right" >Choisissez un planning</label>
+                  <span class ="custom col-sm-6 panel" *ngIf="undefined === plannings">Chargement...</span>
+                  <div class ="custom col-sm-6 panel" *ngIf="undefined !== plannings">
+                    <ng-select [items]="plannings" bindLabel="NomComplet" 
+                        [(ngModel)]="planning" (change)="onChangeSelectedPlanning(planning)">
+                      <ng-template ng-label-tmp let-item="item">{{item.label}}</ng-template>
+                    </ng-select>
+                  </div>
+                  <div class="col-sm-2">
+                    <input  *ngIf="showValider" type="submit" class="btn btn-primary btn-sm waves-light" 
+                      value="Valider" data-dismiss="modal" (click)="changePlanning()"/> 
+                  </div>
+                </div>
+              </div>
+            </div> --> 
           <!-- contenu -->
           <div id="contentToConvert" style="display: block; margin: 0 auto; margin-bottom: 0.5cm; width: 21cm; height: 29.7cm; font-size: 14px; font-family: Arial; ">
 
@@ -25,16 +70,16 @@
             
             <!-- formation -->
             <div id="title" style="text-align:center; margin: 0px; padding:0px">
-                <!-- <h3 id="formation" style="margin: 0px; padding:5px">{{ formation.LibelleLong }}</h3> -->
+                <h3 id="formation" style="margin: 0px; padding:5px"> {{ formation.LibelleLong }} </h3>
                 <div  style="margin: 0px; padding:0px; color:grey">Préparation au titre :</div>
-                <h6 id="label_titre" style="margin: 0px; padding:0px">" <span id="titre">Administrateur systèmes et réseaux</span> "</h6>
-                <h6 id="niveau"style="margin: 0px; padding:0px">Niveau II</h6>  
+                <h6 id="label_titre" style="margin: 0px; padding:0px">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
+                <h6 id="niveau"style="margin: 0px; padding:0px">Niveau : {{ titre.Niveau }} </h6>  
             </div>
 
             <!-- dates de formation -->
             <div id="date_formation" style="margin: 0px; margin-top:20px; padding:5px">
-              <div id="label_date_formation_debut" style="float:left; margin-left:30px"><span style="color:grey">Date de début (formation) : </span><span id="date_formation_debut"style="font-weight: bold">25/09/2017</span></div>
-              <div id="label_date_formation_fin" style="float:right; margin-right: 30px"><span style="color:grey">Date de fin (formation) : </span><span id="date_formation_fin" style="font-weight: bold">29/08/2019</span></div>
+              <div id="label_date_formation_debut" style="float:left; margin-left:30px"><span style="color:grey">Date de début (formation) : </span><span id="date_formation_debut"style="font-weight: bold"> {{ planning.label }}</span></div>
+              <div id="label_date_formation_fin" style="float:right; margin-right: 30px"><span style="color:grey">Date de fin (formation) : </span><span id="date_formation_fin" style="font-weight: bold">{{ planning.label }}</span></div>
             </div>
 
             <!-- heures de formations -->
@@ -43,7 +88,7 @@
             <!-- stagiaire entreprise -->
             <div id="entreprise_stagiaire"  style="margin: 0px; padding:5px">
               <div id="label_entreprise" style="float:left; margin-left:30px"><span style="color:grey">Entreprise : </span><span id="entreprise"  style="font-weight:bold">A définir</span></div>
-              <div id="label_stagiaire" style="float:right; margin-right: 30px"><span style="color:grey">Stagiaire : </span><span id="stagiaire"  style="font-weight:bold">Stagiaire ASR</span></div>
+              <div id="label_stagiaire" style="float:right; margin-right: 30px"><span style="color:grey">Stagiaire : </span><span id="stagiaire"  style="font-weight:bold">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span></div>
             </div>
 
             <!-- tableau du planning -->
@@ -99,10 +144,87 @@
                     </tr>
                 </tbody>
               </table>
+
+              <!-- template semaine à l'école -->
+              <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+                  <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+                    <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+                          <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                              <table style=" width:100%">
+                                  <tr style=" width:100%">
+                                    <td>ENI (Nantes)</td>
+                                  </tr>
+                                  <tr>
+                                    <td>70 heures</td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
+                      </tr>
+                  </tbody>
+                </table>
+  
+  
+  
+              
+              <!-- template semaine à l'école -->
+              <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+                  <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+                    <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+                          <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                              <table style=" width:100%">
+                                  <tr style=" width:100%">
+                                    <td>ENI (Nantes)</td>
+                                  </tr>
+                                  <tr>
+                                    <td>70 heures</td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
+                      </tr>
+                  </tbody>
+                </table>
+  
+  
+  
+              
+              <!-- template semaine à l'école -->
+              <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+                  <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+                    <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+                          <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                              <table style=" width:100%">
+                                  <tr style=" width:100%">
+                                    <td>ENI (Nantes)</td>
+                                  </tr>
+                                  <tr>
+                                    <td>70 heures</td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
+                      </tr>
+                  </tbody>
+                </table>
+  
+  
+  
+                    
+
+
+
             </div>
 
-          </div>
+          <!-- </div> -->
         
- 
+        </div>
+    <!-- </div>
   </div>
-</div>
+</div> -->
