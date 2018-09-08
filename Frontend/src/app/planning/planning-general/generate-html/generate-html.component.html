@@ -1,78 +1,115 @@
-
 <!-- header -->
-  <div class="row menu-row">
-    <!-- impression pdf -->
-    <a id="downloadPDF" class="btn btn-warning" (click)="downloadPdf()">Télécharger au format pdf</a>
-  </div>
+<!-- message de chargement -->
+<div *ngIf="!ready" class="customload row menu-row">
+  <div class="customloadimg"><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></div>
+  <div class="customloadtxt">Veuillez patienter, le planning est en cours de Chargement ...</div>
+</div>
+<!-- impression pdf -->
+<div *ngIf="ready" class="row menu-row">
+  <a id="downloadPDF" class="btn btn-warning" (click)="downloadPdf()">Télécharger au format pdf</a>
+</div>
 
 <!-- contenu -->
+<div *ngIf="ready" id="contentToConvert" style="display: block; margin: 0 auto; margin-bottom: 0.5cm; width: 21cm; height: 29.7cm; font-size: 14px; font-family: Arial; ">
 
-  <!-- contenu -->
-  <div id="contentToConvert" style="display: block; margin: 0 auto; margin-bottom: 0.5cm; width: 21cm; height: 29.7cm; font-size: 14px; font-family: Arial; ">
+  <!-- logo -->
+  <div id="logo" style="padding:30px">
+    <img src='./assets/logo-eni.jpg' style="width:100px"/>
+  </div>
+  
+  <!-- formation -->
+  <div id="title" style="text-align:center; margin: 0px; padding:0px">
+      <h3 id="formation" style="margin: 0px; padding:5px"> {{ formation.LibelleLong }} </h3>
+      <div  style="margin: 0px; padding:0px; color:grey">Préparation au titre :</div>
+      <h6 id="label_titre" style="margin: 0px; padding:0px">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
+      <h6 id="niveau"style="margin: 0px; padding:0px">Niveau : {{ titre.Niveau }} </h6>  
+  </div>
 
-    <!-- logo -->
-    <div id="logo" style="padding:30px">
-      <img src='./assets/logo-eni.jpg' style="width:100px"/>
+  <!-- dates de formation -->
+  <div id="date_formation" style="margin: 0px; margin-top:20px; padding:5px">
+    <div id="label_date_formation_debut" style="float:left; margin-left:30px">
+      <span style="color:grey">Date de début (formation) : </span>
+      <span id="date_formation_debut"style="font-weight: bold"> {{ planning.date_start_formation }}</span></div>
+    <div id="label_date_formation_fin" style="float:right; margin-right: 30px">
+      <span style="color:grey">Date de fin (formation) : </span>
+      <span id="date_formation_fin" style="font-weight: bold">{{ planning.date_end_formation }}</span></div>
+  </div>
+
+  <!-- heures de formations -->
+  <div id="label_nb_heures_formation" style="margin-top:20px;text-align:center">
+    <span style="color:grey">Formation en centre : </span>
+    <span id="nb_heures_formation" style="font-weight: bold">{{ nb_heures_formation }}</span> Heures
+  </div>
+
+  <!-- stagiaire entreprise -->
+  <div id="entreprise_stagiaire"  style="margin: 0px; padding:5px">
+    <div id="label_entreprise" style="float:left; margin-left:30px">
+      <span style="color:grey">Entreprise : </span>
+      <span *ngIf="entreprise" id="entreprise"  style="font-weight:bold">{{ entreprise.RaisonSociale }}</span>
+      <span *ngIf="!entreprise" id="entreprise"  style="font-weight:bold">à définir</span>
     </div>
+    <div id="label_stagiaire" style="float:right; margin-right: 30px">
+      <span style="color:grey">Stagiaire : </span>
+      <span id="stagiaire"  style="font-weight:bold">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span>
+    </div>
+  </div>
+
+  <!-- tableau du planning -->
+  <div id="planning"   style="margin-top: 50px; padding:5px; width:19.5cm; margin-left: 25px">
+
+    <!-- entête du tableau-->
+    <table style="text-align:center;  width:100%; border-collapse: collapse;">
+      <thead style="text-align:center; border-collapse: collapse; background-color:lightgray">
+          <th colspan="2" style="text-align:center; border: 0.5px solid grey; border-collapse: collapse; width:30%">
+            <table style=" width:100% ;text-align:center; border-collapse:collapse;">
+              <tr colspan="2" style="text-align:center;width: 100%;border-collapse:collapse;" >
+                <td colspan="2" style="border-bottom: 0.5px dotted grey;border-collapse:collapse;text-align: center;font-weight: bold">Dates</td>
+              </tr>
+              <tr style=" width:100%;text-align:center;border-collapse:collapse;">
+                <td style="border-right: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Début</td>
+                <td style="border-left: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Fin</td></tr>
+            </table>
+          </th>
+          <th style="border: 0.5px solid grey; width:20%;text-align:center;">Lieu</th>
+          <th style="border: 0.5px solid grey; width:50%;text-align:center;">Programme</th>
+      </thead>
+    </table>
+
+    <!-- template semaine en entreprise -->
+    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+      <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+        <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">22/09/2017</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">3 semaines </td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+        </tr>
+      </tbody>
+    </table>
     
-    <!-- formation -->
-    <div id="title" style="text-align:center; margin: 0px; padding:0px">
-        <h3 id="formation" style="margin: 0px; padding:5px"> {{ formation.LibelleLong }} </h3>
-        <div  style="margin: 0px; padding:0px; color:grey">Préparation au titre :</div>
-        <h6 id="label_titre" style="margin: 0px; padding:0px">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
-        <h6 id="niveau"style="margin: 0px; padding:0px">Niveau : {{ titre.Niveau }} </h6>  
-    </div>
-
-    <!-- dates de formation -->
-    <div id="date_formation" style="margin: 0px; margin-top:20px; padding:5px">
-      <div id="label_date_formation_debut" style="float:left; margin-left:30px"><span style="color:grey">Date de début (formation) : </span><span id="date_formation_debut"style="font-weight: bold"> {{ planning.label }}</span></div>
-      <div id="label_date_formation_fin" style="float:right; margin-right: 30px"><span style="color:grey">Date de fin (formation) : </span><span id="date_formation_fin" style="font-weight: bold">{{ planning.label }}</span></div>
-    </div>
-
-    <!-- heures de formations -->
-    <div id="label_nb_heures_formation" style="margin-top:20px;text-align:center"><span style="color:grey">Formation en centre : </span><span id="nb_heures_formation" style="font-weight: bold">1106</span> Heures</div>
-
-    <!-- stagiaire entreprise -->
-    <div id="entreprise_stagiaire"  style="margin: 0px; padding:5px">
-      <div id="label_entreprise" style="float:left; margin-left:30px"><span style="color:grey">Entreprise : </span><span id="entreprise"  style="font-weight:bold">A définir</span></div>
-      <div id="label_stagiaire" style="float:right; margin-right: 30px"><span style="color:grey">Stagiaire : </span><span id="stagiaire"  style="font-weight:bold">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span></div>
-    </div>
-
-    <!-- tableau du planning -->
-    <div id="planning"   style="margin-top: 50px; padding:5px; width:19.5cm; margin-left: 25px">
-
-      <!-- entête du tableau-->
-      <table style="text-align:center;  width:100%; border-collapse: collapse;">
-        <thead style="text-align:center; border-collapse: collapse; background-color:lightgray">
-            <th colspan="2" style="text-align:center; border: 0.5px solid grey; border-collapse: collapse; width:30%">
-              <table style=" width:100% ;text-align:center; border-collapse:collapse;">
-                <tr colspan="2" style="text-align:center;width: 100%;border-collapse:collapse;" >
-                  <td colspan="2" style="border-bottom: 0.5px dotted grey;border-collapse:collapse;text-align: center;font-weight: bold">Dates</td>
-                </tr>
-                <tr style=" width:100%;text-align:center;border-collapse:collapse;">
-                  <td style="border-right: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Début</td>
-                  <td style="border-left: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Fin</td></tr>
-              </table>
-            </th>
-            <th style="border: 0.5px solid grey; width:20%;text-align:center;">Lieu</th>
-            <th style="border: 0.5px solid grey; width:50%;text-align:center;">Programme</th>
-        </thead>
-      </table>
-
-      <!-- template semaine en entreprise -->
-      <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
-          <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">22/09/2017</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">3 semaines </td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+    <!-- template semaine à l'école -->
+    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+      <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+        <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+              <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                  <table style=" width:100%">
+                      <tr style=" width:100%">
+                        <td>ENI (Nantes)</td>
+                      </tr>
+                      <tr>
+                        <td>70 heures</td>
+                      </tr>
+                  </table>
+              </td>
+              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
           </tr>
-        </tbody>
-      </table>
-      
-      <!-- template semaine à l'école -->
-      <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+      </tbody>
+    </table>
+
+    <!-- template semaine à l'école -->
+    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
         <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
           <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
                 <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
@@ -92,73 +129,52 @@
         </tbody>
       </table>
 
-      <!-- template semaine à l'école -->
-      <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-          <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-            <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                  <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                      <table style=" width:100%">
-                          <tr style=" width:100%">
-                            <td>ENI (Nantes)</td>
-                          </tr>
-                          <tr>
-                            <td>70 heures</td>
-                          </tr>
-                      </table>
-                  </td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-              </tr>
-          </tbody>
-        </table>
 
 
-
-      
-      <!-- template semaine à l'école -->
-      <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-          <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-            <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                  <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                      <table style=" width:100%">
-                          <tr style=" width:100%">
-                            <td>ENI (Nantes)</td>
-                          </tr>
-                          <tr>
-                            <td>70 heures</td>
-                          </tr>
-                      </table>
-                  </td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-              </tr>
-          </tbody>
-        </table>
-
-
-
-      
-      <!-- template semaine à l'école -->
-      <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-          <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
-            <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-                  <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                      <table style=" width:100%">s
-                        <tr>
+    
+    <!-- template semaine à l'école -->
+    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+        <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+          <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+                <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                    <table style=" width:100%">
+                        <tr style=" width:100%">
                           <td>ENI (Nantes)</td>
                         </tr>
                         <tr>
                           <td>70 heures</td>
                         </tr>
-                      </table>
-                  </td>
-                  <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
-              </tr>
-          </tbody>
-        </table>
-    </div>
+                    </table>
+                </td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
+            </tr>
+        </tbody>
+      </table>
+
+
+
+    
+    <!-- template semaine à l'école -->
+    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
+        <tbody  style="border: 0.5px solid grey; border-collapse: collapse;">
+          <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
+                <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">debut</td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">fin</td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+                    <table style=" width:100%">s
+                      <tr>
+                        <td>ENI (Nantes)</td>
+                      </tr>
+                      <tr>
+                        <td>70 heures</td>
+                      </tr>
+                    </table>
+                </td>
+                <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">cours</td>
+            </tr>
+        </tbody>
+      </table>
+  </div>
 </div>

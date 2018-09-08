@@ -6,6 +6,7 @@ import { CONFIG } from '../../utils/config';
 import { CoursPlanning } from '../models/cours-planning';
 import { Cours } from '../models/cours';
 import { Planning } from '../models/planning';
+import { API } from '../api';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,10 @@ export class CoursPlanningService {
 
   	deleteCours(cours: CoursPlanning) {
   		return this.http.delete<CoursPlanning>(this.coursPlanningAPI + '/' + cours.id);
-  	}
+	  }
+	  
+	getCours(idPlanning: number) {
+		return this.http.get(API.coursPlanning + '/' + idPlanning);
+	}
 
 }

@@ -10,6 +10,13 @@ import { StagiaireService } from '../../../utils/services/stagiaire.service'
 import { FormationService } from '../../../utils/services/formation.service'
 import { PlanningService } from '../../../utils/services/planning.service'  
 import { ActivatedRoute } from '@angular/router';
+import { Entreprise } from '../../../utils/models/entreprise';
+import { EntrepriseService } from '../../../utils/services/entreprise.service';
+import { StagiaireparentrepriseService } from '../../../utils/services/stagiaireparentreprise.service';
+import { StagiaireParEntreprise } from '../../../utils/models/stagiaireparentreprise';
+import { DatePipe } from '@angular/common';
+import { CoursPlanning } from '../../../utils/models/cours-planning';
+import { CoursPlanningService } from '../../../utils/services/cours-planning.service';
 
 @Component({
   selector: 'generate-html',
@@ -18,99 +25,163 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GenerateHtmlComponent implements OnInit, OnDestroy {
 
-  id: number;
+  param: number;
+  ready: boolean;
   private sub: any;
   planning: Planning;
   stagiaire: Stagiaire;
   formation: Formation;
   titre: Titre;
-
+  entreprise: Entreprise;
+  stagiaireparentreprise: StagiaireParEntreprise;
+  nb_heures_formations: number;
+  cours_planning: CoursPlanning;
   
   constructor(
     private route: ActivatedRoute,
     private titreService: TitreService,
     private stagiaireService: StagiaireService,
     private formationService: FormationService,
-    private planningService: PlanningService
+    private planningService: PlanningService,
+    private entrepriseService: EntrepriseService,
+    private stagiaireParEntrepriseService: StagiaireparentrepriseService,
+    private datePipe: DatePipe,
+    private coursplanningService: CoursPlanningService,
   ) { 
+    this.sub = this.route.params.subscribe(params => {
+       this.param = +params['id']; 
+    });
+    this.getPlanning(this.param);
   }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-       this.id = +params['id']; 
-    });
-    this.getPlanning(this.id);
   }
 
-  getPlanning(id) {
-    this.planningService.getPlanningsById(id).subscribe(
+  async getPlanning(param) {
+    console.log('début de récupération du planning, id:'+param);
+    return await this.planningService.getPlanningsById(param).subscribe(
       data=> {
         this.planning = data;
       },
       error=>{
-        console.log(error);
+        console.log("erreur de récupération du planning:"+error);  
       },
       ()=> {
+        console.log('fin de récupération du planning');
+        console.log("this.planning.planning_courses:"+this.planning.planning_courses);
+        this.getCoursPlanning();
+      }
+    );
+  }
+
+	// Chargement du stagiaire
+	async getCoursPlanning() {
+    console.log('début de récupération des cours du planning, id:'+this.planning.id);
+    return await this.coursplanningService.getCours(this.planning.id).subscribe(
+      data => {
+        //this.cours_planning = data;
+        console.log('this.cours_planning returndata:'+data);
+      },
+      error => {
+        console.log("erreur de récupération des cours du planning:"+error);  
+      },
+      () => {
+        console.log('fin de récupération des cours du planning');
         this.getStagiaire();
       }
     );
   }
 
 	// Chargement du stagiaire
-	getStagiaire(): void {
+	async getStagiaire() {
     console.log('début de récupération du stagiaire, id:'+this.planning.stagiaire_id);
-    this.stagiaireService.getStagiaireById(this.planning.stagiaire_id).subscribe(
+    return await this.stagiaireService.getStagiaireById(this.planning.stagiaire_id).subscribe(
       data => {
         this.stagiaire = data;
         console.log('this.stagiaire:'+this.stagiaire);
       },
-      error => console.log(error),
+      error => {
+        console.log("erreur de récupération du stagiaire:"+error);  
+      },
       () => {
+        console.log('fin de récupération du stagiaire');
         this.getFormation();
       }
     );
-    console.log('fin de récupération du stagiaire');
   }
 
   // Chargement de la formation 
-  getFormation() {
+  async getFormation() {
     console.log('début de récupération de la formation, id:'+this.planning.formation_id);
-    this.formationService.getFormation(this.planning.formation_id, this.planning.id).subscribe(
+    return await this.formationService.getFormationById(this.planning.formation_id).subscribe(
       data=>{
         this.formation = data;
         console.log('this.formation:'+this.formation);
       },
       error => {
-        console.log(error);
+        console.log("erreur de récupération de la formation:"+error);
       },
       ()=> {
-        this.getTitre()
+        console.log('fin de récupération de la formation');
+        this.getStagiaireParEntreprise(); 
       }
     );
-    console.log('fin de récupération de la formation');
+  }
+
+  // Chargement de l'entreprise 
+  async getStagiaireParEntreprise() {
+    console.log("début de récupération du stagiaire par entreprise:"+this.stagiaire.CodeStagiaire);
+    return await this.stagiaireParEntrepriseService.getStagiaireParEntrepriseByIdStagiaire(this.stagiaire.CodeStagiaire).subscribe(
+      data => {
+        this.stagiaireparentreprise = data;
+      },
+      error=>{
+        console.log("erreur de récupération du stagiaire par entreprise:"+error);
+      },
+      () => {
+        console.log("fin de récupération du stagiaire par entreprise");
+        this.getEntreprise();
+      }
+    );
+  }
+
+  async getEntreprise(){
+    console.log("début de l'entreprise:"+this.stagiaire.CodeStagiaire);
+    return await this.entrepriseService.getEntrepriseById(this.stagiaireparentreprise.CodeEntreprise).subscribe(
+      data => {
+        this.entreprise = data;
+      },
+      error => {
+        console.log("erreur de récupération de l'entreprise:"+error);
+      },
+      () => {
+        console.log("fin de récupération de l'entreprise");
+        this.getTitre();
+      }
+    );
   }
 
   // Chargement du titre 
-  getTitre() {
+  async getTitre() {
     console.log('début de récupération du titre, id:'+this.formation.CodeTitre);
-    console.log(this.formation);
-    this.titreService.getTitre(this.formation.CodeTitre).subscribe(
+    return await this.titreService.getTitre(this.formation.CodeTitre).subscribe(
       data=>{
         this.titre = data;
         console.log('this.titre:'+this.titre);
       },
       error => {
-        console.log(error);
+        console.log("erreur de récupération du titre:"+error);
       },
       () => 
-        { 
-          
-        }
+      { 
+        console.log('fin de récupération du titre');
+        this.ready=true;
+      }
     );
-    console.log('fin de récupération du titre');
   }
 
 
+  // Téléchargement du planning
   downloadPdf() { 
     // doc = https://stackoverflow.com/questions/51624534/download-pdf-file-angular-6-and-web-api
     // https://www.c-sharpcorner.com/article/convert-html-to-pdf-using-angular-6/
