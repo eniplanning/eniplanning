@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Planning } from '../../../utils/models/planning';
 import { PlanningService } from '../../../utils/services/planning.service';
 
@@ -18,7 +18,8 @@ export class RightPanelComponent implements OnInit {
 	months: any[];
 	
   	constructor(
-  		private planningService: 		PlanningService
+  		private planningService: 		PlanningService,
+  		public changeDetector: 						ChangeDetectorRef
   	) {}
 
  	ngOnInit() {
@@ -38,6 +39,7 @@ export class RightPanelComponent implements OnInit {
 	            	for (var d = startPlanning; d <= endPlanning; d.setMonth(d.getMonth() + 1)) {
 	            		this.months.push({ year: d.getFullYear(), month: d.getMonth() + 1 });
 	            	}
+	            	this.changeDetector.detectChanges();
             	}
   
             }

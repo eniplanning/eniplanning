@@ -81,7 +81,8 @@ class PlanningController extends Controller
      */
     public function destroy(Planning $planning)
     {
-        $planning->delete();
+        $planning->planningCourses()->delete();
+        return $planning->delete();
     }
 
     /**
