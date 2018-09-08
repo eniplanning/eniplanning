@@ -48,6 +48,12 @@ export class LeftPanelComponent implements OnInit {
 			modulesComplementaires: false
 		}
 		this.loadSelectedStagiaire();
+		this.planningService.newPlanning.subscribe(
+			(planning: Planning) => {
+				this.onChangeSelectedStagiaire()
+				this.planningService.setSelectedPlanning(planning);
+			}
+		)
 	}
 
 	// Récupération des Stagiaires depuis le service : stagiaire
@@ -91,7 +97,7 @@ export class LeftPanelComponent implements OnInit {
 			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
 			this.planningService.setSelectedPlanning(null);
-			console.log('stagiaire sélectionné' , this.selectedStagiaire);
+			console.log('stagiaire sélectionné', this.selectedStagiaire);
 		}
 	}
 
@@ -140,7 +146,6 @@ export class LeftPanelComponent implements OnInit {
 		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id, this.selectedPlanning.id).subscribe(
 			(formation: Formation) => {
-				console.log(formation);
 				//sorting modules
 				formation.Modules = [];
 				formation.uniteparformation.forEach(function(u) {

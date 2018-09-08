@@ -13,6 +13,7 @@ export class PlanningService {
 	planningsAPI = CONFIG.backend_url + 'planning';
   planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
   selectedPlanning = new BehaviorSubject<Planning>(null);
+  newPlanning = new BehaviorSubject<Planning>(null);
 
   httpOptions = {
       headers: new HttpHeaders({

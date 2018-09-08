@@ -37,9 +37,9 @@
                              [ngClass]="{'active-planning': (selectedPlanning != undefined && selectedPlanning.id == planning.id)}"
                              class="list-plannings-container" >
                              {{ planning.label }}
-                            <div class="btn-group col-span-3" mdbDropdown>
+                            <div class="btn-group col-span-3 pr-1" mdbDropdown>
                                 <a mdbDropdownToggle class="waves-light" mdbWavesEffect>
-                                        <i class="fa fa-ellipsis-h" aria-hidden="true">xxx</i>
+                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                                         <!-- <fa name="ellipsis-h" size="1x"></fa> -->  
                                 </a>
 
@@ -72,7 +72,7 @@
             <div class="content-body">
                 <ul class="module-list fa-ul" *ngIf="formation">
                     <li class="module" *ngFor="let module of formation.Modules">
-                        <div (click)="module.visible = !module.visible"><span class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
+                        <div (click)="module.visible = !module.visible"><span *ngIf="module.cours.length > 0" class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
                         <ul class="cours-list fa-ul" *ngIf="module.visible">
                             <li class="cours" *ngFor="let cours of module.cours">
                                 <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>

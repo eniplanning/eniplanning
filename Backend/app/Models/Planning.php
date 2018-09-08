@@ -25,7 +25,7 @@ class Planning extends Model
         'stagiaire_id',
         'formation_id',
         'user_id',
-        'lieu_id',
+        'code_lieu',
     ];
 
     public function ctrDisponibilities()

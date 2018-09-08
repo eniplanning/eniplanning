@@ -55,6 +55,8 @@ class FormationController extends Controller
         Log::info($planning->date_start_formation);
         Log::info('date.end.after');
         Log::info($planning->date_end_formation);
+        Log::info('code.lieu');
+        Log::info($planning->code_lieu);
         $start = (new Carbon($planning->date_start_formation))->format('Y-d-m');
         $end = (new Carbon($planning->date_end_formation))->format('Y-d-m');
         Log::info('date.start.after');
@@ -64,7 +66,7 @@ class FormationController extends Controller
 
         return Formation::with(['uniteparformation.modules.cours' => function ($query) use ($planning) {
             $query
-                ->where('Cours.CodeLieu', '=', $planning->lieu_id)
+                ->where('Cours.CodeLieu', '=', $planning->code_lieu)
                 ->whereDate('Cours.Debut', '>=', $planning->date_start_formation)
                 ->whereDate('Cours.Fin', '<=', $planning->date_end_formation);
         }])->get()->find($formation->CodeFormation)->toJson();

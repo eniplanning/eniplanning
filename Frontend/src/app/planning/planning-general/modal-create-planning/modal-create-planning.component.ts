@@ -76,6 +76,7 @@ export class ModalCreatePlanningComponent implements OnInit {
     }
 
     createPlanning():void {
+        console.log(this.selectedLieu);
         if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
             this.errorCreatePlanning = "Le nom du planning est obligatoire";
         }
@@ -118,10 +119,12 @@ export class ModalCreatePlanningComponent implements OnInit {
             planning.setStagiaire_id(this.selectedStagiaire.CodeStagiaire);
             planning.setFormation_id(this.selectedFormation.CodeFormation);
             planning.setUser_id(this.user.id);
+            planning.setLieu(this.selectedLieu.CodeLieu);
             this.planningService.createPlanning(planning).subscribe(
                 (planning: Planning) => {
                     this.successCreatePlanning = "Le planning a bien été crée";
                     console.log('planning crée', planning);
+                    this.planningService.newPlanning.next(planning);
                 },
                 error => console.log(error)
             );

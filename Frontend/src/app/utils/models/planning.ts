@@ -28,6 +28,7 @@ export class Planning {
     stagiaire_id:          number
     formation_id:          string
     user_id:               number
+    code_lieu:             number
 
     constructor(){}
 
@@ -36,7 +37,8 @@ export class Planning {
         this.label = label;
     }
 
-    setId(id: number) {
+    setId(id: number)
+    {
         this.id = id;
     }
 
@@ -118,6 +120,10 @@ export class Planning {
     setUser_id(user_id: number)
     {
         this.user_id = user_id;
+    }
+
+    setLieu(code_lieu: number) {
+        this.code_lieu = code_lieu;
     }
 
 
