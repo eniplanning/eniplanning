@@ -39,4 +39,15 @@ class EntrepriseController extends Controller
     {
         return Entreprise::all()->toJson();
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Entreprise $entreprise)
+    {
+        return Entreprise::findOrFail(trim($entreprise->CodeEntreprise))->toJson();
+    }
 }
