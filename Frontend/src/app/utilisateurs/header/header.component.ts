@@ -4,6 +4,7 @@ import { UserService } from '../../utils/services/user.service';
 import { TokenService } from '../../utils/services/token.service';
 import { Router } from '@angular/router';
 import { User } from '../../utils/models/user';
+import { ClearsessionService } from '../../utils/services/clearsession.service';
 
 @Component({
   selector: 'utilisateurs-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
       private router: Router,
       private userService: UserService,
       private token: TokenService,
+      private clearsessionService: ClearsessionService,
     ) {}
 
     ngOnInit() {
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigateByUrl('/login');
       this.userService.unsetUser();
       this.token.remove();
+      this.clearsessionService.run();
     }
 
   redirectToCreate(event: MouseEvent) {

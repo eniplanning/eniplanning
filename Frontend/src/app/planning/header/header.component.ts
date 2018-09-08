@@ -6,6 +6,7 @@ import { TokenService } from '../../utils/services/token.service';
 import { User } from '../../utils/models/user';
 import { Stagiaire } from '../../utils/models/stagiaire';
 import { StagiaireService } from '../../utils/services/stagiaire.service';
+import { ClearsessionService } from '../../utils/services/clearsession.service';
 
 @Component({
   selector: 'planning-header',
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit {
       private router: Router,
       private userService: UserService,
       private token: TokenService,
-      private stagiaireService: StagiaireService
+      private stagiaireService: StagiaireService,
+      private clearSessionService: ClearsessionService,
     ) {}
 
     ngOnInit() {
@@ -35,7 +37,8 @@ export class HeaderComponent implements OnInit {
       this.login.changeAuthStatus(false);
       this.router.navigateByUrl('/login');
       this.userService.unsetUser();
-      this.token.remove();
+      this.token.remove(); 
+      this.clearSessionService.run();
     }
 
     redirectToMonCompte(event: MouseEvent) {

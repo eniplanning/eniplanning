@@ -14,7 +14,7 @@ const routes: Routes = [
 		component: PurgerPlanningComponent
 	},
 	{
-		path: 'generate-html',
+		path: 'generate-html/:id',
 		component: GenerateHtmlComponent
 	}
 ];
