@@ -38,7 +38,7 @@
   <!-- heures de formations -->
   <div id="label_nb_heures_formation" style="margin-top:20px;text-align:center">
     <span style="color:grey">Formation en centre : </span>
-    <span id="nb_heures_formation" style="font-weight: bold">{{ nb_heures_formation }}</span> Heures
+    <span id="nb_heures_formation" style="font-weight: bold">{{ nb_heures_formations }}</span> Heures
   </div>
 
   <!-- stagiaire entreprise -->
@@ -92,9 +92,9 @@
       <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
         <!-- détail de la ligne si en entreprise -->
         <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ setMondayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ setFridayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">3 semaines </td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
+            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
             <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
         </tr>
         <!-- détail de la ligne si en cours -->
@@ -107,7 +107,7 @@
                       <td>ENI (Nantes)</td>
                     </tr>
                     <tr>
-                      <td>{{ cours.DureeReeleEnHeures }} heures</td>
+                      <td>{{ cours.DureeReelleEnHeures }} heures</td>
                     </tr>
                 </table>
             </td>

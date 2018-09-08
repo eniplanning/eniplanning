@@ -34,7 +34,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   titre: Titre;
   entreprise: Entreprise;
   stagiaireparentreprise: StagiaireParEntreprise;
-  nb_heures_formations: number;
+  nb_heures_formations: string;
   cours_planning: CoursPlanning[];
   endOfBeginEntreprise: string;
   beginOfEndEntreprise: string;
@@ -67,27 +67,30 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   }
   
   // Affichage de la première date en entreprise (vendredi)
-  setFirstDateEntreprise() {
+  getFirstDateEntreprise() {
     var beforeDate = new Date(this.cours_planning[0].date_start);
     beforeDate.setDate(beforeDate.getDate() - 3);
     this.endOfBeginEntreprise = this.getDisplayDate(beforeDate);
   }
   
   // Affichage de la dernière date en entreprise (lundi)
-  setLastDateEntreprise() {
+  getLastDateEntreprise() {
     var nextDate = new Date(this.cours_planning[this.cours_planning.length-1].date_end);
     nextDate.setDate(nextDate.getDate() + 3);
     this.beginOfEndEntreprise = this.getDisplayDate(nextDate);
   }
-  // Affichage des dates
-  setMondayBefore(cours: CoursPlanning) {
-    var nextDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)-1].date_end);
-    nextDate.setDate(nextDate.getDate() + 3);
-    return this.getDisplayDate(nextDate);
+
+  // Affichage du Lundi en entreprise (ligne précédant le cours) 
+  getMondayBefore(cours: CoursPlanning) {
+    if (this.cours_planning.indexOf(cours) != 0) {
+      var beforeDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)-1].date_end);
+      beforeDate.setDate(beforeDate.getDate() + 3);
+      return this.getDisplayDate(beforeDate);
+    }
   }
-  
-  // Affichage des dates
-  setFridayBefore(cours: CoursPlanning) {
+
+  // Affichage du Vendredi en entreprise (ligne précédant le cours) 
+  getFridayBefore(cours: CoursPlanning) {
     if (this.cours_planning.indexOf(cours) != 0){
       var beforeDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)].date_start);
       beforeDate.setDate(beforeDate.getDate() - 3);
@@ -95,27 +98,37 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Affichage du nombre de semaines en entreprise
+  getNbSemainesEntreprise(cours: CoursPlanning) {
+    var beforeMondayDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)-1].date_end);
+    var mondayBefore = new Date(beforeMondayDate.setDate(beforeMondayDate.getDate() + 3));
+    var beforeFridayDate = new Date(this.cours_planning[this.cours_planning.indexOf(cours)].date_start);
+    var fridayBefore = new Date(beforeFridayDate.setDate(beforeFridayDate.getDate()));
+    var diff = Math.abs(fridayBefore.getTime() - mondayBefore.getTime());
+    diff = Math.round(diff / (1000 * 3600 * 24 * 7));
+    return diff.toString();
+  }
+  
 
   // Vérifier si les cours se suivent
   isConsecutive(cours:CoursPlanning) {
-    console.log("début du passage sur le cours :"+cours.id);
     var indexCours = this.cours_planning.indexOf(cours);
-    console.log("indexCours:"+ indexCours);
     if (indexCours != 0) {
       var indexPreviouxCours = (this.cours_planning.indexOf(cours) -1);
       var previousCours = this.cours_planning[indexPreviouxCours];
-      var date_start_convert = new Date(cours.date_start);
-      var date_previous_end_convert = new Date(previousCours.date_end);
-      var diff = Math.abs(date_start_convert.getDate() - date_previous_end_convert.getDate());
-      var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      if (diffDays < 5) {  
-        console.log("fin passage sur le cours :"+cours.id);
+      var date_start = new Date(cours.date_start);
+      var date_start_convert = new Date(date_start.setDate(date_start.getDate()));
+      var date_previous_end = new Date(previousCours.date_end);
+      var date_previous_end_convert = new Date(date_previous_end.setDate(date_previous_end.getDate()));
+      var diff = Math.abs(date_start_convert.getTime() - date_previous_end_convert.getTime());
+      if (diff < 4) {
+        return false;
+      } else {
         return true;
       }
+    } else { 
+      return false;
     }
-    console.log("fin passage sur le cours :"+cours.id);
-    console.log("fin passage sur le cours :"+ indexCours);
-    return false;
   }
 
   // Chargement du planning
@@ -129,8 +142,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         console.log("erreur de récupération du planning:"+error);  
       },
       ()=> {
-        console.log('fin de récupération du planning');
-        console.log("this.planning.planning_courses:"+this.planning.planning_courses);
         this.getCoursPlanning();
       }
     );
@@ -138,7 +149,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
 
 	// Chargement du stagiaire
 	async getCoursPlanning() {
-    console.log('début de récupération des cours du planning, id:'+this.planning.id);
     return await this.coursplanningService.getCours(this.planning.id).subscribe(
       (data: CoursPlanning[]) => {
         this.cours_planning = data;
@@ -147,11 +157,15 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         console.log("erreur de récupération des cours du planning:"+error);  
       },
       () => {
-        console.log('fin de récupération des cours du planning');
         this.getStagiaire();
-        this.setFirstDateEntreprise();
-        this.setLastDateEntreprise();
-      }
+        this.getFirstDateEntreprise();
+        this.getLastDateEntreprise();
+        var nb_heures = 0;
+        for (let cours of this.cours_planning) {
+          nb_heures+=cours.expected_time_hour;
+        }
+        this.nb_heures_formations = nb_heures.toString();
+       }
     );
   }
 
@@ -161,13 +175,11 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     return await this.stagiaireService.getStagiaireById(this.planning.stagiaire_id).subscribe(
       data => {
         this.stagiaire = data;
-        console.log('this.stagiaire:'+this.stagiaire);
       },
       error => {
         console.log("erreur de récupération du stagiaire:"+error);  
       },
       () => {
-        console.log('fin de récupération du stagiaire');
         this.getFormation();
       }
     );
@@ -179,13 +191,11 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     return await this.formationService.getFormationById(this.planning.formation_id).subscribe(
       data=>{
         this.formation = data;
-        console.log('this.formation:'+this.formation);
       },
       error => {
         console.log("erreur de récupération de la formation:"+error);
       },
       ()=> {
-        console.log('fin de récupération de la formation');
         this.getStagiaireParEntreprise(); 
       }
     );
@@ -202,7 +212,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         console.log("erreur de récupération du stagiaire par entreprise:"+error);
       },
       () => {
-        console.log("fin de récupération du stagiaire par entreprise");
         this.getEntreprise();
       }
     );
@@ -219,7 +228,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         console.log("erreur de récupération de l'entreprise:"+error);
       },
       () => {
-        console.log("fin de récupération de l'entreprise");
         this.getTitre();
       }
     );
@@ -231,14 +239,12 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     return await this.titreService.getTitre(this.formation.CodeTitre).subscribe(
       data=>{
         this.titre = data;
-        console.log('this.titre:'+this.titre);
       },
       error => {
         console.log("erreur de récupération du titre:"+error);
       },
       () => 
       { 
-        console.log('fin de récupération du titre');
         this.ready=true;
       }
     );
