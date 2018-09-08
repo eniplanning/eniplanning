@@ -81,8 +81,8 @@ return [
 
         'enierp' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
+            'host' => env('DB2_HOST', 'localhost'),
+            'port' => env('DB2_PORT', '1433'),
             'database' => env('DB2_DATABASE', ''),
             'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
