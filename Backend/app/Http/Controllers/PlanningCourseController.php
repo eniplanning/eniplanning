@@ -74,6 +74,8 @@ class PlanningCourseController extends Controller
     public function getPlanningCourseByPlanningId(int $idPlanning)
     {
         return PlanningCourse::where('planning_id', $idPlanning)
-            ->orderBy('date_start', 'asc');
+            ->orderBy('date_start', 'asc')
+            ->get()
+            ->toJson();
     }
 }

@@ -41,7 +41,7 @@ Route::group([
     Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);
 
     // PlanningCourseController Routes
-    Route::get('planningcoursebyplanning', 'PlanningCourseController@getPlanningCourseByPlanningId');
+    Route::get('planningcoursebyplanning/{id}', 'PlanningCourseController@getPlanningCourseByPlanningId');
     Route::resource('planningCourse', 'PlanningCourseController', ['except' => ['create', 'edit']]);
 
     // UserController Routes
