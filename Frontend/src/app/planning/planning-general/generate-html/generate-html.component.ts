@@ -259,11 +259,14 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   // Téléchargement du planning
   downloadPdf() {
     console.log('début chargement pdf');
-    var divCible = document.getElementsByClassName('change_page')[0];
+    // Ajout d'un saut de ligne avant la 7ème ligne de cours
+    var divCible = document.querySelectorAll("[data-index='6']")[0];
     if (divCible != null) {
       divCible.classList.add("print_marge");
-    }
-    var data1 = document.getElementsByClassName('contentToConvert')[0];
+      var data1 = document.getElementsByClassName('contentToConvert')[0];
+    } else {
+      var data1 = document.getElementsByClassName('contentToConvert')[0];
+    } 
     html2canvas(data1).then(canvas => {  
       var imgData = canvas.toDataURL('image/png');
       var imgWidth = 210; 
@@ -298,15 +301,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         divCible.classList.remove("print_marge");
       }
     });
-  }
-
-  // Ajout de classe pour gérer les pages d'impression
-  getChangePage(cours = null) {
-    this.rowcount+=1;
-    console.log('this.rowcount:'+this.rowcount);
-    if (this.rowcount == 10 ) {
-      return "change_page";
-    } 
   }
 
 

@@ -89,17 +89,17 @@
     </table>
 
     <!-- template semaine en entreprise -->
-    <table *ngFor="let cours of cours_planning" class="table_entreprise">
+    <table *ngFor="let cours of cours_planning; let i = index"  [attr.data-index]="i" class="table_entreprise">
       <tbody class="tbody_tableau_detail">
         <!-- détail de la ligne si en entreprise -->
-        <tr *ngIf="isConsecutive(cours)" class="tr_detail"  [ngClass]="getChangePage(cours)">
+        <tr *ngIf="isConsecutive(cours)" class="tr_detail">
             <td class="td_15">{{ getMondayBefore(cours) }}</td>
             <td class="td_15">{{ getFridayBefore(cours) }}</td>
             <td class="td_20">{{ getNbSemainesEntreprise(cours) }} semaine(s) </td>
             <td class="td_50">ENTREPRISE</td>
         </tr>
         <!-- détail de la ligne si en cours -->
-        <tr class="tr_detail"  [ngClass]="getChangePage(cours)">
+        <tr class="tr_detail" >
             <td class="td_15">{{ getDisplayDate(cours.date_start) }}</td>
             <td class="td_15">{{ getDisplayDate(cours.date_end) }}</td>
             <td class="td_20_ENI">
@@ -118,7 +118,7 @@
     </table>
 
     <!-- dernière ligne en entreprise -->
-    <table *ngIf="!firstPage" class="table_entreprise" [ngClass]="getChangePage()" >
+    <table *ngIf="!firstPage" class="table_entreprise" >
         <tbody class="tb  ody_tableau_detail">
           <!-- détail de la ligne -->
           <tr class="tr_entreprise">
