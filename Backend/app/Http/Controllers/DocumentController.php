@@ -32,6 +32,7 @@ class DocumentController extends Controller
      */
     public function getPlanning()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $title = '{ENI PLANNING}';
         $document = new Document($title);
         $document->save(storage_path('planning.rtf'));   // puts contents "{\b foo\b0}"
@@ -50,6 +51,7 @@ class DocumentController extends Controller
      */
     public function show($id)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         //
     }
 

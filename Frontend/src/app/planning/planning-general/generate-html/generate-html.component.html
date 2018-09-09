@@ -10,184 +10,125 @@
 </div>
 
 <!-- contenu -->
-<div *ngIf="ready" id="contentToConvert" style="display: block; margin: 0 auto; margin-bottom: 0.5cm; width: 21cm; height: 29.7cm; font-size: 14px; font-family: Arial; ">
+<div *ngIf="ready" id="top_page" class="contentToConvert">
 
   <!-- logo -->
-  <div id="logo" style="padding:30px">
+  <div id="logo">
     <img src='./assets/logo-eni.jpg' style="width:100px"/>
   </div>
   
   <!-- formation -->
-  <div id="title" style="text-align:center; margin: 0px; padding:0px">
-      <h3 id="formation" style="margin: 0px; padding:5px"> {{ formation.LibelleLong }} </h3>
-      <div  style="margin: 0px; padding:0px; color:grey">Préparation au titre :</div>
-      <h6 id="label_titre" style="margin: 0px; padding:0px">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
-      <h6 id="niveau"style="margin: 0px; padding:0px">Niveau : {{ titre.Niveau }} </h6>  
+  <div id="title" class="div_formation">
+      <h3 id="formation" class="title_formation"> {{ formation.LibelleLong }} </h3>
+      <div class="prepa_titre">Préparation au titre :</div>
+      <h6 id="label_titre">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
+      <h6 id="niveau">Niveau : {{ titre.Niveau }} </h6>  
   </div>
 
   <!-- dates de formation -->
-  <div id="date_formation" style="margin: 0px; margin-top:20px; padding:5px">
-    <div id="label_date_formation_debut" style="float:left; margin-left:30px">
-      <span style="color:grey">Date de début (formation) : </span>
-      <span id="date_formation_debut"style="font-weight: bold"> {{ getDisplayDate(planning.date_start_formation) }}</span></div>
-    <div id="label_date_formation_fin" style="float:right; margin-right: 30px">
-      <span style="color:grey">Date de fin (formation) : </span>
-      <span id="date_formation_fin" style="font-weight: bold">{{  getDisplayDate(planning.date_end_formation) }}</span></div>
+  <div id="date_formation">
+    <div id="label_date_formation_debut" >
+      <span class="color_grey" >Date de début (formation) : </span>
+      <span class="bold_text"> {{ getDisplayDate(planning.date_start_formation) }}</span></div>
+    <div id="label_date_formation_fin" >
+      <span class="color_grey">Date de fin (formation) : </span>
+      <span class="bold_text" >{{  getDisplayDate(planning.date_end_formation) }}</span></div>
   </div>
 
   <!-- heures de formations -->
-  <div id="label_nb_heures_formation" style="margin-top:20px;text-align:center">
-    <span style="color:grey">Formation en centre : </span>
-    <span id="nb_heures_formation" style="font-weight: bold">{{ nb_heures_formations }}</span> Heures
+  <div id="label_nb_heures_formation" >
+    <span class="color_grey">Formation en centre : </span>
+    <span id="nb_heures_formation" class="bold_text">{{ nb_heures_formations }}</span> Heures
   </div>
 
   <!-- stagiaire entreprise -->
-  <div id="entreprise_stagiaire"  style="margin: 0px; padding:5px">
-    <div id="label_entreprise" style="float:left; margin-left:30px">
-      <span style="color:grey">Entreprise : </span>
-      <span *ngIf="entreprise" id="entreprise"  style="font-weight:bold">{{ entreprise.RaisonSociale }}</span>
-      <span *ngIf="!entreprise" id="entreprise"  style="font-weight:bold">à définir</span>
+  <div id="entreprise_stagiaire" >
+    <div id="label_entreprise" >
+      <span class="color_grey">Entreprise : </span>
+      <span *ngIf="entreprise" id="entreprise"  class="bold_text">{{ entreprise.RaisonSociale }}</span>
+      <span *ngIf="!entreprise" id="entreprise"  class="bold_text">à définir</span>
     </div>
     <div id="label_stagiaire" style="float:right; margin-right: 30px">
-      <span style="color:grey">Stagiaire : </span>
-      <span id="stagiaire"  style="font-weight:bold">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span>
+      <span class="color_grey">Stagiaire : </span>
+      <span id="stagiaire"  class="bold_text">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span>
     </div>
   </div>
 
   <!-- tableau du planning -->
-  <div id="planning" style="margin-top: 50px; padding:5px; width:19.5cm; margin-left: 25px">
+  <div id="planning" class="table_planning">
+
     <!-- entête du tableau-->
-    <table style="text-align:center;  width:100%; border-collapse: collapse;">
-      <thead style="text-align:center; border-collapse: collapse; background-color:lightgray">
-          <th colspan="2" style="text-align:center; border: 0.5px solid grey; border-collapse: collapse; width:30%">
-            <table style=" width:100% ;text-align:center; border-collapse:collapse;">
-              <tr colspan="2" style="text-align:center;width: 100%;border-collapse:collapse;" >
-                <td colspan="2" style="border-bottom: 0.5px dotted grey;border-collapse:collapse;text-align: center;font-weight: bold">Dates</td>
+    <table class="table_entete">
+      <thead class="thead_planning">
+          <th colspan="2" class="th_planning" >
+            <table class="custom_style_table_entete">
+              <tr colspan="2" class="custom_style_table_entete" >
+                <td colspan="2" class="custom_style_dotted">Dates</td>
               </tr>
-              <tr style=" width:100%;text-align:center;border-collapse:collapse;">
-                <td style="border-right: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Début</td>
-                <td style="border-left: 0.5px dotted grey;border-collapse:collapse;width: 50%; text-align: center">Fin</td></tr>
+              <tr class="custom_style_table_entete">
+                <td class="custom_style_td_entete" >Début</td>
+                <td class="custom_style_td_entete" >Fin</td></tr>
             </table>
           </th>
-          <th style="border: 0.5px solid grey; width:20%;text-align:center;">Lieu</th>
-          <th style="border: 0.5px solid grey; width:50%;text-align:center;">Programme</th>
+          <th class="th_planning2">Lieu</th>
+          <th class="th_planning3">Programme</th>
       </thead>
     </table>
 
     <!-- première ligne en entreprise -->
-    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+    <table class="table_entreprise" >
+        <tbody class="tbody_tableau_detail">
           <!-- détail de la ligne -->
-          <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ endOfBeginEntreprise }}</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%"></td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+          <tr class="tr_detail">
+              <td class="td_15">../../..</td>
+              <td class="td_15">{{ endOfBeginEntreprise }}</td>
+              <td class="td_20"></td>
+              <td class="td_50">ENTREPRISE</td>
           </tr>
         </tbody>
     </table>
 
     <!-- template semaine en entreprise -->
-    <table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-      <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+    <table *ngFor="let cours of cours_planning" class="table_entreprise">
+      <tbody class="tbody_tableau_detail">
         <!-- détail de la ligne si en entreprise -->
-        <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+        <tr *ngIf="isConsecutive(cours)" class="tr_detail"  [ngClass]="getChangePage(cours)">
+            <td class="td_15">{{ getMondayBefore(cours) }}</td>
+            <td class="td_15">{{ getFridayBefore(cours) }}</td>
+            <td class="td_20">{{ getNbSemainesEntreprise(cours) }} semaine(s) </td>
+            <td class="td_50">ENTREPRISE</td>
         </tr>
         <!-- détail de la ligne si en cours -->
-        <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-            <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
+        <tr class="tr_detail"  [ngClass]="getChangePage(cours)">
+            <td class="td_15">{{ getDisplayDate(cours.date_start) }}</td>
+            <td class="td_15">{{ getDisplayDate(cours.date_end) }}</td>
+            <td class="td_20_ENI">
                 <table style=" width:100%">
                     <tr style=" width:100%">
-                      <td>ENI (Nantes)</td>
+                      <td>ENI {{ Lieu }}</td>
                     </tr>
                     <tr>
                       <td>{{ cours.expected_time_hour.toString() }} heures</td>
                     </tr>
                 </table>
             </td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label }}</td>
+            <td class="td_50">{{ cours.label }}</td>
         </tr>
       </tbody>
     </table>
-
-<!-- ********************************************* A SUPPRIMER -->
-<!-- template semaine en entreprise -->
-<table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-    <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
-      <!-- détail de la ligne si en entreprise -->
-      <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
-      </tr>
-      <!-- détail de la ligne si en cours -->
-      <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-          <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-              <table style=" width:100%">
-                  <tr style=" width:100%">
-                    <td>ENI (Nantes)</td>
-                  </tr>
-                  <tr>
-                    <td>{{ cours.expected_time_hour.toString() }} heures</td>
-                  </tr>
-              </table>
-          </td>
-          <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- template semaine en entreprise -->
-  <table *ngFor="let cours of cours_planning" style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-      <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
-        <!-- détail de la ligne si en entreprise -->
-        <tr *ngIf="isConsecutive(cours)" style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getMondayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getFridayBefore(cours) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%">{{ getNbSemainesEntreprise(cours) }} semaines </td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
-        </tr>
-        <!-- détail de la ligne si en cours -->
-        <tr style="border: 0.5px solid grey; border-collapse: collapse; text-align: center; height: 1.2cm;">
-            <td style="border: 0.5px solid rgb(128, 128, 128); border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_start) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ getDisplayDate(cours.date_end) }}</td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; background-color:#10447C; color:white; width:20%">
-                <table style=" width:100%">
-                    <tr style=" width:100%">
-                      <td>ENI (Nantes)</td>
-                    </tr>
-                    <tr>
-                      <td>{{ cours.expected_time_hour.toString() }} heures</td>
-                    </tr>
-                </table>
-            </td>
-            <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">{{ cours.label }}</td>
-        </tr>
-      </tbody>
-    </table>
-<!-- ********************************************* A SUPPRIMER -->
-    
 
     <!-- dernière ligne en entreprise -->
-    <table style="border: 0.5px solid grey; width:100%; border-collapse: collapse;">
-        <tbody style="border: 0.5px solid grey; border-collapse: collapse;">
+    <table *ngIf="!firstPage" class="table_entreprise" [ngClass]="getChangePage()" >
+        <tbody class="tb  ody_tableau_detail">
           <!-- détail de la ligne -->
-          <tr style="border: 0.5px solid grey; border-collapse: collapse;text-align:center; height: 1.2cm;">
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">{{ beginOfEndEntreprise }}</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:15%">../../..</td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:20%"></td>
-              <td style="border: 0.5px solid grey; border-collapse: collapse; width:50%">ENTREPRISE</td>
+          <tr class="tr_entreprise">
+              <td class="td_15">{{ beginOfEndEntreprise }}</td>
+              <td class="td_15">../../..</td>
+              <td class="td_20"></td>
+              <td class="td_50">ENTREPRISE</td>
           </tr>
         </tbody>
     </table>
+
   </div>
 </div>
-<div style="margin-bottom:200px;"></div>

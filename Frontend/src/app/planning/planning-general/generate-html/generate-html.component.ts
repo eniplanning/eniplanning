@@ -25,21 +25,25 @@ import { CoursPlanningService } from '../../../utils/services/cours-planning.ser
 })
 export class GenerateHtmlComponent implements OnInit, OnDestroy {
 
-  param: number;
-  ready: boolean;
-  private sub: any;
-  planning: Planning;
-  stagiaire: Stagiaire;
-  formation: Formation;
-  titre: Titre;
-  entreprise: Entreprise;
+  
+  param:                  number;
+  ready:                  boolean;
+  private sub:            any;
+  planning:               Planning;
+  stagiaire:              Stagiaire;
+  formation:              Formation;
+  titre:                  Titre;
+  entreprise:             Entreprise;
   stagiaireparentreprise: StagiaireParEntreprise;
-  nb_heures_formations: string;
-  cours_planning: CoursPlanning[];
-  endOfBeginEntreprise: string;
-  beginOfEndEntreprise: string;
-  fridayBefore: string;
-  mondayAfter: string;
+  nb_heures_formations:   string;
+  cours_planning:         CoursPlanning[];
+  endOfBeginEntreprise:   string;
+  beginOfEndEntreprise:   string;
+  fridayBefore:           string;
+  mondayAfter:            string;
+  nbcours:                number;
+  rowcount:               number;
+  run:                    boolean;
   
   constructor(
     private route: ActivatedRoute,
@@ -56,10 +60,12 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
        this.param = +params['id']; 
     });
     this.getPlanning(this.param);
+    this.rowcount=0;
+    this.run=true;
   }
 
   ngOnInit() {
-  }
+  } 
 
   // Formatage des dates pour l'affichage
   getDisplayDate(date:Date) {
@@ -109,7 +115,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
     return diff.toString();
   }
   
-
   // Vérifier si les cours se suivent
   isConsecutive(cours:CoursPlanning) {
     var indexCours = this.cours_planning.indexOf(cours);
@@ -164,6 +169,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
         var nb_heures = 0;
         for (let cours of this.cours_planning) {
           nb_heures+=cours.expected_time_hour;
+          this.nbcours+=1;
         }
         this.nb_heures_formations = nb_heures.toString();
        }
@@ -233,7 +239,6 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
       }
     );
   }
-
   // Chargement du titre 
   async getTitre() {
     console.log('début de récupération du titre, id:'+this.formation.CodeTitre);
@@ -244,49 +249,69 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
       error => {
         console.log("erreur de récupération du titre:"+error);
       },
-      () => 
-      { 
-        this.ready=true;
+      ()=> {
+        this.ready = true;
       }
     );
   }
 
 
   // Téléchargement du planning
-  downloadPdf() { 
-    // doc = https://stackoverflow.com/questions/51624534/download-pdf-file-angular-6-and-web-api
-    // https://www.c-sharpcorner.com/article/convert-html-to-pdf-using-angular-6/
-    
+  downloadPdf() {
     console.log('début chargement pdf');
-    var data = document.getElementById('contentToConvert');  
-    html2canvas(data).then(canvas => {  
+    var divCible = document.getElementsByClassName('change_page')[0];
+    if (divCible != null) {
+      divCible.classList.add("print_marge");
+    }
+    var data1 = document.getElementsByClassName('contentToConvert')[0];
+    html2canvas(data1).then(canvas => {  
+      var imgData = canvas.toDataURL('image/png');
+      var imgWidth = 210; 
+      var pageHeight = 295;  
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+
+      var doc = new jspdf('p', 'mm', 'A4');
+      var position = 0;
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save(this.planning.label+'.pdf');
       
-      // Few necessary setting options  
-      var imgWidth = 210;   
-      var pageHeight = 300;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save(this.planning.label+'.pdf'); // Generated PDF   
       
-			var url = window.URL.createObjectURL(new Blob([pdf.text()], { type: "application/octet-stream" }));
+			var url = window.URL.createObjectURL(new Blob([doc], { type: "application/pdf" }));
 			var a = document.createElement('a');
 			document.body.appendChild(a);
 			a.setAttribute('style', 'display: none');
 			a.href = url;
-			a.download = 'MYPdf.pdf';
-			a.click();
+			a.download = this.planning.label+'.pdf';
 			window.URL.revokeObjectURL(url);
-			a.remove(); // remove the element
-    });  
+      a.remove(); // remove the element
+      if (divCible != null) {
+        divCible.classList.remove("print_marge");
+      }
+    });
+  }
+
+  // Ajout de classe pour gérer les pages d'impression
+  getChangePage(cours = null) {
+    this.rowcount+=1;
+    console.log('this.rowcount:'+this.rowcount);
+    if (this.rowcount == 10 ) {
+      return "change_page";
+    } 
   }
 
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+
 }

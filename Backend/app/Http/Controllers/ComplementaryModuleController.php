@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ComplementaryModule;
+use Log;
 
 class ComplementaryModuleController extends Controller
 {
@@ -14,6 +15,7 @@ class ComplementaryModuleController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return ComplementaryModule::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class ComplementaryModuleController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryModule = ComplementaryModule::create($request->all());
         return $complementaryModule->toJson();
     }
@@ -37,6 +40,7 @@ class ComplementaryModuleController extends Controller
      */
     public function show(ComplementaryModule $complementaryModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $complementaryModule->with('complementaryCourses')->get()->toJson();
     }
 
@@ -49,6 +53,7 @@ class ComplementaryModuleController extends Controller
      */
     public function update(Request $request, ComplementaryModule $complementaryModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryModule->update($request->all());
         return $complementaryModule->toJson();
     }
@@ -61,6 +66,7 @@ class ComplementaryModuleController extends Controller
      */
     public function destroy(ComplementaryModule $complementaryModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryModule->delete();
     }
 }

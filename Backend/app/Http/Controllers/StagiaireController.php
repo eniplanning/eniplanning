@@ -18,7 +18,6 @@ class StagiaireController extends Controller
      */
     public function index()
     {
-        //Log::useDailyFiles(storage_path().Config::get('app.log_file'));
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Stagiaire::all()->toJson();
     }
@@ -31,6 +30,7 @@ class StagiaireController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         Stagiaire::create($request->all());
     }
 
@@ -42,6 +42,7 @@ class StagiaireController extends Controller
      */
     public function show(Stagiaire $stagiaire)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $stagiaire->toJson();
     }
     
@@ -54,6 +55,7 @@ class StagiaireController extends Controller
      */
     public function update(Request $request, Stagiaire $stagiaire)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $stagiaire->update($request->all());
     }
 
@@ -65,6 +67,7 @@ class StagiaireController extends Controller
      */
     public function destroy(Stagiaire $stagiaire)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $stagiaire->delete();
     }
 }

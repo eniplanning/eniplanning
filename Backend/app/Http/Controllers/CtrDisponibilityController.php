@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CtrDisponibility;
+use Log;
 
 class CtrDisponibilityController extends Controller
 {
@@ -14,6 +15,7 @@ class CtrDisponibilityController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return CtrDisponibility::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class CtrDisponibilityController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         CtrDisponibility::create($request->all());
     }
 
@@ -36,6 +39,7 @@ class CtrDisponibilityController extends Controller
      */
     public function show(CtrDisponibility $ctrDisponibility)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $ctrDisponibility->toJson();
     }
 
@@ -48,6 +52,7 @@ class CtrDisponibilityController extends Controller
      */
     public function update(Request $request, CtrDisponibility $ctrDisponibility)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrDisponibility->update($request->all());
     }
 
@@ -59,6 +64,7 @@ class CtrDisponibilityController extends Controller
      */
     public function destroy(CtrDisponibility $ctrDisponibility)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrDisponibility->delete();
     }
 }

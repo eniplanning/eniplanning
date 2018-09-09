@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PlanningCourse;
+use Log;
 
 class PlanningCourseController extends Controller
 {
@@ -14,6 +15,7 @@ class PlanningCourseController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return PlanningCourse::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class PlanningCourseController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         \Log::error($request);
         $planningCourse = PlanningCourse::create($request->all());
         return $planningCourse->toJson();
@@ -38,6 +41,7 @@ class PlanningCourseController extends Controller
      */
     public function show(PlanningCourse $planningCourse)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $planningCourse->toJson();
     }
 
@@ -50,6 +54,7 @@ class PlanningCourseController extends Controller
      */
     public function update(Request $request, PlanningCourse $planningCourse)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $planningCourse->update($request->all());
     }
 
@@ -61,6 +66,7 @@ class PlanningCourseController extends Controller
      */
     public function destroy(PlanningCourse $planningCourse)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $planningCourse->delete();
     }
     
@@ -73,6 +79,7 @@ class PlanningCourseController extends Controller
      */
     public function getPlanningCourseByPlanningId(int $idPlanning)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return PlanningCourse::where('planning_id', $idPlanning)
             ->orderBy('date_start', 'asc')
             ->get()

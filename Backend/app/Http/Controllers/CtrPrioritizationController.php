@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CtrPrioritization;
+use Log;
 
 class CtrPrioritizationController extends Controller
 {
@@ -14,6 +15,7 @@ class CtrPrioritizationController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return CtrPrioritization::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class CtrPrioritizationController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         CtrPrioritization::create($request->all());
     }
 
@@ -36,6 +39,7 @@ class CtrPrioritizationController extends Controller
      */
     public function show(CtrPrioritization $ctrPrioritization)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $ctrPrioritization->toJson();
     }
 
@@ -48,6 +52,7 @@ class CtrPrioritizationController extends Controller
      */
     public function update(Request $request, CtrPrioritization $ctrPrioritization)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrPrioritization->update($request->all());
     }
 
@@ -59,6 +64,7 @@ class CtrPrioritizationController extends Controller
      */
     public function destroy(CtrPrioritization $ctrPrioritization)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrPrioritization->delete();
     }
 }
