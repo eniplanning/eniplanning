@@ -10,6 +10,7 @@ Cette application utilise les technologies suivantes :
 Pour installer l'application depuis sa machine virtuelle "vierge", suivre les instructions qui suivent.
 
 **1) Cloner le répertoire**
+
 Ouvrir le répertoire
 ```
 C:\laragon\www
@@ -22,6 +23,7 @@ Attendez que le répertoire se clone et fermer la fenêtre. Vous devriez avoir l
 ![dossier eniplanning](http://www.image-heberg.fr/files/15365155451300561595.png)
 
 **2) Créer le fichier .env et le modifier**
+
 Ouvrir le dossier "Backend" et ouvrir une invite de commande. Taper ensuite :
 ```
 copy .env.example .env
@@ -49,6 +51,7 @@ DB_PASSWORD=P@$$w0rd
 Puis enregistrer le fichier.
 
 **3) Installer les dépendances composer**
+
 Toujours dans le dossier "Backend", ouvrir une invite de commande et taper les lignes de commandes suivantes **en faisant Entrer entre chacune** :
 ```
 php composer
@@ -74,6 +77,7 @@ php artisan migrate
 ```
 
 **4) Installer les dépendances npm**
+
 Dans le répertoire "eniplanning", se déplacer dans le dossier "Frontend".
 Ouvrir une invite de commande et taper :
 ```
@@ -82,10 +86,13 @@ npm install
 Laisser npm installer les dépendances. **Attention, cela peut prendre plusieurs minutes.**
 
 **5) Lancer le serveur Laragon**
+
 Depuis le menu Démarrer, lancer Laragon.
+
 Cliquer ensuite sur "Tout démarrer".
 
 **6) Lancer le serveur web**
+
 À nouveau dans le répertoire "Frontend", ouvrir une invite de commande et taper :
 ```
 ng serve --open
