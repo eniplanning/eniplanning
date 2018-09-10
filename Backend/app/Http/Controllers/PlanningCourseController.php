@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PlanningCourse;
+use Illuminate\Support\Facades\Log;
 
 class PlanningCourseController extends Controller
 {
@@ -25,7 +26,6 @@ class PlanningCourseController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::error($request);
         $planningCourse = PlanningCourse::create($request->all());
         return $planningCourse->toJson();
     }

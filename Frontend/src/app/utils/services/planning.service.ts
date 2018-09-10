@@ -35,21 +35,21 @@ export class PlanningService {
   }
 
   createPlanning(planning: Planning): Observable<Planning> {
-      return this.http.post<Planning>(this.planningsAPI, planning);
+    return this.http.post<Planning>(this.planningsAPI, planning);
   }
 
-  updatePlanning(planning: Planning) {
-    return this.http.put(this.planningsAPI + '/' + planning.planning_id, planning);
+  updatePlanning(planning: Planning): Observable<Planning>  {
+    return this.http.put<Planning>(this.planningsAPI + '/' + planning.id, planning);
   }
 
   deletePlanning(planning: Planning) {
-    return this.http.delete(this.planningsAPI + '/' + planning.id);
+      return this.http.delete<Planning>(this.planningsAPI + '/' + planning.id);
   }
 
   setSelectedPlanning(planning: Planning) {
     this.clearCoursOnPage();
-    this.selectedPlanning.next(planning);
     sessionStorage.setItem('selectedPlanning', JSON.stringify(planning));
+    this.selectedPlanning.next(planning);
   }
 
   //Clear cours on web page from previous planning

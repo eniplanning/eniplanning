@@ -52,18 +52,8 @@ class FormationController extends Controller
      */
     public function showByPeriodLieu(Formation $formation, Planning $planning)
     {
-        Log::info('date.start.after');
-        Log::info($planning->date_start_formation);
-        Log::info('date.end.after');
-        Log::info($planning->date_end_formation);
-        Log::info('code.lieu');
-        Log::info($planning->code_lieu);
         $start = (new Carbon($planning->date_start_formation))->format('Y-d-m');
         $end = (new Carbon($planning->date_end_formation))->format('Y-d-m');
-        Log::info('date.start.after');
-        Log::info($start);
-        Log::info('date.end.after');
-        Log::info($end);
 
         return Formation::with(['uniteparformation.modules.cours' => function ($query) use ($planning) {
             $query

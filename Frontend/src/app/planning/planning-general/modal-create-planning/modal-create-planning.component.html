@@ -7,7 +7,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == false" class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == true" class="modal-title" id="creaModalLabel">Modifier un planning - Paramètres</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -71,14 +72,12 @@
                     <div class="alert alert-danger col-6 offset-3 text-center" [hidden]="!errorCreatePlanning">
                         {{ errorCreatePlanning }}
                     </div>
-                    <div class="alert alert-success col-6 offset-3 text-center" [hidden]="!successCreatePlanning">
-                        {{ successCreatePlanning }}
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>
-                <button *ngIf="selectedStagiaire != undefined" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
+                <button *ngIf="selectedStagiaire != undefined && modalUpdateMode == false" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
+                <button *ngIf="selectedStagiaire != undefined && modalUpdateMode == true" type="button" class="btn btn-primary" (click)="updatePlanning()">Modifier</button>
             </div>
         </div>
     </div>

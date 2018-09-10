@@ -6,6 +6,7 @@ use App\Models\ComplementaryCourse;
 use App\Models\Cours;
 use App\Models\Planning;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PlanningController extends Controller
 {
@@ -82,7 +83,7 @@ class PlanningController extends Controller
     public function destroy(Planning $planning)
     {
         $planning->planningCourses()->delete();
-        return $planning->delete();
+        $planning->delete();
     }
 
     /**
