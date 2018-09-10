@@ -23,7 +23,7 @@ export class CoursPlanningService {
 
   	constructor(private http: HttpClient) { }
 
-  	addCours(planning: Planning, cours: Cours) {
+  	addCours(planning: Planning, cours: Cours, libelleModule: string) {
   		let coursplanning: CoursPlanning;
   		coursplanning = {
   			id: null,
@@ -33,7 +33,7 @@ export class CoursPlanningService {
 			date_start: cours.Debut,
 			date_end: cours.Fin,
 			public_price_affected: cours.PrixPublicAffecte,
-			label: cours.LibelleCours,
+			short_label: cours.LibelleCours,
 			real_time_hour: cours.DureeReeleEnHeures,
 			expected_time_hour: cours.DureePrevueEnHeures,
 			date_to_be_define: cours.DateADefinir,
@@ -41,8 +41,10 @@ export class CoursPlanningService {
 			module_id: cours.IdModule,
 			code_room: cours.CodeSalle,
 			code_teacher: cours.CodeFormateur,
-			code_location: cours.CodeLieu
-  		}
+			code_location: cours.CodeLieu,
+			label:libelleModule,
+		  }
+		console.log('Addcoursplanning:', coursplanning);
   		return this.http.post<CoursPlanning>(this.coursPlanningAPI, coursplanning, this.httpOptions);
   	}
 

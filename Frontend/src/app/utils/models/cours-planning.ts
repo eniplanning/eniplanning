@@ -6,7 +6,8 @@ export class CoursPlanning {
 	date_start:					Date
 	date_end:					Date
 	public_price_affected:		number
-	label:				string
+	label:						string
+	short_label:				string
 	real_time_hour:				number
 	expected_time_hour:			number
 	date_to_be_define:			boolean

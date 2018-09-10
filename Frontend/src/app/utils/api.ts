@@ -16,4 +16,5 @@ export const API = {
     'stagiaireParEntreprise':  (CONFIG.backend_url + 'stagiaireparentreprise'),
     'entreprise':  (CONFIG.backend_url + 'entreprise'),
     'coursPlanning':  (CONFIG.backend_url + 'planningcoursebyplanning'),
+    'module':  (CONFIG.backend_url + 'getModuleByLibelleCourt'),
 };

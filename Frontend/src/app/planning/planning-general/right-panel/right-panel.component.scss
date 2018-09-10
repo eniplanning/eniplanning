@@ -43,7 +43,7 @@ th {
 
 .display-month {
 	display: inline-block;
-	min-width: 100px;
+	min-width: 120px;
 	vertical-align: top;
     height: 100%;
 }
@@ -75,7 +75,8 @@ td.day-first-letter {
 }
 
 .green-bg {
-    background-color: #00c418;
+	background-color: #00c418;
+	overflow: hidden;
 }
 
 .cell {
@@ -116,4 +117,10 @@ td.day-first-letter {
 .last-day span {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+}
+
+.label_cours {
+	font-size: 10px !important;
+	overflow: hidden;
+	padding:0;
 }

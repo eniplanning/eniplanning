@@ -36,6 +36,9 @@ Route::group([
     Route::resource('lieu', 'LieuController', ['except' => ['create', 'edit']]);
 
     
+    Route::get('getModuleByLibelleCourt/{LibelleCourt}', 'ModuleController@getModuleByLibelleCourt');
+
+
     // ActivityLogController Routes
     Route::post('activity-log/purge', 'ActivityLogController@purge');
     Route::resource('activity-log', 'ActivityLogController', ['except' => ['create', 'edit', 'destroy']]);

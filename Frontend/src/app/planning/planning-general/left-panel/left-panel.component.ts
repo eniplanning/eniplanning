@@ -13,6 +13,7 @@ import { Planning } from '../../../utils/models/planning';
 import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
 import { CoursPlanning } from '../../../utils/models/cours-planning';
+import { ModuleService } from '../../../utils/services/module.service';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class LeftPanelComponent implements OnInit {
 		private coursPlanningService: 	CoursPlanningService,
 		private documentService: 		DocumentService,
 		private router:					Router,
+		private moduleService:			ModuleService,
 	) { }
 
 	ngOnInit() {
@@ -239,15 +241,27 @@ export class LeftPanelComponent implements OnInit {
 		//if first cours clicked or clicked on a different cours
 		if (old_cours == undefined || (old_cours != undefined && old_cours.course_id != cours.IdCours)) {
 			//add cours in database
-			this.coursPlanningService.addCours(this.selectedPlanning, cours).subscribe(
-				cours => {
-					//if successfull, add clicked cours in planning_courses list
-					this.selectedPlanning.planning_courses.push(cours);
-					//and draw it on the page
-					this.drawCoursOnPlanning(cours);
+			var libelleModule;
+			var ready;
+			this.moduleService.getModuleById(cours.LibelleCours).subscribe(
+				data => {
+					libelleModule = data.Libelle;
+					console.log("module:", libelleModule);
 				},
-				error => console.error(error)
-			);
+				error => console.log(error),
+				() => {
+					this.coursPlanningService.addCours(this.selectedPlanning, cours, libelleModule).subscribe(
+						cours => {
+							//if successfull, add clicked cours in planning_courses list
+							this.selectedPlanning.planning_courses.push(cours);
+							//and draw it on the page
+							this.drawCoursOnPlanning(cours);
+						},
+						error => console.error(error)
+						);
+				}
+			)
+			console.log('cours:',cours);
 		}
 	}
 
@@ -264,10 +278,19 @@ export class LeftPanelComponent implements OnInit {
 			let id = '' + d.getFullYear()
 						+ (d.getMonth()+1<10 ? '0'+(d.getMonth()+1) : d.getMonth()+1)
 						+ (d.getDate()<10 ? '0'+d.getDate() : d.getDate());
-			if (document.getElementById(id).parentElement.classList.contains('green-bg')) {
-				document.getElementById(id).parentElement.classList.remove('green-bg');
+			var td = document.getElementById(id);
+			if (td.parentElement.classList.contains('green-bg')) {
+				td.parentElement.classList.remove('green-bg');
+				if(d.getDay() == 1) {
+					td.innerHTML=null;
+					td.className=null;
+				} 
 			} else {
-				document.getElementById(id).parentElement.classList.add('green-bg');
+				td.parentElement.classList.add('green-bg');
+				if(d.getDay() == 1) {
+					td.innerHTML=cours.short_label;
+					td.className='label_cours';
+				} 
 			}
 		});
 	}

@@ -30,4 +30,19 @@ class ModuleController extends Controller
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $module->with('cours')->get()->toJson();
     }
+    
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getModuleByLibelleCourt(Request $request)
+    {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
+        return Module::where('LibelleCourt', [$request->LibelleCourt])
+        ->first()
+        ->toJson();
+    }
 }
