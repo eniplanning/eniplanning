@@ -18,7 +18,7 @@ class PlanningController extends Controller
     public function index()
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        Planning::all()->toJson();
+        return Planning::all()->toJson();
     }
 
     /**
@@ -76,7 +76,7 @@ class PlanningController extends Controller
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $planning->update($request->all());
-        return $planning->toJson();
+        $planning->toJson();
     }
 
     /**
