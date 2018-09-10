@@ -6,7 +6,7 @@ use App\Models\ComplementaryCourse;
 use App\Models\Cours;
 use App\Models\Planning;
 use Illuminate\Http\Request;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class PlanningController extends Controller
 {

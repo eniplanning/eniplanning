@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PlanningCourse;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 class PlanningCourseController extends Controller
 {
