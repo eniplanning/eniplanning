@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Module;
+use Log;
 
 class ModuleController extends Controller
 {
@@ -14,6 +15,7 @@ class ModuleController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Module::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class ModuleController extends Controller
      */
     public function show(Module $module)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $module->with('cours')->get()->toJson();
     }
 }

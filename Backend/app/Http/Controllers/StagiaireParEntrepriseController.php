@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Stagiaire;
 use App\Models\StagiaireParEntreprise;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class StagiaireParEntrepriseController extends Controller
 {
@@ -15,6 +16,7 @@ class StagiaireParEntrepriseController extends Controller
      */
     public static function getByStagiaire(Stagiaire $stagiaire)
     {
+        //Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return StagiaireParEntreprise::where('codeStagiaire', [$stagiaire->CodeStagiaire])
             ->orderBy('DateDebutEnEts', 'desc')
             ->first();
@@ -29,6 +31,7 @@ class StagiaireParEntrepriseController extends Controller
      */
     public function show(int $id)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $spe = new StagiaireParEntreprise();
         $spe->setConnection('enierp');
         $spe = StagiaireParEntreprise::where('CodeStagiaire', $id)

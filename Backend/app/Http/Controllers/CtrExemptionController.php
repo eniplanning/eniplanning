@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CtrExemption;
+use Log;
 
 class CtrExemptionController extends Controller
 {
@@ -14,6 +15,7 @@ class CtrExemptionController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return CtrExemption::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class CtrExemptionController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         CtrExemption::create($request->all());
     }
 
@@ -36,6 +39,7 @@ class CtrExemptionController extends Controller
      */
     public function show(CtrExemption $ctrExemption)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $ctrExemption->toJson();
     }
 
@@ -48,6 +52,7 @@ class CtrExemptionController extends Controller
      */
     public function update(Request $request, CtrExemption $ctrExemption)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrExemption->update($request->all());
     }
 
@@ -59,6 +64,7 @@ class CtrExemptionController extends Controller
      */
     public function destroy(CtrExemption $ctrExemption)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $ctrExemption->delete();
     }
 }

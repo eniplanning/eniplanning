@@ -21,6 +21,7 @@ class CreatePlanningCoursesTable extends Migration
             $table->dateTime('date_start');
             $table->dateTime('date_end');
             $table->float('public_price_affected')->nullable();
+            $table->string('label')->nullable();
             $table->string('short_label')->nullable();
             $table->integer('real_time_hour')->nullable();
             $table->integer('expected_time_hour')->nullable();

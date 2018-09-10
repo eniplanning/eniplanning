@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ChainingModule;
+use Log;
 
 class ChainingModuleController extends Controller
 {
@@ -14,6 +15,7 @@ class ChainingModuleController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return ChainingModule::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class ChainingModuleController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         ChainingModule::create($request->all());
     }
 
@@ -36,6 +39,7 @@ class ChainingModuleController extends Controller
      */
     public function show(ChainingModule $chainingModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $chainingModule->toJson();
     }
 
@@ -48,6 +52,7 @@ class ChainingModuleController extends Controller
      */
     public function update(Request $request, ChainingModule $chainingModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $chainingModule->update($request->all());
     }
 
@@ -59,6 +64,7 @@ class ChainingModuleController extends Controller
      */
     public function destroy(ChainingModule $chainingModule)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $chainingModule->delete();
     }
 }

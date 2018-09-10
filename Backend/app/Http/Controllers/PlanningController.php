@@ -17,6 +17,7 @@ class PlanningController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         Planning::all()->toJson();
     }
 
@@ -28,6 +29,7 @@ class PlanningController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $request->validate([
             'label' => 'required',
             // 'date_start_contract'
@@ -44,6 +46,7 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $planning->toJson();
     }
 
@@ -53,6 +56,7 @@ class PlanningController extends Controller
      */
     public function showWithGlobal(Planning $planning, Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $planning->with([
             'planningCourses',
             'ctrDisponibilities',
@@ -70,6 +74,7 @@ class PlanningController extends Controller
      */
     public function update(Request $request, Planning $planning)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $planning->update($request->all());
         return $planning->toJson();
     }
@@ -82,6 +87,7 @@ class PlanningController extends Controller
      */
     public function destroy(Planning $planning)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $planning->planningCourses()->delete();
         $planning->delete();
     }
@@ -93,6 +99,7 @@ class PlanningController extends Controller
      */
     public function getByCodeStagiaire(Request $request)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Planning::where('stagiaire_id', '=', $request->code)->with([
             'planningCourses',
             'ctrDisponibilities',
@@ -109,6 +116,7 @@ class PlanningController extends Controller
      */
     public function setPlanningBroken()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         // On récupère tous les plannings et leurs cours
         $plannings = Planning::with('planningCourses')->get();
 
@@ -181,6 +189,7 @@ class PlanningController extends Controller
      */
     public function getPlanningBroken()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Planning::where('is_broken', '=', TRUE)->get()->toJson();
     }
 }

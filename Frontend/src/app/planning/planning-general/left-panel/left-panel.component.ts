@@ -219,7 +219,7 @@ export class LeftPanelComponent implements OnInit {
 		});
 	}
 
-	onClickCours(cours: Cours) {
+	onClickCours(cours: Cours, LibelleCours: string) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
 		})

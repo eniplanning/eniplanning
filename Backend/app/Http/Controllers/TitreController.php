@@ -19,6 +19,7 @@ class TitreController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Titre::all()->toJson();
     }
 
@@ -30,6 +31,7 @@ class TitreController extends Controller
      */
     public function show(Titre $titre)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Titre::findOrFail(trim($titre->CodeTitre))->toJson();
     }
 }
