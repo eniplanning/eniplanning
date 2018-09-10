@@ -22,7 +22,7 @@
                 <div class="content-body">
                     <p>Stagiaire : {{ selectedStagiaire.Nom}} {{selectedStagiaire.Prenom}}</p>
                     <p>Ville : {{ selectedStagiaire.Ville | titlecase }}</p>
-                    <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale != null ? selectedStagiaire.Entreprise.RaisonSociale : 'non définie'}}</p>
+                    <p>Entreprise : {{ entreprise }}</p>
                 </div>
                 <div class="content-title">Plannings</div>
                 <div class="content-body">
@@ -40,7 +40,7 @@
                                         <i class="fa fa-ellipsis-h" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
                                 </a>
                                 <div class="dropdown-menu dropdown-primary">
-                                    <a class="dropdown-item" target="_blank" [routerLink]="['generate-html', planning.id]">Visualiser</a>
+                                    <a class="dropdown-item" target="_blank" [routerLink]="['export']">Exporter</a>
                                     <a class="dropdown-item" (click)=openModalModifyPlanning()>Modifier</a>
                                     <a class="dropdown-item" (click)="deletePlanning()">Supprimer</a>
                                 </div>

@@ -22,6 +22,7 @@ export class UtilisateursComponent implements OnInit {
   private sorted = false;
   searchValue: string;
   activityLog: ActivityLog;
+  errorMsg : string =null;
 
   constructor(
     private userService: UserService,
@@ -53,10 +54,12 @@ export class UtilisateursComponent implements OnInit {
 	getUsers() {
     return this.userService.getUsers().subscribe(
         data => {
+          this.errorMsg = null;
           this.users = data;
         },
         error => {
-          console.log(error);
+          console.log('error', error);
+          this.errorMsg=("Erreur de réponse du serveur, veuillez contacter l'administrateur.");
         },
         () => this.users.sort(function(a, b) {
           //custom sorting function, sorts by stagiaire.Nom in alphabetical order
@@ -71,15 +74,15 @@ export class UtilisateursComponent implements OnInit {
 
   // Changement du statut d'un utilisateur (actif ou non)
  changeStatus(user: User, is_active) {
-    console.log(user);
     user.is_active = (is_active == 1 ? 0 : 1);
     return this.userService.updateUser(user).subscribe(
       data=>{
+        this.errorMsg = null;
         this.createActivityLog((user.is_active ? 'Activer' : 'Désactiver'), user);
-        console.log(data);
       },
       error=>{ 
-        console.log(error);
+        console.log('error changeStatus', error);
+        this.errorMsg =("Le changement d'autorisation a échoué, en raison d'une erreur du serveur. Veuillez contacter l'administrateur.");
       }
     );
   }
@@ -116,7 +119,7 @@ export class UtilisateursComponent implements OnInit {
     this.activityLog.properties= this.datePipe.transform(new Date(),"yyyy-MM-dd HH:mm", 'fr-Fr');
     this.activityLogService.storeActivityLog(this.activityLog).subscribe(
       data => console.log("log d'activité enregistré"), 
-      error => console.log("erreur d'enregistrement du log d'activité: "+ error)
+      error => console.log("erreur d'enregistrement du log d'activité: ", error)
     );
     this.activityLog = null;
   }

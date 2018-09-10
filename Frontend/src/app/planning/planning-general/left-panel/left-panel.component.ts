@@ -14,6 +14,10 @@ import { Formation } from '../../../utils/models/formation';
 import { Cours } from '../../../utils/models/cours';
 import { CoursPlanning } from '../../../utils/models/cours-planning';
 import { ModuleService } from '../../../utils/services/module.service';
+import { StagiaireparentrepriseService } from '../../../utils/services/stagiaireparentreprise.service';
+import { StagiaireParEntreprise } from '../../../utils/models/stagiaireparentreprise';
+import { Entreprise } from '../../../utils/models/entreprise';
+import { EntrepriseService } from '../../../utils/services/entreprise.service';
 
 
 @Component({
@@ -29,6 +33,7 @@ export class LeftPanelComponent implements OnInit {
 	selectedPlanning: 		Planning;
 	formation:				Formation;
 	libelleLieuFormation: 	String;
+	entreprise:				String;
 	panelStates: 			{};	 //used to keep track of panels states : open or closed
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
@@ -43,6 +48,8 @@ export class LeftPanelComponent implements OnInit {
 		private documentService: 		DocumentService,
 		private router:					Router,
 		private moduleService:			ModuleService,
+		private stagiaireParEntrepriseService: StagiaireparentrepriseService,
+		private entrepriseService: 	    EntrepriseService,
 	) { }
 
 	ngOnInit() {
@@ -104,17 +111,20 @@ export class LeftPanelComponent implements OnInit {
 	loadSelectedStagiaire() {
 		//Fist time we visit the page on a new session, sessionStorage.getItem returns the string 'undefined', so JSON.parse throw an error
 		let unparsedSelectedStagiaire = sessionStorage.getItem('selectedStagiaire');
-		if (unparsedSelectedStagiaire != 'undefined' && unparsedSelectedStagiaire != 'null') {
+		if (unparsedSelectedStagiaire != 'undefined' && unparsedSelectedStagiaire != 'null' && unparsedSelectedStagiaire != null) {
 			this.selectedStagiaire = JSON.parse(unparsedSelectedStagiaire);
+			this.getEntreprise(this.selectedStagiaire.CodeStagiaire);
 		}
 		if (this.selectedStagiaire != null) {
 			this.panelStates['informations'] = true;
 			this.stagiaireService.selectedStagiaire.next(this.selectedStagiaire);
 			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+			this.getEntreprise(this.selectedStagiaire.CodeStagiaire);
 		}
 		else {
 			this.stagiaireService.selectedStagiaire.next(this.selectedStagiaire);
 			this.planningService.setSelectedPlanning(null);
+			this.entreprise = '';
 		}
 	}
 
@@ -125,7 +135,7 @@ export class LeftPanelComponent implements OnInit {
 			this.planningService.setSelectedPlanning(null);
 			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
 			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
-			console.log('stagiaire sélectionné', this.selectedStagiaire);
+			this.getEntreprise(this.selectedStagiaire.CodeStagiaire);
 		}
 	}
 
@@ -136,8 +146,55 @@ export class LeftPanelComponent implements OnInit {
 
 		this.selectedPlanning = null;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
+		
+		sessionStorage.removeItem('stagiaireParEntreprise');
+		this.getEntreprise();
 	}
 
+	// Récupération de l'objet entreprise
+	getEntreprise(codeStagiaire=null) {
+		return this.stagiaireParEntrepriseService.getAllStagiairesParEntreprise().subscribe(
+			(data:StagiaireParEntreprise[]) => {
+			  var listSPE = data.sort(function(a, b) {
+				//custom sorting function, sorts by stagiaire.Nom in alphabetical order
+				if (a.NumLien > b.NumLien)
+				  return -1;
+				else if (a.NumLien < b.NumLien)
+				  return 1;
+				return 0
+			  })
+			  if (codeStagiaire != null) {
+				var existStagiaireParEntreprise = listSPE.find(elt => (elt.CodeStagiaire == codeStagiaire.toString()));
+				if (existStagiaireParEntreprise != null) {
+				  sessionStorage.setItem('stagiaireParEntreprise', JSON.stringify(existStagiaireParEntreprise));
+				  this.getEntrepriseName(existStagiaireParEntreprise.CodeEntreprise.toString());
+				} else {
+				  this.entreprise = "à définir";
+				  sessionStorage.removeItem('stagiaireParEntreprise');
+				}
+			  } else {
+				  this.entreprise = '';
+				  sessionStorage.removeItem('stagiaireParEntreprise');
+			  }
+			},
+			error=>{
+			  console.log("erreur de récupération du stagiaire par entreprise:"+error);
+			}
+		);
+	}
+
+	
+  // Chargement de l'entreprise
+  getEntrepriseName(codeEntreprise){
+    return this.entrepriseService.getEntrepriseById(codeEntreprise).subscribe(
+      (data:Entreprise) => {
+        this.entreprise = data.RaisonSociale;
+      },
+      error => {
+        console.log("erreur de récupération de l'entreprise:"+error);
+      }
+    );
+  }
 
 	// Récupération des Plannings du stagiaire sélectionné depuis le service : planning
 	// onCompleted : récupère le selectedPlanning dans la session. si il existe, il est automatiquement sélectionné dans la liste des plannings
@@ -158,7 +215,6 @@ export class LeftPanelComponent implements OnInit {
 					this.selectedPlanning = JSON.parse(unparsedSelectedPlanning);
 				}
 				if (this.selectedPlanning != null) {
-					console.log('selectedPlanning not null', this.selectedPlanning);
 					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 					this.selectedStagiaire.ListPlannings.forEach(function(p) {
 						if (p.id == self.selectedPlanning.id) {
@@ -178,8 +234,7 @@ export class LeftPanelComponent implements OnInit {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
 		this.getLieu(this.selectedPlanning.code_lieu);
-		console.log('planning sélectionné', this.selectedPlanning);
-
+		
 		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id, this.selectedPlanning.id).subscribe(
 			(formation: Formation) => {
@@ -209,7 +264,6 @@ export class LeftPanelComponent implements OnInit {
 					});
 				});
 				this.formation = formation;
-				console.log('formation sélectionnée', this.formation);
 			},
 			error => console.error(error)
 		);
@@ -246,7 +300,6 @@ export class LeftPanelComponent implements OnInit {
 			this.moduleService.getModuleById(cours.LibelleCours).subscribe(
 				data => {
 					libelleModule = data.Libelle;
-					console.log("module:", libelleModule);
 				},
 				error => console.log(error),
 				() => {
@@ -260,8 +313,7 @@ export class LeftPanelComponent implements OnInit {
 						error => console.error(error)
 						);
 				}
-			)
-			console.log('cours:',cours);
+			);
 		}
 	}
 

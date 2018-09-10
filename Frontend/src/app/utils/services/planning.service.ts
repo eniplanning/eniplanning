@@ -31,7 +31,7 @@ export class PlanningService {
   }
 
   getPlanningsById(idPlanning: Number): Observable<Planning> {
-    return this.http.get<Planning>(this.planningsAPI + '/' + idPlanning);
+    return this.http.get<Planning>(this.planningsAPI + 'Global/' + idPlanning);
   }
 
   createPlanning(planning: Planning): Observable<Planning> {
