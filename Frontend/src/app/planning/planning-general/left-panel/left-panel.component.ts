@@ -286,6 +286,7 @@ export class LeftPanelComponent implements OnInit {
             data => {
                 this.planningService.setSelectedPlanning(null);
                 this.planningService.updatePlanningsList.next('deletion');
+                this.resetAlert();
             }
         );
     }
@@ -301,15 +302,16 @@ export class LeftPanelComponent implements OnInit {
             //Si le cours choisis entre en conflit avec une contrainte de disponibilité
             this.selectedPlanning.ctr_disponibilities.forEach(disponibility => {
 
+                //Test pour savoir si un cours chevauche une contrainte d'absence
                 if (
                     (new Date(disponibility.date_start) <= new Date(cours.date_start) && new Date(disponibility.date_end) <= new Date(cours.date_end) && new Date(disponibility.date_end) > new Date(cours.date_start))
                     || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end) && new Date(disponibility.date_start) < new Date(cours.date_end))
                     || (new Date(disponibility.date_start) < new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end))
                     || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end))
-                )
-                {
+                ) {
                     this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label });
                 }
+
             });
 
             // Test pour les autres types d'alertes
@@ -317,5 +319,10 @@ export class LeftPanelComponent implements OnInit {
 
         //Envoi d'un évènement pour que le composant right panel puisse récupérer la liste des alertes
         this.planningService.alertPlanningList.next(this.alert_array);
+    }
+
+    resetAlert()
+    {
+        this.planningService.alertPlanningList.next(null);
     }
 }

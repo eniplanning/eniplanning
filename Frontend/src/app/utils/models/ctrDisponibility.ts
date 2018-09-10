@@ -10,7 +10,7 @@ export class CtrDisponibility {
     date_end:       any;
     is_available:   boolean;
     planning_id:    number;
-    id_constraint:  number;
+    id:  number;
 
     constructor() {}
 
@@ -36,7 +36,7 @@ export class CtrDisponibility {
 
     setId_constraint(id_constraint: number)
     {
-        this.id_constraint = id_constraint;
+        this.id = id_constraint;
     }
 
 }

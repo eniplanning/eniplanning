@@ -33,10 +33,10 @@ export class ConstraintService {
     }
 
     updateDisponibilityConstraint(constraint: CtrDisponibility) {
-        return this.http.put(this.disponibilityAPI + '/' + constraint.id_constraint, constraint);
+        return this.http.put(this.disponibilityAPI + '/' + constraint.id, constraint);
     }
 
     deleteDisponibilityConstraint(constraint: CtrDisponibility) {
-        return this.http.delete(this.disponibilityAPI + '/' + constraint.id_constraint);
+        return this.http.delete(this.disponibilityAPI + '/' + constraint.id);
     }
 }

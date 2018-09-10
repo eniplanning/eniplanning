@@ -155,6 +155,7 @@ export class ModalCreatePlanningComponent implements OnInit {
         if (this.modalUpdateMode)
         {
             var ctr = this.selectedPlanning.ctr_disponibilities[index]
+            console.log(ctr);
             this.constraintService.deleteDisponibilityConstraint(ctr).subscribe();
             this.ctrDisponibilities.splice(index, 1);
         }
@@ -214,7 +215,7 @@ export class ModalCreatePlanningComponent implements OnInit {
                         console.log('planning crée', planning);
                         this.planningService.newPlanning.next(planning);
                         this.createModal.hide();
-
+                        this.toggleContraintes();
                         // console.log(this.ctrDisponibilities);
                         //création des contraintes en récupérant l'ID du planning après sa création
                         this.ctrDisponibilities.forEach(disponibility => {
@@ -237,6 +238,7 @@ export class ModalCreatePlanningComponent implements OnInit {
                         console.log('planning modifié', planning);
                         this.planningService.updatePlanningsList.next(planning);
                         this.createModal.hide();
+                        this.toggleContraintes();
                     },
                     error => console.log(error)
                 )
@@ -245,7 +247,7 @@ export class ModalCreatePlanningComponent implements OnInit {
         }
     }
 
-     updatePlanning():void {
+    updatePlanning():void {
         if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
             this.errorCreatePlanning = "Le nom du planning est obligatoire";
         }
@@ -296,9 +298,39 @@ export class ModalCreatePlanningComponent implements OnInit {
                     console.log('planning modifié', planning);
                     this.planningService.updatePlanningsList.next(planning);
                     this.createModal.hide();
+                    this.toggleContraintes();
                 },
                 error => console.log(error)
             );
+            this.ctrDisponibilities.forEach(disponibility => {
+                if (disponibility.id == undefined) {
+                    disponibility.setPlanning_id(this.selectedPlanning.id);
+                    this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
+                        (constraint: CtrDisponibility) =>{
+                            console.log("contraite créée", constraint);
+                        }
+                    );
+                } else {
+                    this.constraintService.updateDisponibilityConstraint(disponibility).subscribe(
+                        (constraint: CtrDisponibility) =>{
+                            console.log("Contrainte modifiée", constraint);
+                        }
+                    );
+                }
+            });
         }
+    }
+
+    resetModal()
+    {
+        this.isCtrVisible           = false;
+        this.selectedConstraint     = undefined;
+        this.selectedFormation      = undefined;
+        this.selectedLieu           = undefined;
+        this.selectedDebutC         = undefined;
+        this.selectedFinC           = undefined;
+        this.selectedDebutF         = undefined;
+        this.selectedFinF           = undefined;
+        this.ctrDisponibilities     = undefined;
     }
 }

@@ -7,9 +7,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 *ngIf="modalUpdateMode == false" class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
-                <h5 *ngIf="modalUpdateMode == true" class="modal-title" id="creaModalLabel">Modifier un planning - Paramètres</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
+                <h5 *ngIf="modalUpdateMode == false && isCtrVisible == false" class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == false && isCtrVisible == true" class="modal-title" id="creaModalLabel">Créer un planning - Contraintes</h5>
+                <h5 *ngIf="modalUpdateMode == true && isCtrVisible == false" class="modal-title" id="creaModalLabel">Modifier un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == true && isCtrVisible == true" class="modal-title" id="creaModalLabel">Modifier un planning - Contraintes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide();resetModal();">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -72,7 +74,7 @@
                     </div>
                 </div>
                 <!-- Partie contraintes planning -->
-                <div [hidden]="!isCtrVisible"><!-- [ngClass]="{'contraintesPlanning': isCtrVisible }" -->
+                <div [hidden]="!isCtrVisible">
                     <div class="row">
                         <div class="col-xs-12 col-md-5 offset-md-1">
                             <ng-select placeholder="Choisir une contrainte" [(ngModel)]="selectedConstraint" bindLabel="LibelleCourt">
@@ -84,29 +86,28 @@
                         </div>
                     </div>
                     <!-- Affichage des toutes les contraintes de disponibilités -->
-                    <div class="row" *ngFor="let ctrDisponibility of ctrDisponibilities; let i = index">
-                        <div class="col-xs-12 offset-md-1 col-md-3">
-                            <label>Disponibilité</label>
-                        </div>
-                        <div class="col-xs-12 offset-md-1 col-md-5">
-                            <mat-form-field >
-                                <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_start" [matDatepicker]="date_start" [index]="i" placeholder="Date de début">
-                                <mat-datepicker-toggle matSuffix [for]="date_start"></mat-datepicker-toggle>
-                                <mat-datepicker #date_start></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-xs-12  col-md-1">
-                            <button class="btn btn-primary btn-sm" (click)="delConstraint(i)"><i class="fa fa-close"></i></button>
-                        </div>
-                        <div class="col-xs-12 offset-md-1 col-md-3">
-                            <input type="checkbox" [(ngModel)]="ctrDisponibility.is_available"> Est disponible
-                        </div>
-                        <div class="col-xs-12 offset-md-1 col-md-5">
-                            <mat-form-field>
-                                <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_end" [matDatepicker]="date_end" [index]="i" placeholder="Date de fin">
-                                <mat-datepicker-toggle matSuffix [for]="date_end"></mat-datepicker-toggle>
-                                <mat-datepicker #date_end></mat-datepicker>
-                            </mat-form-field>
+                    <div class="scrollable">
+                        <div class="row contrainte" *ngFor="let ctrDisponibility of ctrDisponibilities; let i = index">
+                            <div class="col-xs-12 offset-md-1 col-md-4">
+                                <label class="labelContrainte">Contrainte de disponibilité</label>
+                            </div>
+                            <div class="col-xs-12  col-md-5">
+                                <mat-form-field >
+                                    <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_start" [matDatepicker]="date_start" [index]="i" placeholder="Date de début">
+                                    <mat-datepicker-toggle matSuffix [for]="date_start"></mat-datepicker-toggle>
+                                    <mat-datepicker #date_start></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12  col-md-1">
+                                <button class="btn btn-primary btn-sm" (click)="delConstraint(i)"><i class="fa fa-close"></i></button>
+                            </div>
+                            <div class="col-xs-12 offset-md-5 col-md-5">
+                                <mat-form-field>
+                                    <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_end" [matDatepicker]="date_end" [index]="i" placeholder="Date de fin">
+                                    <mat-datepicker-toggle matSuffix [for]="date_end"></mat-datepicker-toggle>
+                                    <mat-datepicker #date_end></mat-datepicker>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
