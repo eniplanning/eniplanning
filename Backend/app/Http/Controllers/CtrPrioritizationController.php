@@ -53,7 +53,7 @@ class CtrPrioritizationController extends Controller
     public function update(Request $request, CtrPrioritization $ctrPrioritization)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        $ctrPrioritization->update($request->all());
+        return $ctrPrioritization->update($request->all());
     }
 
     /**

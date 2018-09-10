@@ -209,42 +209,30 @@ export class ModalCreatePlanningComponent implements OnInit {
             planning.setFormation_id(this.selectedFormation.CodeFormation);
             planning.setUser_id(this.user.id);
             planning.setLieu(this.selectedLieu.CodeLieu);
-            if (this.modalUpdateMode == false) {    //create mode
-                    this.planningService.createPlanning(planning).subscribe(
-                    (planning: Planning) => {
-                        console.log('planning crée', planning);
-                        this.planningService.newPlanning.next(planning);
-                        this.createModal.hide();
-                        this.toggleContraintes();
-                        // console.log(this.ctrDisponibilities);
-                        //création des contraintes en récupérant l'ID du planning après sa création
-                        this.ctrDisponibilities.forEach(disponibility => {
-                            disponibility.setPlanning_id(planning.id);
-                            disponibility.setDate_start(moment(disponibility.date_start).format());
-                            disponibility.setDate_end(moment(disponibility.date_end).format());
-                            console.log(disponibility);
-                            this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
-                                (disponibility: CtrDisponibility) => {
-                                    console.log('contrainte crée', disponibility);
-                                },
-                                error => console.log(error)
-                            );
-                        });
-                    },
-                    error => console.log(error)
-                );
-            }
-            else {        //update mode
-                this.planningService.updatePlanning(planning).subscribe(
-                    (planning: Planning) => {
-                        console.log('planning modifié', planning);
-                        this.planningService.updatePlanningsList.next(planning);
-                        this.createModal.hide();
-                        this.toggleContraintes();
-                    },
-                    error => console.log(error)
-                )
-            }
+
+            this.planningService.createPlanning(planning).subscribe(
+                (planning: Planning) => {
+                    console.log('planning crée', planning);
+                    this.planningService.newPlanning.next(planning);
+                    this.createModal.hide();
+                    this.toggleContraintes();
+                    // console.log(this.ctrDisponibilities);
+                    //création des contraintes en récupérant l'ID du planning après sa création
+                    this.ctrDisponibilities.forEach(disponibility => {
+                        disponibility.setPlanning_id(planning.id);
+                        disponibility.setDate_start(moment(disponibility.date_start).format());
+                        disponibility.setDate_end(moment(disponibility.date_end).format());
+                        console.log(disponibility);
+                        this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
+                            (disponibility: CtrDisponibility) => {
+                                console.log('contrainte crée', disponibility);
+                            },
+                            error => console.log(error)
+                        );
+                    });
+                },
+                error => console.log(error)
+            );
 
         }
     }
