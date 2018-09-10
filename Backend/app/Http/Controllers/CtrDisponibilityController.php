@@ -53,7 +53,7 @@ class CtrDisponibilityController extends Controller
     public function update(Request $request, CtrDisponibility $ctrDisponibility)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        $ctrDisponibility->update($request->all());
+        return $ctrDisponibility->update($request->all());
     }
 
     /**
