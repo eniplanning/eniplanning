@@ -27,11 +27,7 @@ class PlanningCourseController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-=======
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        \Log::error($request);
->>>>>>> 80087f87101fe6e02a568ad163bf37549f024a8e
         $planningCourse = PlanningCourse::create($request->all());
         return $planningCourse->toJson();
     }
