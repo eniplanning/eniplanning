@@ -220,7 +220,9 @@ export class ModalCreatePlanningComponent implements OnInit {
                         //création des contraintes en récupérant l'ID du planning après sa création
                         this.ctrDisponibilities.forEach(disponibility => {
                             disponibility.setPlanning_id(planning.id);
-                            // console.log(this.ctrDisponibilities);
+                            disponibility.setDate_start(moment(disponibility.date_start).format());
+                            disponibility.setDate_end(moment(disponibility.date_end).format());
+                            console.log(disponibility);
                             this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
                                 (disponibility: CtrDisponibility) => {
                                     console.log('contrainte crée', disponibility);
@@ -305,12 +307,16 @@ export class ModalCreatePlanningComponent implements OnInit {
             this.ctrDisponibilities.forEach(disponibility => {
                 if (disponibility.id == undefined) {
                     disponibility.setPlanning_id(this.selectedPlanning.id);
+                    disponibility.setDate_start(moment(disponibility.date_start).format());
+                    disponibility.setDate_end(moment(disponibility.date_end).format());
                     this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
                         (constraint: CtrDisponibility) =>{
                             console.log("contraite créée", constraint);
                         }
                     );
                 } else {
+                    disponibility.setDate_start(moment(disponibility.date_start).format());
+                    disponibility.setDate_end(moment(disponibility.date_end).format());
                     this.constraintService.updateDisponibilityConstraint(disponibility).subscribe(
                         (constraint: CtrDisponibility) =>{
                             console.log("Contrainte modifiée", constraint);
