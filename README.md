@@ -54,7 +54,8 @@ Puis enregistrer le fichier.
 
 Toujours dans le dossier "Backend", ouvrir une invite de commande et taper les lignes de commandes suivantes **en faisant Entrer entre chacune** :
 ```
-php composer
+php composer install
+php composer dump-autoload
 ```
 **Attention, la commande précédente peut prendre plusieurs minutes.**
 ```
@@ -74,6 +75,9 @@ php artisan config:cache
 ```
 ```
 php artisan migrate
+```
+```
+php artisan db:seed --class=UsersTableSeeder
 ```
 
 **4) Installer les dépendances npm**
