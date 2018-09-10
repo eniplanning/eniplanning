@@ -3,12 +3,14 @@ import { Formation } from "../../../utils/models/formation";
 import { LoggerService } from '../../../utils/services/logger.service';
 import { FormationService } from "../../../utils/services/formation.service";
 import { StagiaireService } from '../../../utils/services/stagiaire.service';
+import { ConstraintService } from '../../../utils/services/constraint.service';
 import { Stagiaire } from '../../../utils/models/stagiaire';
 import { Lieu } from '../../../utils/models/lieu';
 import { LieuService } from "../../../utils/services/lieu.service";
 import { PlanningService } from '../../../utils/services/planning.service';
 import { Planning } from '../../../utils/models/planning';
 import { User } from '../../../utils/models/user';
+import { CtrDisponibility } from '../../../utils/models/ctrDisponibility';
 import { formatDate } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -24,6 +26,7 @@ export class ModalCreatePlanningComponent implements OnInit {
     formations:             Formation[];
     lieux:                  Lieu[];
     selectedStagiaire:      Stagiaire;
+    selectedConstraint:     String;
     selectedFormation:      Formation;
     selectedLieu :          Lieu;
     nomPlanning:            string;
@@ -33,7 +36,9 @@ export class ModalCreatePlanningComponent implements OnInit {
     selectedFinF:           any;
     date_inscription:       Date;
     user:                   User;
-    
+    isCtrVisible:           Boolean;
+    ctrDisponibilities:     CtrDisponibility[];
+
     errorCreatePlanning:    String;
     successCreatePlanning:  String;
     @ViewChild('createModal') createModal: ModalDirective;
@@ -44,11 +49,14 @@ export class ModalCreatePlanningComponent implements OnInit {
         private formationService:   FormationService,
         private lieuService:        LieuService,
         private planningService:    PlanningService,
-        private stagiaireService:   StagiaireService
+        private stagiaireService:   StagiaireService,
+        private constraintService:  ConstraintService
     ){}
 
     ngOnInit() {
         registerLocaleData(localeFr);
+        this.isCtrVisible = false;
+        this.ctrDisponibilities = new Array<CtrDisponibility>();
         this.getFormation();
         this.getLieux();
         this.getUser();
@@ -113,6 +121,27 @@ export class ModalCreatePlanningComponent implements OnInit {
         this.createModal.show()
     }
 
+    toggleContraintes()
+    {
+        this.isCtrVisible = !this.isCtrVisible;
+    }
+
+    addConstraint()
+    {
+        console.log(this.selectedConstraint);
+        switch (this.selectedConstraint) {
+            case 'disponibilite':
+                this.ctrDisponibilities.push(new CtrDisponibility());
+                console.log(this.ctrDisponibilities);
+                break;
+
+            default:
+                console.log("rien a ajouter");
+                break;
+        }
+
+    }
+
     createPlanning():void {
         if (this.nomPlanning == undefined || this.nomPlanning.trim().length == 0) {
             this.errorCreatePlanning = "Le nom du planning est obligatoire";
@@ -163,6 +192,19 @@ export class ModalCreatePlanningComponent implements OnInit {
                         this.successCreatePlanning = "Le planning a bien été crée";
                         console.log('planning crée', planning);
                         this.planningService.newPlanning.next(planning);
+
+                        console.log(this.ctrDisponibilities);
+                        //création des contraintes en récupérant l'ID du planning après sa création
+                        this.ctrDisponibilities.forEach(disponibility => {
+                            disponibility.setPlanning_id(planning.id);
+                            console.log(this.ctrDisponibilities);
+                            this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
+                                (disponibility: CtrDisponibility) => {
+                                    console.log('contrainte crée', disponibility);
+                                },
+                                error => console.log(error)
+                            );
+                        });
                     },
                     error => console.log(error)
                 );
@@ -177,7 +219,7 @@ export class ModalCreatePlanningComponent implements OnInit {
                     error => console.log(error)
                 )
             }
-            
+
         }
     }
 

@@ -11,11 +11,12 @@ import { CONFIG } from '../../utils/config';
 export class PlanningService {
 
 	planningsAPI = CONFIG.backend_url + 'planning';
-  planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
-  selectedPlanning = new BehaviorSubject<Planning>(null);
-  newPlanning = new BehaviorSubject<Planning>(null);
-  updatePlanningsList = new BehaviorSubject(null);
-  openModalUpdatePlanning = new BehaviorSubject<Array<any>>(null);
+    planningsByCode = CONFIG.backend_url + 'planningsByCodeStagiaire';
+    selectedPlanning = new BehaviorSubject<Planning>(null);
+    newPlanning = new BehaviorSubject<Planning>(null);
+    updatePlanningsList = new BehaviorSubject(null);
+    openModalUpdatePlanning = new BehaviorSubject<Array<any>>(null);
+    alertPlanningList = new BehaviorSubject<Array<any>>(null)
 
   httpOptions = {
       headers: new HttpHeaders({

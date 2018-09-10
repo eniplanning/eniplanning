@@ -13,72 +13,125 @@
                 </button>
             </div>
             <div class="modal-body" *ngIf="selectedStagiaire != undefined">
-                <div class="row">
-                    <div class="col-8 offset-2 pb-4">
-                        <mat-form-field>
-                            <input matInput [(ngModel)]="nomPlanning" placeholder="Nom du planning" class="col-12">
-                        </mat-form-field>
+                <!-- Partie création de planning -->
+                <div [hidden]="isCtrVisible">
+                    <div class="row">
+                        <div class="col-8 offset-2 pb-4">
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="nomPlanning" placeholder="Nom du planning" class="col-12">
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <!-- Partie gauche de la modal de création -->
-                    <div class="col-xs-12 col-md-6">
-                        <p>Stagiaire : {{ selectedStagiaire.Nom }} {{ selectedStagiaire.Prenom }}</p>
-                        <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }}</p>
-                        <ng-select placeholder="Choisir une formation" [(ngModel)]="selectedFormation" bindLabel="LibelleCourt">
-                            <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
-                        </ng-select>
-                        <ng-select placeholder="Choisir un site de formation" [(ngModel)]="selectedLieu" bindLabel="Libelle">
-                            <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
-                        </ng-select>
-                        <ng-select placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">
+                    <div class="row">
+                        <!-- Partie gauche de la modal de création -->
+                        <div class="col-xs-12 col-md-6">
+                            <p>Stagiaire : {{ selectedStagiaire.Nom }} {{ selectedStagiaire.Prenom }}</p>
+                            <p>Entreprise : {{ selectedStagiaire.Entreprise.RaisonSociale }}</p>
+                            <ng-select placeholder="Choisir une formation" [(ngModel)]="selectedFormation" bindLabel="LibelleCourt">
+                                <ng-option *ngFor="let formation of formations" [value]="formation">{{formation.LibelleCourt | uppercase}}</ng-option>
+                            </ng-select>
+                            <ng-select placeholder="Choisir un site de formation" [(ngModel)]="selectedLieu" bindLabel="Libelle">
+                                <ng-option *ngFor="let lieu of lieux" [value]="lieu">{{lieu.Libelle | uppercase}}</ng-option>
+                            </ng-select>
+                            <ng-select placeholder="Choisir un modèle de planning" notFoundText="Aucun modèle trouvé">
 
-                        </ng-select>
-                    </div>
-                    <!-- Partie droite de la modal de création -->
-                    <div class="col-xs-12 col-md-6 row">
-                            <div class="col-12 text-center">
-                                <mat-form-field>
-                                    <input matInput [(ngModel)]="selectedDebutC" [matDatepicker]="date_debut_contract"  placeholder="Date de début de contrat">
-                                    <mat-datepicker-toggle matSuffix [for]="date_debut_contract"></mat-datepicker-toggle>
-                                    <mat-datepicker #date_debut_contract ></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 text-center">
-                                <mat-form-field>
-                                    <input matInput [(ngModel)]="selectedFinC" [matDatepicker]="date_fin_contract" placeholder="Date de fin de contrat">
-                                    <mat-datepicker-toggle matSuffix [for]="date_fin_contract"></mat-datepicker-toggle>
-                                    <mat-datepicker #date_fin_contract></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 text-center">
-                                <mat-form-field>
-                                    <input matInput [(ngModel)]="selectedDebutF" [matDatepicker]="date_debut_formation" placeholder="Date de début de formation">
-                                    <mat-datepicker-toggle matSuffix [for]="date_debut_formation"></mat-datepicker-toggle>
-                                    <mat-datepicker #date_debut_formation></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 text-center">
-                                <mat-form-field>
-                                    <input matInput [(ngModel)]="selectedFinF" [matDatepicker]="date_fin_formation" placeholder="Date de fin de formation">
-                                    <mat-datepicker-toggle matSuffix [for]="date_fin_formation"></mat-datepicker-toggle>
-                                    <mat-datepicker #date_fin_formation></mat-datepicker>
-                                </mat-form-field>
-                            </div>
+                            </ng-select>
+                        </div>
+                        <!-- Partie droite de la modal de création -->
+                        <div class="col-xs-12 col-md-6 row">
+                                <div class="col-12 text-center">
+                                    <mat-form-field>
+                                        <input matInput datetime-local [(ngModel)]="selectedDebutC" [matDatepicker]="date_debut_contract"  placeholder="Date de début de contrat">
+                                        <mat-datepicker-toggle matSuffix [for]="date_debut_contract"></mat-datepicker-toggle>
+                                        <mat-datepicker #date_debut_contract ></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <mat-form-field>
+                                        <input matInput [(ngModel)]="selectedFinC" [matDatepicker]="date_fin_contract" placeholder="Date de fin de contrat">
+                                        <mat-datepicker-toggle matSuffix [for]="date_fin_contract"></mat-datepicker-toggle>
+                                        <mat-datepicker #date_fin_contract></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <mat-form-field>
+                                        <input matInput [(ngModel)]="selectedDebutF" [matDatepicker]="date_debut_formation" placeholder="Date de début de formation">
+                                        <mat-datepicker-toggle matSuffix [for]="date_debut_formation"></mat-datepicker-toggle>
+                                        <mat-datepicker #date_debut_formation></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <mat-form-field>
+                                        <input matInput [(ngModel)]="selectedFinF" [matDatepicker]="date_fin_formation" placeholder="Date de fin de formation">
+                                        <mat-datepicker-toggle matSuffix [for]="date_fin_formation"></mat-datepicker-toggle>
+                                        <mat-datepicker #date_fin_formation></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="alert alert-danger col-6 offset-3 text-center" [hidden]="!errorCreatePlanning">
-                        {{ errorCreatePlanning }}
+                <!-- Partie contraintes planning -->
+                <div [hidden]="!isCtrVisible"><!-- [ngClass]="{'contraintesPlanning': isCtrVisible }" -->
+                    <div class="row">
+                        <div class="col-xs-12 col-md-5 offset-md-1">
+                            <ng-select placeholder="Choisir une contrainte" [(ngModel)]="selectedConstraint" bindLabel="LibelleCourt">
+                                <ng-option [value]="'disponibilite'">Contrainte de disponibilité</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-xs-12 col-md-4 offset-md-2">
+                            <button type="button" [hidden]="selectedConstraint == undefined" class="btn btn-primary" (click)="addConstraint()">Ajouter</button>
+                        </div>
                     </div>
-                    <div class="alert alert-success col-6 offset-3 text-center" [hidden]="!successCreatePlanning">
-                        {{ successCreatePlanning }}
+                    <!-- Affichage des toutes les contraintes de disponibilités -->
+                    <div class="row" *ngFor="let ctrDisponibility of ctrDisponibilities; let i = index">
+                        <div class="col-xs-12 offset-md-1 col-md-4">
+                            <label>Disponibilité</label>
+                        </div>
+                        <div class="col-xs-12 offset-md-1 col-md-5">
+                            <mat-form-field >
+                                <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_start" [matDatepicker]="date_start" [index]="i" placeholder="Date de début">
+                                <mat-datepicker-toggle matSuffix [for]="date_start"></mat-datepicker-toggle>
+                                <mat-datepicker #date_start></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xs-12 offset-md-1 col-md-4">
+                            <input type="checkbox" [(ngModel)]="ctrDisponibility.is_available"> Est disponible
+                        </div>
+                        <div class="col-xs-12 offset-md-1 col-md-5">
+                            <mat-form-field>
+                                <input matInput datetime-local [(ngModel)]="ctrDisponibility.date_end" [matDatepicker]="date_end" [index]="i" placeholder="Date de fin">
+                                <mat-datepicker-toggle matSuffix [for]="date_end"></mat-datepicker-toggle>
+                                <mat-datepicker #date_end></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <!-- Partie droite de la modal de création -->
+                        <div class="col-xs-12 col-md-6 row">
+                            <div class="col-12 text-center">
+                            </div>
+                            <div class="col-12 text-center">
+                            </div>
+                            <div class="col-12 text-center">
+                            </div>
+                            <div class="col-12 text-center">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="alert alert-danger col-6 offset-3 text-center" [hidden]="!errorCreatePlanning">
+                            {{ errorCreatePlanning }}
+                        </div>
+                        <div class="alert alert-success col-6 offset-3 text-center" [hidden]="!successCreatePlanning">
+                            {{ successCreatePlanning }}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>
-                <button *ngIf="selectedStagiaire != undefined" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
+                <button type="button" [hidden]="isCtrVisible" class="btn btn-blue-grey" data-dismiss="modal" (click)="createModal.hide()">Annuler</button>
+                <button *ngIf="selectedStagiaire != undefined" [hidden]="isCtrVisible"  type="button" class="btn btn-primary" (click)="toggleContraintes()">Suivant</button>
+
+                <button type="button" [hidden]="!isCtrVisible" class="btn btn-blue-grey" data-dismiss="modal" (click)="toggleContraintes()">Précédent</button>
+                <button *ngIf="selectedStagiaire != undefined" [hidden]="!isCtrVisible" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
             </div>
         </div>
     </div>

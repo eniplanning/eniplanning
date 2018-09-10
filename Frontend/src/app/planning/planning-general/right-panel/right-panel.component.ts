@@ -16,7 +16,7 @@ export class RightPanelComponent implements OnInit {
 	totalHours: 			Number = 0;
 
 	months: any[];
-	
+
   	constructor(
   		private planningService: 		PlanningService,
   		public changeDetector: 			ChangeDetectorRef
@@ -66,7 +66,7 @@ export class RightPanelComponent implements OnInit {
 	    //new Date() is 0-based for months. Our data is 1-based. So we decrease by 1
 	    return new Date(year, month-1, day);
   	}
-  
+
   	generateDaysOfMonth(year, month) {
 		let l = []
 		//We do not decrease by 1 because we take the next month's day number 0 (= our month last day)
@@ -76,13 +76,13 @@ export class RightPanelComponent implements OnInit {
     	}
 		return l;
   	}
-  
+
   	isWeekEnd(year, month, day) {
 		//new Date() is 0-based for months. Our data is 1-based. So we decrease by 1
 		let d = new Date(year, month-1, day).getDay();
 		return d == 6 || d == 0; //6 = Saturday, 0 = Sunday
   	}
-  
+
   	formatCellId(year, month, day) {
 		month = month > 9 ? month : '0' + month;
 		day = day > 9 ? day : '0' + day;

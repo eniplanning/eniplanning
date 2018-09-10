@@ -28,7 +28,8 @@ export class LeftPanelComponent implements OnInit {
 	selectedPlanning: 		Planning;
 	formation:				Formation;
 	libelleLieuFormation: 	String;
-	panelStates: 			{};	 //used to keep track of panels states : open or closed
+    panelStates: 			{};	 //used to keep track of panels states : open or closed
+    alert_array:            Array<any>;
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -64,7 +65,7 @@ export class LeftPanelComponent implements OnInit {
 				this.onChangeSelectedStagiaire();
 			},
 			error => console.error(error)
-		)
+        )
 	}
 
 	getLieu(code_lieu: number) {
@@ -204,18 +205,20 @@ export class LeftPanelComponent implements OnInit {
 			},
 			error => console.error(error)
 		);
-		
+
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {
 			self.drawCoursOnPlanning(c);
-		});
+        });
+        this.checkAlertsPlanning();
 	}
 
 	onClickCours(cours: Cours) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
-		})
+        })
+
 		// if a cours from this module is already in planning_courses
 		if (old_cours != undefined) {
 			// removes it from database
@@ -241,7 +244,8 @@ export class LeftPanelComponent implements OnInit {
 				},
 				error => console.error(error)
 			);
-		}
+        }
+        this.checkAlertsPlanning();
 	}
 
 	drawCoursOnPlanning(cours: CoursPlanning) {
@@ -252,7 +256,7 @@ export class LeftPanelComponent implements OnInit {
 			dateRange.push(new Date(start));
 			start.setDate(start.getDate() + 1);
 		}
-		
+
 		dateRange.forEach(function(d) {
 			let id = '' + d.getFullYear()
 						+ (d.getMonth()+1<10 ? '0'+(d.getMonth()+1) : d.getMonth()+1)
@@ -276,5 +280,34 @@ export class LeftPanelComponent implements OnInit {
 		} catch (error) {
 			console.error(error);
 		}
-	}
+    }
+
+    checkAlertsPlanning()
+    {
+        // on vide la liste des erreurs
+        this.alert_array = new Array<any>();
+
+        //Pour chaques cours du planning, on check s'il est en conflict avec une contrainte
+        this.selectedPlanning.planning_courses.forEach(cours => {
+            console.log(cours);
+            //Si le cours choisis entre en conflit avec une contrainte de disponibilité
+            this.selectedPlanning.ctr_disponibilities.forEach(disponibility => {
+
+                if (
+                    (new Date(disponibility.date_start) <= new Date(cours.date_start) && new Date(disponibility.date_end) <= new Date(cours.date_end) && new Date(disponibility.date_end) > new Date(cours.date_start))
+                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end) && new Date(disponibility.date_start) < new Date(cours.date_end))
+                    || (new Date(disponibility.date_start) < new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end))
+                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end))
+                )
+                {
+                    this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label_course });
+                }
+            });
+
+            // Test pour les autres types d'alertes
+        });
+
+        //Envoi d'un évènement pour que le composant right panel puisse récupérer la liste des alertes
+        this.planningService.alertPlanningList.next(this.alert_array);
+    }
 }

@@ -10,9 +10,10 @@ import { Stagiaire } from '../../utils/models/stagiaire';
 })
 export class PlanningComponent implements OnInit {
 
-  username: String;
-  
-  constructor() { }
+  username:             String;
+  alertPlanningList:   Array<any>;
+
+    constructor() { }
 
   ngOnInit() {
     this.username = sessionStorage.getItem('username');
