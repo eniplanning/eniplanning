@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lieu;
+use Log;
 
 class LieuController extends Controller
 {
@@ -14,6 +15,7 @@ class LieuController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Lieu::all()->toJson();
     }
 
@@ -25,6 +27,7 @@ class LieuController extends Controller
      */
     public function show(Lieu $lieu)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return $lieu->toJson();
     }
 }

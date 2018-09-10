@@ -55,14 +55,22 @@ export class LeftPanelComponent implements OnInit {
 		this.loadSelectedStagiaire();
 		this.planningService.newPlanning.subscribe(
 			(planning: Planning) => {
-				this.onChangeSelectedStagiaire();
-				this.planningService.setSelectedPlanning(planning);
-			}
+				if (planning != null) {
+					this.planningService.setSelectedPlanning(planning);
+					this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+				}
+			},
+			error => console.error(error)
 		)
 		this.planningService.updatePlanningsList.subscribe(
 			data => {
-				this.selectedPlanning = null;
-				this.onChangeSelectedStagiaire();
+				if (data != null) {
+					if (data == 'deletion') {
+						this.formation = null;
+					}
+					this.selectedPlanning = null;
+					this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+				}
 			},
 			error => console.error(error)
         )
@@ -100,6 +108,7 @@ export class LeftPanelComponent implements OnInit {
 		}
 		if (this.selectedStagiaire != null) {
 			this.panelStates['informations'] = true;
+			this.stagiaireService.selectedStagiaire.next(this.selectedStagiaire);
 			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 		}
 		else {
@@ -112,9 +121,9 @@ export class LeftPanelComponent implements OnInit {
 	// Mise à jour de la liste des plannings du stagiaire à la sélection d'un stagiaire
 	onChangeSelectedStagiaire() {
 		if (this.selectedStagiaire != null) {
-			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
-			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
 			this.planningService.setSelectedPlanning(null);
+			this.stagiaireService.setSelectedStagiaire(this.selectedStagiaire);
+			this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 			console.log('stagiaire sélectionné', this.selectedStagiaire);
 		}
 	}
@@ -148,6 +157,7 @@ export class LeftPanelComponent implements OnInit {
 					this.selectedPlanning = JSON.parse(unparsedSelectedPlanning);
 				}
 				if (this.selectedPlanning != null) {
+					console.log('selectedPlanning not null', this.selectedPlanning);
 					let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 					this.selectedStagiaire.ListPlannings.forEach(function(p) {
 						if (p.id == self.selectedPlanning.id) {
@@ -164,9 +174,6 @@ export class LeftPanelComponent implements OnInit {
 
 	// Mise à jour de TODO à la sélection d'un planning
 	onChangeSelectedPlanning(planning: Planning) {
-		if (this.selectedPlanning != null && this.selectedPlanning.id == planning.id) {
-			return;
-		}
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
 		this.getLieu(this.selectedPlanning.code_lieu);
@@ -214,7 +221,7 @@ export class LeftPanelComponent implements OnInit {
         this.checkAlertsPlanning();
 	}
 
-	onClickCours(cours: Cours) {
+	onClickCours(cours: Cours, LibelleCours: string) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
         })
@@ -274,12 +281,12 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 	deletePlanning() {
-		try {
-			this.planningService.deletePlanning(this.selectedPlanning);
-			this.planningService.updatePlanningsList.next(null);
-		} catch (error) {
-			console.error(error);
-		}
+        this.planningService.deletePlanning(this.selectedPlanning).subscribe(
+            data => {
+                this.planningService.setSelectedPlanning(null);
+                this.planningService.updatePlanningsList.next('deletion');
+            }
+        );
     }
 
     checkAlertsPlanning()

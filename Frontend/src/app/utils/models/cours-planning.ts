@@ -6,7 +6,7 @@ export class CoursPlanning {
 	date_start:					Date
 	date_end:					Date
 	public_price_affected:		number
-	label_course:				string
+	label:				string
 	real_time_hour:				number
 	expected_time_hour:			number
 	date_to_be_define:			boolean
@@ -15,17 +15,4 @@ export class CoursPlanning {
 	code_room:					string
 	code_teacher:				number
 	code_location:				number
-	
-	/*
-	dureeReeleEnHeures:			number
-	codePromotion:				string
-	prixPublicAffecte:			number
-	idModule:					number
-	libelleCours:				string
-	dureePrevueEnHeures:		number
-	dateADefinir:				boolean
-	codeSalle:					string
-	codeFormateur:				number
-	codeLieu:					number
-	*/
 }

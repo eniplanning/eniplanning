@@ -43,8 +43,6 @@
                                     <a class="dropdown-item" target="_blank" [routerLink]="['generate-html', planning.id]">Visualiser</a>
                                     <a class="dropdown-item" (click)=openModalModifyPlanning()>Modifier</a>
                                     <a class="dropdown-item" (click)="deletePlanning()">Supprimer</a>
-                                    <div class="divider dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
                             </div>
                             
@@ -69,7 +67,7 @@
                         <div (click)="module.visible = !module.visible"><span *ngIf="module.cours.length > 0" class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
                         <ul class="cours-list fa-ul" *ngIf="module.visible">
                             <li class="cours" *ngFor="let cours of module.cours">
-                                <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>
+                                <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours, module.Libelle)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>
                             </li>
                         </ul>
                     </li>

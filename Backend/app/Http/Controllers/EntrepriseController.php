@@ -9,6 +9,7 @@ use App\Models\Stagiaire;
 use App\Http\Controllers\StagiaireParEntrepriseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 
 class EntrepriseController extends Controller
@@ -37,6 +38,7 @@ class EntrepriseController extends Controller
      */
     public function index()
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Entreprise::all()->toJson();
     }
 
@@ -48,6 +50,7 @@ class EntrepriseController extends Controller
      */
     public function show(Entreprise $entreprise)
     {
+        Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         return Entreprise::findOrFail(trim($entreprise->CodeEntreprise))->toJson();
     }
 }

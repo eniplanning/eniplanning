@@ -7,7 +7,8 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == false" class="modal-title" id="creaModalLabel">Créer un planning - Paramètres</h5>
+                <h5 *ngIf="modalUpdateMode == true" class="modal-title" id="creaModalLabel">Modifier un planning - Paramètres</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="createModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -132,6 +133,7 @@
 
                 <button type="button" [hidden]="!isCtrVisible" class="btn btn-blue-grey" data-dismiss="modal" (click)="toggleContraintes()">Précédent</button>
                 <button *ngIf="selectedStagiaire != undefined" [hidden]="!isCtrVisible" type="button" class="btn btn-primary" (click)="createPlanning()">Créer</button>
+                <button *ngIf="selectedStagiaire != undefined && modalUpdateMode == true" [hidden]="!isCtrVisible" type="button" class="btn btn-primary" (click)="updatePlanning()">Modifier</button>
             </div>
         </div>
     </div>
