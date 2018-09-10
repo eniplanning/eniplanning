@@ -262,7 +262,6 @@ export class LeftPanelComponent implements OnInit {
 				}
 			)
 			console.log('cours:',cours);
-			);
 		}
 	}
 
