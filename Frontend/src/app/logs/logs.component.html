@@ -1,0 +1,44 @@
+<logs-header (refreshList)="refreshList($event)" ></logs-header>
+
+<!-- titre de la page -->
+<div class="card" (eventSorted)="onSortedEvent(event)">
+    <h1>Logs</h1>
+</div>
+<div class="card-body">
+
+
+    <!-- zone de recherche -->
+    <div class="md-form">
+        <i class="fa fa-search prefix"></i>
+        <input type="search" [(ngModel)]="searchActivityValue" id="searchText" class="form-control" mdbInputDirective [mdbValidate]="false">
+        <label for="searchText">Saisissez le nom de l'objet modifié</label>
+    </div>      
+
+
+    <!-- tableau des logs -->
+    <div>
+        <div class="table-responsive">
+            <table class="table table-responsive-md table-bordered">
+
+                <!-- entete des colonnes -->
+                <thead>
+                    <tr>
+                        <th id="col20">Date <mdb-icon (click)="sortBy('properties')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th id="col20">Utilisateur <mdb-icon (click)="sortBy('log_name')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                        <th id="col60">Détail de l'activité <mdb-icon (click)="sortBy('causer_type')"><i class="fa fa-sort" aria-hidden="true"></i></mdb-icon></th>
+                    </tr>
+                </thead>
+
+                <!-- contenu du tableau -->
+                <tbody *ngIf="undefined !== activityLogs"> 
+                    <tr *ngFor="let activityLog of searchActivity()" >
+                        <td id="col20" class="text-center">{{ activityLog.properties }}</td>
+                        <td id="col20" class="text-center">{{ activityLog.log_name }}</td> 
+                        <td id="col60">{{ activityLog.causer_type }} ({{ activityLog.description }}) => {{ activityLog.subject_type }} </td>
+                        <!-- <td id="col60">{{ activityLog.detail }} </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

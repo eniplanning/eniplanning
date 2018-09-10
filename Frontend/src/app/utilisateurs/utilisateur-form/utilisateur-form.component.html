@@ -1,0 +1,107 @@
+<a *ngIf="action == 'Créer'" class="nav-link" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
+<a *ngIf="action == 'Modifier'" data-toggle="modal" data-target="#modal-user-form" (click)="modalUserForm.show()">{{action}}</a>
+
+<div mdbModal #modalUserForm="mdb-modal" class="modal fade" id="modal-user-form" 
+    tabindex="1200" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop:false}" >
+  <div class="modal-dialog modal-fluid" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">{{action}} un utilisateur</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalUserForm.hide();sendMessage();"><!--</button>modalUserForm.hide()"-->
+                  <span aria-hidden="true">×</span>
+              </button>
+          </div>          
+          <div class="modal-body">
+            <div class="row menu-row">
+              <div class="card-body">
+                <form #utilisateurForm=ngForm (ngSubmit)="onSubmit()">
+                  <!-- Message de confirmation ou d'erreur -->
+                  <div class="form-group row">
+                      <div class="offset-4 col-sm-7"> 
+                          <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+                          <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
+                      </div>
+                  </div>
+                  <!-- Nom de l'utilisateur -->
+                  <div *ngIf="showForm" class="form-group row">
+                    <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="name" (input)="onEdit($event.target)"class="form-control" placeholder="Nom" [(ngModel)]="selectedUser.name" value="selectedUser.name"required>
+                        <div class="alert alert-danger" [hidden]="!error.name">
+                        {{ error.name }}
+                      </div>
+                    </div>
+                  </div>  
+                  <!-- Prénom de l'utilisateur -->                 
+                  <div *ngIf="showForm"  class="form-group row">
+                    <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="firstname" (input)="onEdit($event.target)" class="form-control"  placeholder="Prénom" [(ngModel)]="selectedUser.firstname" value="selectedUser.firstname">
+                      </div>
+                  </div>
+                  <!-- Email de l'utilisateur -->
+                  <div *ngIf="showForm"  class="form-group row">
+                    <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
+                    <div class="col-sm-7">
+                        <input type="email" name="email" class="form-control"  placeholder="Email" [(ngModel)]="selectedUser.email" value="selectedUser.email" required>
+                        <div class="alert alert-danger" [hidden]="!error.email">
+                          {{ error.email }} 
+                        </div>          
+                      </div>
+                  </div>
+
+                  <!-- Mot de passe de l'utilisateur -->
+                  <div *ngIf="showPasswordForm">
+                    <div class="form-group row">
+                      <label for="password" class="col-sm-4 col-form-label text-right">Mot de passe</label>
+                      <div class="col-sm-7">
+                        <input type="password" name="password" (input)="onEdit($event.target)" class="form-control"
+                          [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
+                          [(ngModel)]="selectedUser.password" required>
+                        <div class="alert alert-danger" [hidden]="!error.password">
+                          {{ error.password }}
+                        </div>  
+                      </div>
+                    </div>
+                    <!-- Confirmation du mot de passe -->
+                    <div class="form-group row">
+                        <label for="password_confirmation" class="col-sm-4 col-form-label text-right">Confirmation de mot de passe</label>
+                        <div class="col-sm-7">
+                          <input type="password" name="password_confirmation" class="form-control"
+                            [placeholder]="(action == 'Modifier') ? 'Nouveau mot de passe' : 'Mot de passe'"
+                            [(ngModel)]="selectedUser.password_confirmation"  required>
+                          <div class="alert alert-danger" [hidden]="!error.password">
+                            {{ error.password }}
+                          </div>  
+                        </div>
+                    </div>
+                  </div>
+                  <!-- Role de l'utilisateur -->
+                  <div *ngIf="showForm"  class="form-group row">
+                      <label for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
+                      <div class="col-sm-7">
+                        <div *ngFor="let role of roles">
+                          <input class="col-sm-4" type="radio" name="role_id" class="form-check-inline"
+                              [(ngModel)]="selectedUser.role_id" [value]=role.id required>{{ role.name }}
+                        </div>  
+                      </div>
+                  </div>
+                  <!-- Validation du formulaire -->
+                  <div class="form-group row">
+                    <div class="col-sm-7 offset-4">
+                      <button type="submit" class="btn btn-primary btn-sm waves-light"  data-dismiss="modal" [disabled]="!utilisateurForm.valid" mdbWavesEffect>Enregistrer</button>
+                      <a [hidden]="!showResetButton" (click)="resetInformationsCompte()" class="btn btn-primary btn-sm waves-light" dbWavesEffect>Annuler</a>
+                      <button *ngIf="showPasswordForm" [hidden]="action == 'Créer'" [disabled]="disabledPasswordButton" class="btn btn-primary btn-sm waves-light" (click)="changePassword(false)">Gestion du compte</button>
+                      <button *ngIf="!showPasswordForm" [hidden]="showResetButton" [disabled]="disabledPasswordButton" class="btn btn-primary btn-sm waves-light" (click)="changePassword(true)">Gestion du mot de passe</button>
+                     
+                  </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+

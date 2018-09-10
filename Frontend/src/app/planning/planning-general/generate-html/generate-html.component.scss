@@ -1,0 +1,217 @@
+.customload{
+    margin: auto;
+    width: 50%;
+    padding: 50px;
+    
+}
+
+.customloadimg{
+    display: block;
+    padding: 20px;
+}
+
+.customloadtxt{
+    display: block;
+    padding: 20px;
+}
+
+#top_page {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 200px;
+    padding-bottom:200px;
+    width: 21cm;
+    font-size: 14px; 
+    font-family: Arial;
+}
+
+#logo{
+    padding:30px;
+}
+
+.div_formation {
+    text-align:center;
+    margin: 0px;
+    padding:0px;
+}
+
+.title_formation {
+    margin: 0px;
+    padding:5px;
+}
+
+.prepa_titre {
+    margin: 0px;
+    padding:0px; 
+    color:grey;
+}
+
+#label_titre {
+    margin: 0px;
+    padding:0px;
+}
+
+#niveau {
+    margin: 0px;
+    padding:0px;
+}
+
+#date_formation {
+    margin: 0px;
+    margin-top:20px;
+    padding:5px;
+}
+
+#label_date_formation_debut {
+    float:left;
+    margin-left:30px;
+}
+.color_grey {
+    color:grey
+}
+
+.bold_text {
+    font-weight: bold
+}
+#label_date_formation_fin {
+    float:right;
+    margin-right: 30px;
+}
+
+#label_nb_heures_formation {
+    margin-top:20px;
+    text-align:center;
+}
+
+#nb_heures_formation {
+    font-weight: bold;
+}
+
+#entreprise_stagiaire {
+    margin: 0px;
+    padding:5px;
+}
+
+#label_entreprise {
+    float:left;
+    margin-left:30px;
+}
+
+#label_stagiaire {
+    float:right;
+    margin-right: 30px;
+}
+
+.table_planning {
+    margin-top: 50px;
+    padding:5px;
+    width:19.5cm;
+    margin-left: 25px;
+}
+
+.table_entete {
+    text-align:center;
+    width:100%;
+    border-collapse: collapse;
+}
+
+.thead_planning {
+    text-align:center;
+    border-collapse: collapse;
+    background-color:lightgray;
+}
+
+.th_planning {
+    text-align:center;
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+    width:30%;
+}
+
+.th_planning2 {
+    text-align:center;
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+    width:20%;
+}
+
+.th_planning3 {
+    text-align:center;
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+    width:50%;
+}
+
+.custom_style_table_entete {
+    text-align:center;
+    width: 100%;
+    border-collapse:collapse;
+}
+
+.custom_style_dotted {
+    border-bottom: 0.5px dotted grey;
+    border-collapse:collapse;
+    text-align: center;
+    font-weight: bold
+}
+.custom_style_td_entete {
+    border-right: 0.5px dotted grey;
+    border-collapse:collapse;
+    width: 50%;
+    text-align: center;
+}
+
+.table_entreprise {
+    border: 0.5px solid grey;
+    width:100%;
+    border-collapse: collapse;
+}
+
+.td_15 {
+    border: 0.5px solid grey;
+    border-collapse: collapse; 
+    width:15%;
+}
+
+.td_20 {
+    border: 0.5px solid grey;
+    border-collapse: collapse; 
+    width:20%;
+}
+
+.td_20_ENI {
+    border: 0.5px solid grey;
+    border-collapse: collapse; 
+    width:20%;
+    background-color:#10447C;
+    color:white; 
+}
+
+.td_50 {
+    border: 0.5px solid grey;
+    border-collapse: collapse; 
+    width:50%;
+}
+
+.tr_entreprise {
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+    text-align:center;
+    height: 1.2cm;
+}
+
+.tbody_tableau_detail {
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+}
+
+.tr_detail{
+    border: 0.5px solid grey;
+    border-collapse: collapse;
+    text-align:center; 
+    height: 1.2cm;
+}
+
+.print_marge{
+    margin-top: 300px;
+}

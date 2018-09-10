@@ -1,0 +1,134 @@
+<!-- header -->
+<!-- message de chargement -->
+<div *ngIf="!ready" class="customload row menu-row">
+  <div class="customloadimg"><i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></div>
+  <div class="customloadtxt">Veuillez patienter, le planning est en cours de Chargement ...</div>
+</div>
+<!-- impression pdf -->
+<div *ngIf="ready" class="row menu-row">
+  <a id="downloadPDF" class="btn btn-warning" (click)="downloadPdf()">Télécharger au format pdf</a>
+</div>
+
+<!-- contenu -->
+<div *ngIf="ready" id="top_page" class="contentToConvert">
+
+  <!-- logo -->
+  <div id="logo">
+    <img src='./assets/logo-eni.jpg' style="width:100px"/>
+  </div>
+  
+  <!-- formation -->
+  <div id="title" class="div_formation">
+      <h3 id="formation" class="title_formation"> {{ formation.LibelleLong }} </h3>
+      <div class="prepa_titre">Préparation au titre :</div>
+      <h6 id="label_titre">" <span id="titre"> {{ titre.LibelleLong }} </span> "</h6>
+      <h6 id="niveau">Niveau : {{ titre.Niveau }} </h6>  
+  </div>
+
+  <!-- dates de formation -->
+  <div id="date_formation">
+    <div id="label_date_formation_debut" >
+      <span class="color_grey" >Date de début (formation) : </span>
+      <span class="bold_text"> {{ getDisplayDate(planning.date_start_formation) }}</span></div>
+    <div id="label_date_formation_fin" >
+      <span class="color_grey">Date de fin (formation) : </span>
+      <span class="bold_text" >{{  getDisplayDate(planning.date_end_formation) }}</span></div>
+  </div>
+
+  <!-- heures de formations -->
+  <div id="label_nb_heures_formation" >
+    <span class="color_grey">Formation en centre : </span>
+    <span id="nb_heures_formation" class="bold_text">{{ nb_heures_formations }}</span> Heures
+  </div>
+
+  <!-- stagiaire entreprise -->
+  <div id="entreprise_stagiaire" >
+    <div id="label_entreprise" >
+      <span class="color_grey">Entreprise : </span>
+      <span *ngIf="entreprise" id="entreprise"  class="bold_text">{{ entreprise.RaisonSociale }}</span>
+      <span *ngIf="!entreprise" id="entreprise"  class="bold_text">à définir</span>
+    </div>
+    <div id="label_stagiaire" style="float:right; margin-right: 30px">
+      <span class="color_grey">Stagiaire : </span>
+      <span id="stagiaire"  class="bold_text">{{ stagiaire.Nom }} {{ stagiaire.Prenom }}</span>
+    </div>
+  </div>
+
+  <!-- tableau du planning -->
+  <div id="planning" class="table_planning">
+
+    <!-- entête du tableau-->
+    <table class="table_entete">
+      <thead class="thead_planning">
+          <th colspan="2" class="th_planning" >
+            <table class="custom_style_table_entete">
+              <tr colspan="2" class="custom_style_table_entete" >
+                <td colspan="2" class="custom_style_dotted">Dates</td>
+              </tr>
+              <tr class="custom_style_table_entete">
+                <td class="custom_style_td_entete" >Début</td>
+                <td class="custom_style_td_entete" >Fin</td></tr>
+            </table>
+          </th>
+          <th class="th_planning2">Lieu</th>
+          <th class="th_planning3">Programme</th>
+      </thead>
+    </table>
+
+    <!-- première ligne en entreprise -->
+    <table class="table_entreprise" >
+        <tbody class="tbody_tableau_detail">
+          <!-- détail de la ligne -->
+          <tr class="tr_detail">
+              <td class="td_15">../../..</td>
+              <td class="td_15">{{ endOfBeginEntreprise }}</td>
+              <td class="td_20"></td>
+              <td class="td_50">ENTREPRISE</td>
+          </tr>
+        </tbody>
+    </table>
+
+    <!-- template semaine en entreprise -->
+    <table *ngFor="let cours of cours_planning; let i = index"  [attr.data-index]="i" class="table_entreprise">
+      <tbody class="tbody_tableau_detail">
+        <!-- détail de la ligne si en entreprise -->
+        <tr *ngIf="isConsecutive(cours)" class="tr_detail">
+            <td class="td_15">{{ getMondayBefore(cours) }}</td>
+            <td class="td_15">{{ getFridayBefore(cours) }}</td>
+            <td class="td_20">{{ getNbSemainesEntreprise(cours) }} semaine(s) </td>
+            <td class="td_50">ENTREPRISE</td>
+        </tr>
+        <!-- détail de la ligne si en cours -->
+        <tr class="tr_detail" >
+            <td class="td_15">{{ getDisplayDate(cours.date_start) }}</td>
+            <td class="td_15">{{ getDisplayDate(cours.date_end) }}</td>
+            <td class="td_20_ENI">
+                <table style=" width:100%">
+                    <tr style=" width:100%">
+                      <td>ENI {{ Lieu }}</td>
+                    </tr>
+                    <tr>
+                      <td>{{ cours.expected_time_hour.toString() }} heures</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="td_50">{{ cours.label }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- dernière ligne en entreprise -->
+    <table *ngIf="!firstPage" class="table_entreprise" >
+        <tbody class="tb  ody_tableau_detail">
+          <!-- détail de la ligne -->
+          <tr class="tr_entreprise">
+              <td class="td_15">{{ beginOfEndEntreprise }}</td>
+              <td class="td_15">../../..</td>
+              <td class="td_20"></td>
+              <td class="td_50">ENTREPRISE</td>
+          </tr>
+        </tbody>
+    </table>
+
+  </div>
+</div>

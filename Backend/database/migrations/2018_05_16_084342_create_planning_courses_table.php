@@ -16,21 +16,21 @@ class CreatePlanningCoursesTable extends Migration
         Schema::create('planning_courses', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('planning_id')->unsigned();
-            $table->uuid('course_id');
-            $table->integer('complementary_course_id')->unsigned();
-            $table->boolean('is_complementary');
-            $table->dateTime('start');
-            $table->dateTime('end');
-            $table->float('public_price_affected');
-            $table->string('label_course');
-            $table->integer('real_time_hour');
-            $table->integer('expected_time_hour');
-            $table->boolean('date_to_be_define');
-            $table->string('code_promotion');
-            $table->integer('module_id');
-            $table->string('code_room');
-            $table->integer('code_teacher');
-            $table->integer('code_location');
+            $table->uuid('course_id')->nullable();
+            $table->integer('complementary_course_id')->unsigned()->nullable();
+            $table->dateTime('date_start');
+            $table->dateTime('date_end');
+            $table->float('public_price_affected')->nullable();
+            $table->string('label')->nullable();
+            $table->string('short_label')->nullable();
+            $table->integer('real_time_hour')->nullable();
+            $table->integer('expected_time_hour')->nullable();
+            $table->boolean('date_to_be_defined')->nullable();
+            $table->string('code_promotion')->nullable();
+            $table->integer('module_id')->nullable();
+            $table->string('code_room')->nullable();
+            $table->integer('code_teacher')->nullable();
+            $table->integer('code_location')->nullable();
             $table->timestamps();
         });
     }

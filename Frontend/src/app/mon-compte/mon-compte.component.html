@@ -1,0 +1,101 @@
+<mon-compte-header
+    (messageChangeCompteEvent)="receiveChangeMdp($event)"
+    (messageChangeMdpEvent)="receiveChangeCompte($event)"
+    [currentUser]="currentUser">
+</mon-compte-header>
+<h1>Informations sur votre compte</h1>
+
+<div class="row menu-row">
+    <div class="card-body">
+        <form #monCompteForm=ngForm (ngSubmit)="onSubmit()">
+            <!-- Message de confirmation ou d'erreur -->
+            <div class="form-group row">
+                <div class="offset-4 col-sm-4"> 
+                    <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+                    <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
+                </div>
+            </div>
+        
+            <!-- Nom de l'utilisateur -->
+            <div *ngIf="showCompteForm" class="form-group row">
+                <label for="name" class="col-sm-4 col-form-label text-right">Nom</label>
+                <div class="col-sm-4">
+                    <input type="text" id="name" placeholder="Nom"
+                        [(ngModel)]="user.name" name="name"
+                        [class]="!editCompte ? 'disabled grey lighten-4 form-control':'form-control'" 
+                        value="user.name" required>
+                    <div class="alert alert-danger" [hidden]="!error.name">
+                    {{ error.name }}
+                    </div>
+                </div>
+            </div>  
+            
+            <!-- Prénom de l'utilisateur -->                 
+            <div *ngIf="showCompteForm" class="form-group row">
+                <label for="firstname" class="col-sm-4 col-form-label text-right">Prénom</label>
+                <div class="col-sm-4">
+                    <input type="text" name="firstname" placeholder="Prénom" 
+                        [class]="!editCompte ? 'disabled grey lighten-4 form-control':'form-control'" 
+                        [(ngModel)]="user.firstname" value="user.firstname">
+                </div>
+            </div>
+            
+            <!-- Email de l'utilisateur -->                 
+            <div *ngIf="showCompteForm" class="form-group row">
+                <label for="email" class="col-sm-4 col-form-label text-right">Email</label>
+                <div class="col-sm-4">
+                    <input type="text" name="email" placeholder="Prénom" 
+                        [class]="!editCompte ? 'disabled grey lighten-4 form-control':'form-control'" 
+                        [(ngModel)]="user.email" value="user.email">
+                </div>
+            </div>
+            
+            <!-- Mot de passe de l'utilisateur -->
+            <div  *ngIf="showMdpForm" class="form-group row">
+                <label for="password" class="col-sm-4 col-form-label text-right">Mot de passe</label>
+                <div class="col-sm-4">
+                <input type="password" name="password"
+                    [class]="!editMdp ? 'disabled form-control':'form-control'" 
+                    placeholder="Nouveau mot de passe"
+                    [(ngModel)]="user.password" required>
+                <div class="alert alert-danger" [hidden]="!error.password">
+                    {{ error.password }}
+                </div>  
+                </div>
+            </div>
+            <!-- Confirmation du mot de passe -->
+            <div *ngIf="showMdpForm"  class="form-group row">
+                <label for="password_confirmation" class="col-sm-4 col-form-label text-right">Confirmation de mot de passe</label>
+                <div class="col-sm-4">
+                    <input type="password" name="password_confirmation"
+                        [class]="!editMdp ? 'disabled form-control':'form-control'" 
+                        placeholder="Confirmation du Nouveau mot de passe"
+                        [(ngModel)]="user.password_confirmation"  required>
+                    <div class="alert alert-danger" [hidden]="!error.password"> 
+                        {{ error.password }}
+                    </div>  
+                </div>
+            </div>
+            <!-- Role de l'utilisateur -->
+            <div  *ngIf="showCompteForm">
+                <div *ngFor="let role of roles" class="form-group row">
+                    <label *ngIf="user.role_id == role.id" for="role_id" class="col-sm-4 col-form-label text-right">Rôle</label>
+                    <div  *ngIf="user.role_id == role.id" class="col-sm-4">
+                        <input hidden="true" type="text" name="role_id" class="form-control"
+                            [(ngModel)]="user.role_id" value="user.role_id" required>
+                        <span class="form-control  grey lighten-4">{{ role.name }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Validation du formulaire -->
+            <div *ngIf="showSubmitForm" class="form-group row">
+                <div class="col-sm-4 offset-4">
+                    <button type="submit" class="btn btn-primary btn-sm waves-light"
+                        [disabled]="!monCompteForm.valid" mdbWavesEffect>Enregistrer</button>
+                    <a type="submit" class="btn btn-primary btn-sm waves-light" (click)="refresh()"
+                        mdbWavesEffect>Annuler</a>
+                </div>
+            </div> 
+        </form>
+    </div>
+</div>

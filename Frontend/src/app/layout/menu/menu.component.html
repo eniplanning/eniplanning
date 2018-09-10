@@ -1,0 +1,97 @@
+<a class="navbar-brand"><i class="fa fa-home fa-2x menu-icon mr-3" data-toggle="modal" data-target="#modal-menu" (click)="modalMenu.show()"></i></a>
+
+<div mdbModal #modalMenu="mdb-modal" class="modal fade" id="modal-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fluid" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">MENU</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalMenu.hide()">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            	<div class="row menu-row">
+            		<div class="row-title align-self-center col-lg-3 col-xs-12">
+            			Utilisateurs
+	            	</div>
+	            	<div class=" row col-lg-9 col-xs-12">
+		                <div class="menu-link col-2">
+		                	<a routerLink="/planning" (click)="modalMenu.hide()">
+		                		<fa name="calendar" size="3x"></fa>
+		                		<div>Planning</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-2">
+		                	<a routerLink="/modeles" (click)="modalMenu.hide()">
+		                		<fa name="calendar-o" size="3x"></fa>
+		                		<div>Modèles</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-3">
+		                	<a routerLink="/plannings-en-defaut" (click)="modalMenu.hide()">
+		                		<fa name="calendar-times-o" size="3x"></fa>
+		                		<div>Plannings en défaut</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-2">
+		                	<a routerLink="/mon-compte" (click)="modalMenu.hide()">
+		                		<fa name="user-circle-o" size="3x"></fa>
+		                		<div>Mon compte</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-3">
+		                	<a routerLink="/modules-complementaires" (click)="modalMenu.hide()">
+		                		<fa name="list-alt" size="3x"></fa>
+		                		<div class="text-center">Modules complémentaires</div>
+		            		</a>
+		                </div>
+			        </div>
+            	</div>
+
+            	<div  *ngIf="userRole > 1"  class="row menu-row">
+            		<div class="row-title align-self-center col-lg-3 col-xs-12">
+            			Responsable pédagogique
+	            	</div>
+	            	<div class=" row col-lg-9 col-xs-12">
+		                <div class="menu-link col-2">
+		                	<a routerLink="/modules" (click)="modalMenu.hide()">
+		                		<fa name="list-alt" size="3x"></fa>
+		                		<div>Modules</div>
+		            		</a>
+		                </div>
+			        </div>
+            	</div>
+
+            	<div *ngIf="userRole > 2" class="row menu-row">
+            		<div class="row-title align-self-center col-lg-3 col-xs-12">
+            			Administrateur 
+	            	</div>
+	            	<div class=" row col-lg-9 col-xs-12">
+		                <div class="menu-link col-2">
+		                	<a routerLink="/admin/utilisateurs" (click)="modalMenu.hide()">
+		                		<fa name="users" size="3x"></fa>
+		                		<div>Utilisateurs</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-2">
+		                	<a routerLink="/admin/statut" (click)="modalMenu.hide()">
+		                		<fa name="sliders" size="3x"></fa>
+		                		<div>Statut</div>
+		            		</a>
+		                </div>
+		                <div class="menu-link col-2">
+		                	<a routerLink="/admin/logs" (click)="modalMenu.hide()">
+		                		<fa name="file-text-o" size="3x"></fa>
+		                		<div>Logs</div>
+		            		</a>
+		                </div>
+			        </div>
+            	</div>
+            	
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm waves-light" data-dismiss="modal" (click)="modalMenu.hide()" mdbWavesEffect>Close</button>
+            </div>
+        </div>
+    </div>
+</div>

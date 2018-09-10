@@ -1,0 +1,44 @@
+.navbar-brand {
+	font-size: 16px;
+	margin: 0;
+}
+
+.modal-title {
+	padding-left: 8%;
+	font-size: 30px;
+	color: #4285f4;
+}
+
+.menu-icon {
+	color: #4285f4;
+	font-size: 24px;
+}
+
+.menu-row {
+	margin: 20px 0;
+}
+
+.row-title {
+	color: #aa66cc;
+	font-size: 24px;
+	font-weight: 600;
+	padding-left: 8%;
+	margin: 0;
+}
+
+.menu-link a {
+	color: black;
+}
+
+.menu-link a div {
+	font-size: 20px;
+}
+
+.menu-link a fa, .menu-link a div {
+	display: flex;
+	justify-content: center;
+}
+
+.menu-link a:hover {
+	color: #4285f4;
+}

@@ -1,0 +1,45 @@
+<statut-header></statut-header>
+
+<!-- titre de la page -->
+<div class="card">
+    <h1>Etat des services</h1>
+</div>
+<div class="card-body">
+    <!-- tableau des utilisateurs -->
+    <div>
+        <div class="table-responsive">
+            <table class="table table-responsive-md table-bordered">
+
+                <!-- entete des colonnes -->
+                <thead>
+                    <tr>
+                        <th>Services</th>
+                        <th>Etat</th>
+                    </tr>
+                </thead>
+
+                <!-- contenu du tableau -->
+                <tbody> 
+                    <tr>
+                        <td> Applicatif BackEnd : LARAVEL </td> 
+                        <td [class]="backend ? 'btn-success' : 'btn-danger'" >
+                             {{ backendStatus }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Base de données : ENI PLANNING </td> 
+                        <td [class]="eniDatabase ? 'btn-success' : 'btn-danger'" >
+                            {{ eniDatabaseStatus }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Base de données : ERP </td> 
+                        <td [class]="erpDatabase ? 'btn-success' : 'btn-danger'" >
+                            {{ erpDatabaseStatus }} 
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

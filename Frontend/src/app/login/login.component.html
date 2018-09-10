@@ -1,0 +1,32 @@
+<login-header></login-header>
+
+<!-- <div class="mt-4 col-8 offset-2"> -->
+<div class="mt-5 col-lg-4 offset-lg-4 col-md-6 offset-md-3 justify-content-center">
+
+  <!-- Material form login -->
+  <form #loginForm=ngForm (ngSubmit)="onSubmit()">
+    <p class="h4 text-center mb-4">Connexion</p>      
+    <div class="alert alert-danger" [hidden]="!error">{{error}}</div>
+    <!-- Material input email -->
+    <div class="md-form">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <!--label for="loginEmail">Email</label-->
+        <input type="email" name="email" id="loginEmail" class="form-control" 
+            [(ngModel)]="form.email" required>
+    </div>
+
+    <!-- Material input password -->
+    <div class="md-form">
+        <i class="fa fa-lock prefix grey-text"></i>
+        <!-- label for="loginPassword">Mot de Passe</label-->
+        <input type="password" name="password" id="loginPassword" class="form-control" 
+            [(ngModel)]="form.password" required>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-indigo" type="submit" [disabled]="!loginForm.valid">Login</button>
+
+      </div>
+  </form>
+
+</div>

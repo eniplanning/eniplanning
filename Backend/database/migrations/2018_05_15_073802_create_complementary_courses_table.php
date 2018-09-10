@@ -17,7 +17,8 @@ class CreateComplementaryCoursesTable extends Migration
             $table->increments('id');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
-            $table->time('real_duration');
+            $table->time('real_time_hour');
+            $table->time('expected_time_hour');
             $table->boolean('date_to_be_defined');
             $table->integer('complementary_module_id')->unsigned();
             $table->timestamps();

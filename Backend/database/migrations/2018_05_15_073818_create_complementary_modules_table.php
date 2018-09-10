@@ -16,7 +16,7 @@ class CreateComplementaryModulesTable extends Migration
         Schema::create('complementary_modules', function (Blueprint $table) {
             $table->increments('id');
             $table->string('label');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->time('duration');
             $table->timestamps();
         });

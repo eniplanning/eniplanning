@@ -9,16 +9,19 @@ class ComplementaryCourse extends Model
     protected $fillable = [
         'date_start',
         'date_end',
-        'real_duration',
+        'real_time_hour',
+        'expected_time_hour',
         'date_to_be_defined',
         'complementary_module_id'
     ];
-
-    public function planningCourse(){
-        return $this->hasOne('App\Models\PlanningCourse');
+    
+    public function planningCourses()
+    {
+        return $this->hasMany(PlanningCourse::class);
     }
 
-    public function complementaryModule(){
-        return $this->belongsTo('App\Models\ComplementaryModule', 'complementary_module_id');
+    public function complementaryModule()
+    {
+        return $this->hasOne(ComplementaryModule::class);
     }
 }

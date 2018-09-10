@@ -10,11 +10,11 @@ class PlanningCourse extends Model
         'planning_id',
         'course_id',
         'complementary_course_id',
-        'is_complementary',
-        'start',
-        'start',
+        'date_start',
+        'date_end',
         'public_price_affected',
-        'label_course',
+        'label',
+        'short_label',
         'real_time_hour',
         'expected_time_hour',
         'date_to_be_define',
@@ -22,18 +22,21 @@ class PlanningCourse extends Model
         'module_id',
         'code_room',
         'code_teacher',
-        'code_location'
+        'code_location',
     ];
 
-    public function planning(){
-        return $this->belongsTo('App\Models\Planning', 'planning_id');
+    public function planning()
+    {
+        return $this->hasOne(Planning::class);
     }
 
-    public function cours(){
-        return $this->belongsTo('App\Models\Cours', 'course_id');
+    public function cours()
+    {
+        return $this->hasOne(Cours::class);
     }
 
-    public function complementaryCourse(){
-        return $this->belongsTo('App\Models\ComplementaryCourse', 'complementary_course_id');
+    public function complementaryCourse()
+    {
+        return $this->hasOne(ComplementaryCourse::class);
     }
 }
