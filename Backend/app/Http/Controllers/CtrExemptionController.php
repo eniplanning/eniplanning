@@ -53,7 +53,7 @@ class CtrExemptionController extends Controller
     public function update(Request $request, CtrExemption $ctrExemption)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        $ctrExemption->update($request->all());
+        return $ctrExemption->update($request->all());
     }
 
     /**
