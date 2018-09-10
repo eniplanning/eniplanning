@@ -6,8 +6,8 @@
 
 export class CtrDisponibility {
 
-    date_start:     Date;
-    date_end:       Date;
+    date_start:     any;
+    date_end:       any;
     is_available:   boolean;
     planning_id:    number;
     id_constraint:  number;

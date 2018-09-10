@@ -233,7 +233,8 @@ export class LeftPanelComponent implements OnInit {
 				//if successful, removes it from the planning_courses list
 				data => {
 					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
-					this.drawCoursOnPlanning(old_cours);
+                    this.drawCoursOnPlanning(old_cours);
+                    this.checkAlertsPlanning();
 				},
 				error => console.error(error)
 			)
@@ -247,12 +248,12 @@ export class LeftPanelComponent implements OnInit {
 					//if successfull, add clicked cours in planning_courses list
 					this.selectedPlanning.planning_courses.push(cours);
 					//and draw it on the page
-					this.drawCoursOnPlanning(cours);
+                    this.drawCoursOnPlanning(cours);
+                    this.checkAlertsPlanning();
 				},
 				error => console.error(error)
 			);
         }
-        this.checkAlertsPlanning();
 	}
 
 	drawCoursOnPlanning(cours: CoursPlanning) {
@@ -307,7 +308,7 @@ export class LeftPanelComponent implements OnInit {
                     || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end))
                 )
                 {
-                    this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label_course });
+                    this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label });
                 }
             });
 

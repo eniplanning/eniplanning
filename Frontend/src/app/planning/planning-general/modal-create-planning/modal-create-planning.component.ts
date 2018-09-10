@@ -71,6 +71,11 @@ export class ModalCreatePlanningComponent implements OnInit {
                 if (data != null) {
                     this.modalUpdateMode = true;
                     this.selectedPlanning = data[0];
+                    this.ctrDisponibilities = this.selectedPlanning.ctr_disponibilities;
+                    this.ctrDisponibilities.forEach(disponibility => {
+                        disponibility.date_start = moment(disponibility.date_start);
+                        disponibility.date_end = moment(disponibility.date_end);
+                    });
                     this.nomPlanning =  this.selectedPlanning.label;
                     this.selectedDebutC = moment( this.selectedPlanning.date_start_contract);
                     this.selectedFinC = moment( this.selectedPlanning.date_end_contract);
@@ -113,6 +118,7 @@ export class ModalCreatePlanningComponent implements OnInit {
     openModalNewPlanning() {
         this.modalUpdateMode = false;
         this.nomPlanning = undefined;
+        this.ctrDisponibilities = new Array<CtrDisponibility>();
         this.selectedDebutC = '';
         this.selectedFinC = '';
         this.selectedDebutF = '';
@@ -141,6 +147,21 @@ export class ModalCreatePlanningComponent implements OnInit {
                 break;
         }
 
+    }
+
+    delConstraint(index: number)
+    {
+        console.log(index);
+        if (this.modalUpdateMode)
+        {
+            var ctr = this.selectedPlanning.ctr_disponibilities[index]
+            this.constraintService.deleteDisponibilityConstraint(ctr).subscribe();
+            this.ctrDisponibilities.splice(index, 1);
+        }
+        else
+        {
+            this.ctrDisponibilities.splice(index, 1);
+        }
     }
 
     createPlanning():void {
@@ -194,11 +215,11 @@ export class ModalCreatePlanningComponent implements OnInit {
                         this.planningService.newPlanning.next(planning);
                         this.createModal.hide();
 
-                        console.log(this.ctrDisponibilities);
+                        // console.log(this.ctrDisponibilities);
                         //création des contraintes en récupérant l'ID du planning après sa création
                         this.ctrDisponibilities.forEach(disponibility => {
                             disponibility.setPlanning_id(planning.id);
-                            console.log(this.ctrDisponibilities);
+                            // console.log(this.ctrDisponibilities);
                             this.constraintService.createDisponibilityConstraint(disponibility).subscribe(
                                 (disponibility: CtrDisponibility) => {
                                     console.log('contrainte crée', disponibility);
