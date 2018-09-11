@@ -134,11 +134,12 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   // Chargement du planning
   async getPlanning() {
     var idPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning')).id;
-    return await this.planningService.getPlanningsById(idPlanning).subscribe(
+    return await this.planningService.getPlanningById(idPlanning).subscribe(
       (data:Planning) => {
         this.planning = data;
         this.planning.label = JSON.parse(sessionStorage.getItem('selectedPlanning')).label;
-      },
+        this.planning.date_start_formation = JSON.parse(sessionStorage.getItem('selectedPlanning')).date_start_formation;
+        },
       error=>{
         console.log("erreur de récupération du planning:", error);  
       },

@@ -30,7 +30,7 @@ export class PlanningService {
     return this.http.get<Planning[]>(this.planningsByCode + '/' + codeStagiaire);
   }
 
-  getPlanningsById(idPlanning: Number): Observable<Planning> {
+  getPlanningById(idPlanning: Number): Observable<Planning> {
     return this.http.get<Planning>(this.planningsAPI + 'Global/' + idPlanning);
   }
 
