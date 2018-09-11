@@ -13,6 +13,7 @@ export class LogsComponent implements OnInit {
   activityLogs: ActivityLog[];
   private sorted = false;
   searchActivityValue: string;
+  errorMsg : string =null;
 
   constructor(
     private activityLogService: ActivityLogService,
@@ -60,9 +61,11 @@ export class LogsComponent implements OnInit {
     this.activityLogService.getActivityLogs().subscribe(
       data => {
         this.activityLogs = data;
+        this.errorMsg = null;
       },
       error => {
-        console.log(error);
+        this.errorMsg=("Erreur de réponse du serveur, veuillez contacter l'administrateur.");
+        console.log("erreur getActivityLogs", error);
       },
       () => this.activityLogs.sort(function(a, b) {
         //custom sorting function, sorts by stagiaire.Nom in alphabetical order

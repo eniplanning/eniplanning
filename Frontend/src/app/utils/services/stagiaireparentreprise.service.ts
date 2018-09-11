@@ -18,4 +18,10 @@ export class StagiaireparentrepriseService {
   {
       return this.http.get<StagiaireParEntreprise>(API.stagiaireParEntreprise+ '/'+idStagiaire);
   }
+
+  // Récuparation de la liste des Stagiaires par entreprise
+  getAllStagiairesParEntreprise(): Observable<StagiaireParEntreprise[]>
+  {
+      return this.http.get<StagiaireParEntreprise[]>(API.stagiaireParEntreprise);
+  }
 }

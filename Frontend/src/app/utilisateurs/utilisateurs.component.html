@@ -6,6 +6,7 @@
     <h2>Gestion des utilisateurs</h2>
 </div>
 <div class="card-body">
+<div *ngIf="errorMsg != null" class="alert alert-danger" > {{ errorMsg }} </div>
 
     <!-- zone de recherche -->
     <div class="md-form">

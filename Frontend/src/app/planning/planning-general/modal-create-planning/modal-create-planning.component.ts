@@ -131,6 +131,7 @@ export class ModalCreatePlanningComponent implements OnInit {
     toggleContraintes()
     {
         this.isCtrVisible = !this.isCtrVisible;
+        this.errorCreatePlanning = ""
     }
 
     addConstraint()
@@ -193,6 +194,7 @@ export class ModalCreatePlanningComponent implements OnInit {
         else if (this.selectedFinF < this.selectedDebutF) {
             this.errorCreatePlanning = "La date de fin de formation doit être postérieure à la date de début de formation";
         }
+        // else if (this.checkContraintes()) { }     // erreur au niveau des contraintes
         else {
             //tous les champs sont remplis correctement
             this.errorCreatePlanning = "";
@@ -328,5 +330,24 @@ export class ModalCreatePlanningComponent implements OnInit {
         this.selectedDebutF         = undefined;
         this.selectedFinF           = undefined;
         this.ctrDisponibilities     = undefined;
+    }
+
+    checkContraintes()
+    {
+        this.ctrDisponibilities.forEach(disponibility =>{
+            console.log(disponibility.date_start.format());
+            console.log(disponibility.date_end.format());
+            if (new Date(disponibility.date_start) > new Date(disponibility.date_end))
+            {
+                this.errorCreatePlanning = "Une des contrainte n'est pas conforme, la date de fin ne peut pas être avant la date de début."
+                return true;
+            }
+            else if(disponibility.date_start == "" || disponibility.date_end == "")
+            {
+                this.errorCreatePlanning = "Une des contraintes n'est pas conforme, les dates de début et de fin doivent être renseigné."
+                return true;
+            }
+        });
+        return false;
     }
 }

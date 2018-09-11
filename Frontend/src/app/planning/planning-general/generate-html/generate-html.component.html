@@ -45,8 +45,7 @@
   <div id="entreprise_stagiaire" >
     <div id="label_entreprise" >
       <span class="color_grey">Entreprise : </span>
-      <span *ngIf="entreprise" id="entreprise"  class="bold_text">{{ entreprise.RaisonSociale }}</span>
-      <span *ngIf="!entreprise" id="entreprise"  class="bold_text">à définir</span>
+      <span id="entreprise"  class="bold_text">{{ entreprise }}</span>
     </div>
     <div id="label_stagiaire" style="float:right; margin-right: 30px">
       <span class="color_grey">Stagiaire : </span>
@@ -89,7 +88,7 @@
     </table>
 
     <!-- template semaine en entreprise -->
-    <table *ngFor="let cours of cours_planning; let i = index"  [attr.data-index]="i" class="table_entreprise">
+    <table *ngFor="let cours of planning.planning_courses; let i = index"  [attr.data-index]="i" class="table_entreprise">
       <tbody class="tbody_tableau_detail">
         <!-- détail de la ligne si en entreprise -->
         <tr *ngIf="isConsecutive(cours)" class="tr_detail">
