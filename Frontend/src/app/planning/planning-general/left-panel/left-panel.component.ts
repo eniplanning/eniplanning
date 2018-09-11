@@ -68,10 +68,11 @@ export class LeftPanelComponent implements OnInit {
 			data => {
 				if (data != null) {
 					if (data == 'deletion') {
-						this.formation = null;
-					}
-					this.selectedPlanning = null;
-					this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+                        this.formation = null;
+                        this.selectedPlanning = null;
+                    }
+                    console.log('dans update');
+                    this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 				}
 			},
 			error => console.error(error)
@@ -288,7 +289,8 @@ export class LeftPanelComponent implements OnInit {
 				td.parentElement.classList.remove('green-bg');
 				if(d.getDay() == 1) {
 					td.innerHTML=null;
-					td.className=null;
+                    td.className=null;
+                    td.style.padding = '0';
 				}
 			} else {
 				td.parentElement.classList.add('green-bg');
@@ -326,12 +328,11 @@ export class LeftPanelComponent implements OnInit {
             this.selectedPlanning.ctr_disponibilities.forEach(disponibility => {
 
                 //Test pour savoir si un cours chevauche une contrainte d'absence
-                if (
-                    (new Date(disponibility.date_start) <= new Date(cours.date_start) && new Date(disponibility.date_end) <= new Date(cours.date_end) && new Date(disponibility.date_end) > new Date(cours.date_start))
+                if ((new Date(disponibility.date_start) <= new Date(cours.date_start) && new Date(disponibility.date_end) <= new Date(cours.date_end) && new Date(disponibility.date_end) > new Date(cours.date_start))
                     || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end) && new Date(disponibility.date_start) < new Date(cours.date_end))
                     || (new Date(disponibility.date_start) < new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end))
-                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end))
-                ) {
+                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end)))
+                {
                     this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label });
                 }
 
