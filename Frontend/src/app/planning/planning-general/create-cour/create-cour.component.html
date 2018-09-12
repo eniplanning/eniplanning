@@ -1,0 +1,88 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ajouter un cours</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <span aria-hidden="true">&times;</span>
+  </div>
+
+  <div class="modal-body">
+
+      <!-- Liste des modules -->
+      <div class="form-group">
+        <label for="module">Module</label>
+        <ng-select id="module" [allowClear]="true" [items]="complementaryModules" (selected)="selected($event)">
+        </ng-select>
+      </div>
+
+      <!-- créer un module -->
+      <app-create-module></app-create-module>
+
+      <!-- date à préciser -->
+      <div class="form-group">
+        <input id="dates_a_definir" type="checkbox" [checked]="true" [(ngModel)]="knownDate" (change)="knownDate = !knownDate" class="text-center"/>
+        <label for="dates_a_definir"><span class="label">Dates à redéfinir</span></label>  
+      </div>
+
+      <!-- date de début du cours -->
+      <div class="form-group">
+        <label for="date_debut">Date de début du cours</label>
+        <div class="input-group">
+          <input id="date_debut" name="date_debut" class="form-control c-datepicker text-center"
+              placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_debut" ngbDatepicker 
+              [(ngModel)]="date_debut"
+              [dayTemplate]="customDay" 
+              (click)="datePicker.toggle()"
+              #datePicker="ngbDatepicker"
+              value="{{ today | date: 'dd-MM-yyyy' }}" >
+          <div class="input-group-append">
+            <i class="fa fa-calendar btn btn-primary btn-sm waves-light calendar" aria-hidden="true" (click)="datePicker.toggle()"></i>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- date de fin du cours -->
+      <div class="form-group">
+          <label for="date_fin">Date de fin du cours</label>
+          <div class="input-group">
+            <input id="date_fin" name="date_fin" class="form-control c-datepicker text-center"
+                placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_fin" ngbDatepicker 
+                [(ngModel)]="date_fin"
+                [dayTemplate]="customDay" 
+                (click)="datePickerFin.toggle()"
+                #datePickerFin="ngbDatepicker"
+                value="{{ today | date: 'dd-MM-yyyy' }}" >
+            <div class="input-group-append">
+              <i class="fa fa-calendar btn btn-primary btn-sm waves-light calendar" aria-hidden="true" (click)="datePickerFin.toggle()"></i>
+            </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Enregistrer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-sm waves-light" 
+    [disabled]="disabledSubmit" (click)="modal.close('Save click'); enregistrerCours()">Enregistrer</button>
+  </div>
+
+</ng-template>
+
+<!-- Appel de la modal -->
+<div class="text-center">
+  <input type="submit" value="Ajouter un cours" class="btn btn-primary btn-sm waves-light" (click)="open(content)">
+</div>
+
+
+<!-- template des jours -->
+<ng-template #customDay let-date="date" let-currentMonth="currentMonth" let-selected="selected" 
+let-disabled="disabled" let-focused="focused">
+  <span class="custom-day" 
+      [class.weekend]="isWeekend(date)" [class.focused]="focused" 
+      [class.bg-primary]="selected"
+      [class.hidden]="date.month !== currentMonth"
+      [class.text-muted]="disabled">
+      {{ date.day }}
+  </span>
+</ng-template>

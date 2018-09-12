@@ -15,20 +15,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-
-
+import { DataService } from './utils/services/data.service';
 
 
 @NgModule({
 	exports: [
-    // MatButtonModule,
-    // BrowserAnimationsModule,
-    // MatCheckboxModule,
-    // MatDatepickerModule,
-    // MatNativeDateModule
     BrowserAnimationsModule,
-    HttpModule
+    HttpModule,
 	]
 })
 export class AngularMaterialModule {}
@@ -53,6 +46,7 @@ export class AngularMaterialModule {}
   providers: [
     CookieService,
     DatePipe,
+    DataService,
   ],
   bootstrap: [AppComponent]
 })

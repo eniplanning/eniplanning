@@ -1,0 +1,52 @@
+<ng-template #content let-modal>
+    <!-- entete fenetre -->
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Créer un module</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      <span aria-hidden="true">&times;</span>
+    </div>
+  
+    <div class="modal-body">
+        <!-- message -->
+        <div class="form-group"> 
+            <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+            <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
+        </div>
+
+        <!-- label -->
+        <div class="form-group">
+            <label for="label" class="form-label">Titre</label>  
+            <input id="label" class="form-control" type="texte" [(ngModel)]="label" required="true"/>
+        </div>
+        <div class="alert alert-danger" [hidden]="!error.label">{{ error.label }}</div>
+  
+        <!-- description -->
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>  
+            <input id="description" class="form-control" type="texte" [(ngModel)]="description" required="true"/>
+        </div>
+        <div class="alert alert-danger" [hidden]="!error.description">{{ error.description }}</div>
+
+  
+        <!-- durée -->
+        <div class="form-group">
+            <label for="duration" class="form-label" >Durée</label>  
+            <input id="duration" type="text"  class="form-control" [(ngModel)]="duration" required="true"/>
+        </div>
+        <div class="alert alert-danger" [hidden]="!error.duration">{{ error.duration }}</div>
+
+    <!-- Enregistrer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-sm waves-light" 
+      (click)="enregistrerModule(); sendMessage();">Enregistrer</button>
+    </div>
+  </div>
+  
+</ng-template>
+  
+<!-- Appel de la modal -->
+<div class="text-center">
+  <input type="submit" value="Ajouter un module" class="btn btn-primary btn-sm waves-light" (click)="open(content)">
+</div>

@@ -7,6 +7,7 @@ import { ModulesComplementairesRoutingModule } from './modules-complementaires-r
 import { ModulesComplementairesComponent } from './modules-complementaires.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
+import { CreateModuleComponent } from './create-module/create-module.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { MenuModule } from '../layout/menu/menu.module';
     MDBBootstrapModule.forRoot(),
     AngularFontAwesomeModule,
     ModulesComplementairesRoutingModule,
-    MenuModule
+    MenuModule,
+    CreateModuleComponent,
   ],
   declarations: [
   	ModulesComplementairesComponent,

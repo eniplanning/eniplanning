@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ComplementaryModuleRequest;
 use Illuminate\Http\Request;
 use App\Models\ComplementaryModule;
 use Log;
@@ -16,7 +17,7 @@ class ComplementaryModuleController extends Controller
     public function index()
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        return ComplementaryModule::all()->toJson();
+        return ComplementaryModule::with('complementaryCourses')->get()->toJson();
     }
 
     /**
@@ -25,12 +26,12 @@ class ComplementaryModuleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComplementaryModuleRequest $request)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryModule = ComplementaryModule::create($request->all());
         return $complementaryModule->toJson();
-    }
+    }   
 
     /**
      * Display the specified resource.
@@ -69,4 +70,6 @@ class ComplementaryModuleController extends Controller
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryModule->delete();
     }
+
+
 }

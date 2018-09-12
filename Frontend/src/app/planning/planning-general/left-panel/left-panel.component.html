@@ -95,9 +95,25 @@
             <button class="btn btn-outline-primary waves-effect w-100" type="button" (click)="panelStates['modulesComplementaires'] = !panelStates['modulesComplementaires']" mdbWavesEffect>Modules complémentaires</button>
         </div>
         <div class="panel-content" *ngIf="panelStates['modulesComplementaires']">
-            <div class="content-title">Title</div>
+            <div class="content-title">Modules et cours disponibles</div>
+            <app-create-cour></app-create-cour>
             <div class="content-body">
-               Content
+                <ul class="module-list fa-ul" *ngIf="complementaryModules">
+                    <li class="module" *ngFor="let moduleC of complementaryModules">
+                        <div (click)="moduleC.visible = !moduleC.visible">
+                            <span *ngIf="moduleC.complementary_courses.length > 0" class="fa-li">
+                                <fa name="{{moduleC.visible ? 'minus' : 'plus'}}"></fa>
+                            </span>{{ moduleC.label }}</div>
+                        <ul class="cours-list fa-ul" *ngIf="moduleC.visible">
+                            <li class="cours" *ngFor="let coursC of moduleC.complementary_courses">
+                                <span class="fa-li" (click)="coursC.visible = !coursC.visible">
+                                    <fa name="{{coursC.visible ? 'minus' : 'plus'}}"></fa>
+                                </span>
+                                <div (click)="onClickCours(coursC, moduleC.label)">{{ coursC.date_start | date:'dd/MM/yyyy'}} - {{ coursC.date_end | date:'dd/MM/yyyy'}}</div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

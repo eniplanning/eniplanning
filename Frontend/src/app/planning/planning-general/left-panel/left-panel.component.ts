@@ -18,6 +18,9 @@ import { StagiaireparentrepriseService } from '../../../utils/services/stagiaire
 import { StagiaireParEntreprise } from '../../../utils/models/stagiaireparentreprise';
 import { Entreprise } from '../../../utils/models/entreprise';
 import { EntrepriseService } from '../../../utils/services/entreprise.service';
+import { ComplementaryCours } from '../../../utils/models/complementary-cours'
+import { ComplementaryModule } from '../../../utils/models/complementary-module'
+import { ComplementaryModuleService } from '../../../utils/services/complementary-module.service';
 
 
 @Component({
@@ -35,6 +38,9 @@ export class LeftPanelComponent implements OnInit {
 	libelleLieuFormation: 	String;
 	entreprise:				String;
 	panelStates: 			{};	 //used to keep track of panels states : open or closed
+	complementaryModules:	ComplementaryModule[];
+	
+
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -50,6 +56,7 @@ export class LeftPanelComponent implements OnInit {
 		private moduleService:			ModuleService,
 		private stagiaireParEntrepriseService: StagiaireparentrepriseService,
 		private entrepriseService: 	    EntrepriseService,
+		private complementaryModuleService:	ComplementaryModuleService,
 	) { }
 
 	ngOnInit() {
@@ -81,6 +88,22 @@ export class LeftPanelComponent implements OnInit {
 				}
 			},
 			error => console.error(error)
+		)
+		this.complementaryModuleService.getComplementaryModules().subscribe(
+			(data:ComplementaryModule[]) => {
+				this.complementaryModules = data;
+				this.complementaryModules.sort(function(a, b) {
+					//custom sorting function, sorts by stagiaire.Nom in alphabetical order
+					if (a.label < b.label)
+						return -1;
+					else if (a.label > b.label)
+						return 1;
+					return 0;
+				} );
+				
+				console.log('ComplementaryModule',data);
+			},
+			(error) => console.log(error)
 		)
 	}
 

@@ -19,4 +19,7 @@ export class ModuleService {
     return this.http.get<Module>(API.module + '/' + libelleCourt, {responseType: 'json'});
   }
 
+  getModules(): Observable<Module[]> { 
+    return this.http.get<Module[]>(API.module);
+  }
 }

@@ -17,7 +17,7 @@ class CreateComplementaryModulesTable extends Migration
             $table->increments('id');
             $table->string('label');
             $table->string('description')->nullable();
-            $table->time('duration');
+            $table->integer('duration');
             $table->timestamps();
         });
     }

@@ -16,6 +16,12 @@ import { ModalCreatePlanningComponent } from './planning-general/modal-create-pl
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MAT_DATE_FORMATS } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { GenerateHtmlComponent } from './planning-general/generate-html/generate-html.component';
+import { CreateModuleComponent } from '../modules-complementaires/create-module/create-module.component';
+import { CreateCourComponent } from './planning-general/create-cour/create-cour.component';
+import { NgbModalModule, NgbModule, NgbDateParserFormatter, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateFRParserFormatter } from "../utils/dateformat"
+
+
 
 @NgModule({
   declarations: [
@@ -25,7 +31,9 @@ import { GenerateHtmlComponent } from './planning-general/generate-html/generate
     PurgerPlanningComponent,
     HeaderComponent,
     ModalCreatePlanningComponent,
-    GenerateHtmlComponent
+    GenerateHtmlComponent,
+    CreateCourComponent,
+    CreateModuleComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +46,10 @@ import { GenerateHtmlComponent } from './planning-general/generate-html/generate
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    NgbModalModule,
+    NgbModule,
+    NgbModule.forRoot()
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [
@@ -55,6 +66,9 @@ import { GenerateHtmlComponent } from './planning-general/generate-html/generate
     {
       provide: MAT_DATE_FORMATS,
       useValue: MAT_MOMENT_DATE_FORMATS
+    },
+    {
+      provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter
     }
   ]
 })
