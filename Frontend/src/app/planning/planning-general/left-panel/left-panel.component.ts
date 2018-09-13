@@ -21,6 +21,7 @@ import { EntrepriseService } from '../../../utils/services/entreprise.service';
 import { ComplementaryCours } from '../../../utils/models/complementary-cours'
 import { ComplementaryModule } from '../../../utils/models/complementary-module'
 import { ComplementaryModuleService } from '../../../utils/services/complementary-module.service';
+import { DataService } from '../../../utils/services/data.service';
 
 
 @Component({
@@ -42,8 +43,7 @@ export class LeftPanelComponent implements OnInit {
 	entreprise:				String;
 	complementaryModules:	ComplementaryModule[];
 	closed:					string;
-	
-
+	message:				string;
 
 	groupByFirstLetter = (item) => item.Nom.slice(0,1);
 
@@ -60,9 +60,14 @@ export class LeftPanelComponent implements OnInit {
 		private stagiaireParEntrepriseService: StagiaireparentrepriseService,
 		private entrepriseService: 	    EntrepriseService,
 		private complementaryModuleService:	ComplementaryModuleService,
+		private data: DataService,
 	) { }
 
 	ngOnInit() {
+		this.data.currentMessage.subscribe(message => {
+			this.message = message; 
+			this.getComplementaryModules();	
+		});
 		this.getStagiaires();
 		this.panelStates = {
 			informations: false,
@@ -100,14 +105,26 @@ export class LeftPanelComponent implements OnInit {
 		this.complementaryModuleService.getComplementaryModules().subscribe(
 			(data:ComplementaryModule[]) => {
 				this.complementaryModules = data;
-				this.complementaryModules.sort(function(a, b) {
-					//custom sorting function, sorts by stagiaire.Nom in alphabetical order
-					if (a.label < b.label)
-						return -1;
-					else if (a.label > b.label)
-						return 1;
-					return 0;
-				})
+				if (this.complementaryModules.length > 1) {
+					this.complementaryModules.sort(function(a, b) {
+						if (a.description < b.description)
+							return -1;
+						else if (a.description > b.description)
+							return 1;
+						return 0;
+					});
+					this.complementaryModules.forEach(module => {
+						if (module.complementary_courses.length>1) {
+							module.complementary_courses.sort(function(a, b) {
+								if (a.date_start < b.date_start)
+									return -1;
+								else if (a.date_end > b.date_end)
+									return 1;
+								return 0;
+							});
+						}
+					});
+				}
 				// this.complementaryModules.complementary_courses.filter(cours =>
 				// 		 (cours.date_start > this.selectedPlanning.date_start
 				// 			&& cours.date_end < this.selectedPlanning.date_end)
@@ -128,6 +145,7 @@ export class LeftPanelComponent implements OnInit {
 	// Raffraichir la liste des cours et modules complémentaires
 	receiveMessage($event) {
 		this.getComplementaryModules();
+		console.log('message reçu');
 	}
 
 

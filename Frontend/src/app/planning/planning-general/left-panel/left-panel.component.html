@@ -106,7 +106,7 @@
             <div class="content-title">Modules et cours disponibles</div>
                 <div *ngIf="selectedPlanning != null">
                 <!-- bouton ajouter un module -->
-                <app-create-cour (closed)="receiveMessage($event)"></app-create-cour>
+                <app-create-cour  (closed)="receiveMessage($event)" ></app-create-cour>
                 <div class="content-body">
                     <!-- modules complémentaires liste -->
                     <ul class="module-list fa-ul" *ngIf="complementaryModules">

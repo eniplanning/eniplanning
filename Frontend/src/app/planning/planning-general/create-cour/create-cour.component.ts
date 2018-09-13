@@ -18,13 +18,19 @@ export class CreateCourComponent implements OnInit  {
   // https://github.com/ng-bootstrap/ng-bootstrap/tree/master/demo/src/app/components
   // https://ng-bootstrap.github.io/#/components/datepicker/overview
 
-  @Output() closed = new EventEmitter<string>();  
-  sendMessageToLeftComponent() {
-    this.closed.emit('enregistrement');
+  // Message for LeftPanelComponent
+  @Output() closed = new EventEmitter<string>();
+  sendMessage() {
+    this.closed.emit(this.message);
+    this.data.changeMessage('newCours');
   }
 
+  // Message from create Module
+  message: string;
   receiveMessage($event) {
-    this.sendMessageToLeftComponent();
+    this.getComplementaryModules();
+    console.log('liste modules', this.complementaryModules);
+    this.sendMessage();
   }
   
   disabled : boolean = false;
@@ -38,7 +44,6 @@ export class CreateCourComponent implements OnInit  {
   complementaryCours:     ComplementaryCours;
   date_start:             NgbDateStruct;
   date_end:               NgbDateStruct;
-  message:                string;
   exist:                  false;
 
   public error = [] ;
@@ -56,6 +61,7 @@ export class CreateCourComponent implements OnInit  {
   }
 
   ngOnInit() {
+    this.data.currentMessage.subscribe(message => this.message = message);
     this.getComplementaryModules();
     this.complementaryCours = new ComplementaryCours();
     this.data.currentMessage.subscribe(message => {
@@ -67,7 +73,15 @@ export class CreateCourComponent implements OnInit  {
   // Recherche des modules existants  
   getComplementaryModules() {
     this.complementaryModuleService.getComplementaryModules().subscribe(
-      (data :ComplementaryModule[]) => this.complementaryModules = data,
+      (data :ComplementaryModule[]) => {
+        this.complementaryModules = data.sort(function(a, b) {
+          if (a.description < b.description)
+            return -1;
+          else if (a.description > b.description)
+            return 1;
+          return 0;
+        });
+      },
       (error) => console.log('erreur de communication avec le serveur', error),
     );
   }
@@ -75,7 +89,7 @@ export class CreateCourComponent implements OnInit  {
   // Enregistrer le cours complémentaire
   enregistrerCours() {
     this.createComplementaryCours();
-    this.sendMessageToLeftComponent();
+    this.sendMessage();
     this.complementaryCoursService.enregistrerComplementaryCourses(this.complementaryCours).subscribe(
       (data)=> { this.handleData(data); },
       (error)=> { this.handleError(error); }

@@ -27,7 +27,7 @@
       <div class="alert alert-danger" [hidden]="!error.complementary_module_id">{{ error.complementary_module_id }}</div>
 
       <!-- Créer un module -->
-      <app-create-module (closed)="receiveMessage($event)"></app-create-module>
+      <app-create-module (closed)="receiveMessage($event)" ></app-create-module>
 
       <!-- date estimée -->
       <div class="form-group">

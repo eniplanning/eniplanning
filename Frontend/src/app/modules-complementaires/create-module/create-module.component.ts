@@ -16,7 +16,9 @@ export class CreateModuleComponent implements OnInit  {
 
   // Evénement à la fermeture de la modal 
   message:string;  
+  @Output() closed = new EventEmitter<string>();
   sendMessage() {
+    this.closed.emit(this.message);
     this.data.changeMessage('closed');
   }
   
@@ -37,13 +39,12 @@ export class CreateModuleComponent implements OnInit  {
 
   ngOnInit() {
     registerLocaleData(localeFr);
-    this.data.currentMessage.subscribe(message => this.message = message)
+    this.data.currentMessage.subscribe(message => this.message = message);
   }
 
 
   // Enregistrer cours
   enregistrerModule() {
-    this.sendMessage();
     this.complementaryModule.label = this.label;
     this.complementaryModule.description = this.description;
     this.complementaryModule.duration = this.duration;
@@ -100,5 +101,6 @@ export class CreateModuleComponent implements OnInit  {
     this.errorMsg = null;
     this.error = [];
     this.confirmMsg = "Module complémentaire enregistré !";
+    this.sendMessage();
   }
 }
