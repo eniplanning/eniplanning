@@ -31,6 +31,7 @@ import { ComplementaryModuleService } from '../../../utils/services/complementar
 
 export class LeftPanelComponent implements OnInit {
 
+
 	stagiaires: 			Stagiaire[];
 	selectedStagiaire: 		Stagiaire;
 	selectedPlanning: 		Planning;
@@ -39,6 +40,7 @@ export class LeftPanelComponent implements OnInit {
 	entreprise:				String;
 	panelStates: 			{};	 //used to keep track of panels states : open or closed
 	complementaryModules:	ComplementaryModule[];
+	closed:					string;
 	
 
 
@@ -89,6 +91,11 @@ export class LeftPanelComponent implements OnInit {
 			},
 			error => console.error(error)
 		)
+		this.getComplementaryModules();
+	}
+
+	// Récupérer la lise des modules et cours complémentaires
+	getComplementaryModules() {
 		this.complementaryModuleService.getComplementaryModules().subscribe(
 			(data:ComplementaryModule[]) => {
 				this.complementaryModules = data;
@@ -99,13 +106,29 @@ export class LeftPanelComponent implements OnInit {
 					else if (a.label > b.label)
 						return 1;
 					return 0;
-				} );
-				
-				console.log('ComplementaryModule',data);
+				})
+				// this.complementaryModules.complementary_courses.filter(cours =>
+				// 		 (cours.date_start > this.selectedPlanning.date_start
+				// 			&& cours.date_end < this.selectedPlanning.date_end)
+				// );
+				// this.complementaryModules.complementary_courses.sort(function(a,b) {
+				// 		if (a.date_start < b.date_start)
+				// 			return -1;
+				// 		else if (a.date_start > b.date_start)
+				// 			return 1;
+				// 		return 0;
+				// 	});
+				// });
 			},
 			(error) => console.log(error)
 		)
 	}
+
+	// Raffraichir la liste des cours et modules complémentaires
+	receiveMessage($event) {
+		this.getComplementaryModules();
+	}
+
 
 	getLieu(code_lieu: number) {
 		this.lieuService.getLieu(code_lieu).subscribe(
@@ -334,13 +357,46 @@ export class LeftPanelComponent implements OnInit {
 							this.drawCoursOnPlanning(cours);
 						},
 						error => console.error(error)
-						);
+					);
 				}
 			);
 		}
 	}
 
+	onClickComplemenetaryCours(coursC: ComplementaryCours, moduleC: ComplementaryModule) {
+		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
+			return c.label == moduleC.description;
+		})
+		// if a cours from this module is already in planning_courses
+		if (old_cours != undefined) {
+			// removes it from database
+			this.coursPlanningService.deleteCours(old_cours).subscribe(
+				//if successful, removes it from the planning_courses list
+				data => {
+					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
+					this.drawCoursOnPlanning(old_cours);
+				},
+				error => console.error(error)
+			)
+		}
+
+		//if first cours clicked or clicked on a different cours
+		if (old_cours == undefined || (old_cours != undefined && old_cours.complementary_course_id != coursC.id)) {
+			//add cours in database
+			this.coursPlanningService.addComplementaryCours(this.selectedPlanning, coursC, moduleC).subscribe(
+				(coursC) => {
+					//if successfull, add clicked cours in planning_courses list
+					this.selectedPlanning.planning_courses.push(coursC);
+					//and draw it on the page
+					this.drawCoursOnPlanning(coursC);
+				},
+				error => console.error('error',error)
+			);
+		}
+	}
+
 	drawCoursOnPlanning(cours: CoursPlanning) {
+		console.log('cours:', cours);
 		let dateRange = []
 		let start = new Date(cours.date_start);
 		let end = new Date(cours.date_end);

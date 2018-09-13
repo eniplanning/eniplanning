@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ComplementaryModuleRequest extends FormRequest
+class ComplementaryCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +25,9 @@ class ComplementaryModuleRequest extends FormRequest
     public function rules()
     {
         return [
-            'label' =>  ['required', 'unique:complementary_modules', 'max:15'],
-            'description' => ['required', 'string', 'min:6'],
-            'duration' => [
-                'required',
-                'integer',
-                'min:0',
-            ]
+            'date_start' =>  ['required', 'date'],
+            'date_end' =>  ['required','after_or_equal:date_start'],
+            'complementary_module_id' => ['required']
         ];
     }
 }

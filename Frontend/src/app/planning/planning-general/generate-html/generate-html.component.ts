@@ -42,6 +42,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   nbcours:                number;
   rowcount:               number;
   run:                    boolean;
+  listCours:              CoursPlanning[];
 
   
   constructor(
@@ -82,7 +83,9 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
 
   // Affichage du Lundi en entreprise (ligne précédant le cours) 
   getMondayBefore(cours: CoursPlanning) {
+    console.log('cours:', cours);
     if (this.planning.planning_courses.indexOf(cours) != 0) {
+      console.log('this.planning.planning_courses.indexOf(cours)-1:', this.planning.planning_courses.indexOf(cours)-1);
       var beforeDate = new Date(this.planning.planning_courses[this.planning.planning_courses.indexOf(cours)-1].date_end);
       beforeDate.setDate(beforeDate.getDate() + 3);
       return this.getDisplayDate(beforeDate);
@@ -121,6 +124,7 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
       var date_previous_end_convert = new Date(date_previous_end.setDate(date_previous_end.getDate()));
       var diff = Math.abs(date_start_convert.getTime() - date_previous_end_convert.getTime());
       var diffDays = Math.round(diff / (1000 * 3600 * 24));
+      
       if (diffDays < 4) {
         return false;
       } else {
@@ -132,14 +136,22 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   }
 
   // Chargement du planning
-  async getPlanning() {
+  getPlanning() {
     var idPlanning = JSON.parse(sessionStorage.getItem('selectedPlanning')).id;
-    return await this.planningService.getPlanningById(idPlanning).subscribe(
+    return this.planningService.getPlanningById(idPlanning).subscribe(
       (data:Planning) => {
         this.planning = data;
+        this.listCours = this.planning.planning_courses;
+        this.listCours.sort(function(a,b) {
+          if (a.date_start < b.date_start)
+						return -1;
+					else if (a.date_start > b.date_start)
+						return 1;
+					return 0;
+        });
         this.planning.label = JSON.parse(sessionStorage.getItem('selectedPlanning')).label;
         this.planning.date_start_formation = JSON.parse(sessionStorage.getItem('selectedPlanning')).date_start_formation;
-        },
+      },
       error=>{
         console.log("erreur de récupération du planning:", error);  
       },
@@ -165,8 +177,8 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   }
 
   // Chargement de la formation 
-  async getFormation() {
-    return await this.formationService.getFormationById(this.planning.formation_id).subscribe(
+  getFormation() {
+    return this.formationService.getFormationById(this.planning.formation_id).subscribe(
       data=>{
         this.formation = data;
       },
@@ -199,8 +211,8 @@ export class GenerateHtmlComponent implements OnInit, OnDestroy {
   }
 
   // Chargement du titre 
-  async getTitre() {
-    return await this.titreService.getTitre(this.formation.CodeTitre).subscribe(
+  getTitre() {
+    return this.titreService.getTitre(this.formation.CodeTitre).subscribe(
       data=>{
         this.titre = data;
       },

@@ -9,62 +9,69 @@
 
   <div class="modal-body">
 
-      <!-- Liste des modules -->
-      <div class="form-group">
-        <label for="module">Module</label>
-        <ng-select id="module" [allowClear]="true" [items]="complementaryModules" (selected)="selected($event)">
-        </ng-select>
+      <!-- message -->
+      <div class="form-group"> 
+          <div *ngIf="confirmMsg != null" class="alert alert-success" [hidden]="!confirmMsg"> {{ confirmMsg }}</div>
+          <div *ngIf="error != null" class="alert alert-danger" [hidden]="!error.status"> {{ errorMsg }} </div>
       </div>
 
-      <!-- créer un module -->
-      <app-create-module></app-create-module>
-
-      <!-- date à préciser -->
+      <!-- Liste des modules -->
       <div class="form-group">
-        <input id="dates_a_definir" type="checkbox" [checked]="true" [(ngModel)]="knownDate" (change)="knownDate = !knownDate" class="text-center"/>
+        <label for="complementaryModulesControl">Module</label>
+        <select name="complementaryModules" [(ngModel)]="complementaryModule" class="form-control">
+            <option class="dropdown" [value]="" disabled>Choisissez un module</option>
+            <option class="dropdown" *ngFor="let complementaryModule of complementaryModules" [ngValue]="complementaryModule">  
+              {{complementaryModule.description}}</option>
+        </select>
+      </div>
+      <div class="alert alert-danger" [hidden]="!error.complementary_module_id">{{ error.complementary_module_id }}</div>
+
+      <!-- Créer un module -->
+      <app-create-module (closed)="receiveMessage($event)"></app-create-module>
+
+      <!-- date estimée -->
+      <div class="form-group">
+        <input id="dates_a_definir" type="checkbox" [(ngModel)]="dateToBeDefined" (click)="change(dateToBeDefined)" class="text-center"/>
         <label for="dates_a_definir"><span class="label">Dates à redéfinir</span></label>  
       </div>
 
-      <!-- date de début du cours -->
+      <!-- date réelle de début du cours -->
       <div class="form-group">
         <label for="date_debut">Date de début du cours</label>
         <div class="input-group">
           <input id="date_debut" name="date_debut" class="form-control c-datepicker text-center"
               placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_debut" ngbDatepicker 
-              [(ngModel)]="date_debut"
-              [dayTemplate]="customDay" 
-              (click)="datePicker.toggle()"
-              #datePicker="ngbDatepicker"
-              value="{{ today | date: 'dd-MM-yyyy' }}" >
+              [(ngModel)]="date_start" [dayTemplate]="customDay"  (click)="datePicker.toggle()"
+              #datePicker="ngbDatepicker" value="{{ today | date: 'dd-MM-yyyy' }}" >
           <div class="input-group-append">
             <i class="fa fa-calendar btn btn-primary btn-sm waves-light calendar" aria-hidden="true" (click)="datePicker.toggle()"></i>
           </div>
         </div>
       </div>
+      <div class="alert alert-danger" [hidden]="!error.date_start">{{ error.date_start }}</div>
+
 
       
-      <!-- date de fin du cours -->
+      <!-- date réelle de fin du cours -->
       <div class="form-group">
           <label for="date_fin">Date de fin du cours</label>
           <div class="input-group">
             <input id="date_fin" name="date_fin" class="form-control c-datepicker text-center"
                 placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_fin" ngbDatepicker 
-                [(ngModel)]="date_fin"
-                [dayTemplate]="customDay" 
-                (click)="datePickerFin.toggle()"
-                #datePickerFin="ngbDatepicker"
-                value="{{ today | date: 'dd-MM-yyyy' }}" >
+                [(ngModel)]="date_end" [dayTemplate]="customDay"  (click)="datePickerFin.toggle()"
+                #datePickerFin="ngbDatepicker" value="{{ today | date: 'dd-MM-yyyy' }}" >
             <div class="input-group-append">
               <i class="fa fa-calendar btn btn-primary btn-sm waves-light calendar" aria-hidden="true" (click)="datePickerFin.toggle()"></i>
             </div>
           </div>
       </div>
+      <div class="alert alert-danger" [hidden]="!error.date_end">{{ error.date_end }}</div>
   </div>
   
   <!-- Enregistrer -->
   <div class="modal-footer">
     <button type="button" class="btn btn-primary btn-sm waves-light" 
-    [disabled]="disabledSubmit" (click)="modal.close('Save click'); enregistrerCours()">Enregistrer</button>
+    [disabled]="disabledSubmit" (click)="enregistrerCours()">Enregistrer</button>
   </div>
 
 </ng-template>

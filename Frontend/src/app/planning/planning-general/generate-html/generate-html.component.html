@@ -88,7 +88,7 @@
     </table>
 
     <!-- template semaine en entreprise -->
-    <table *ngFor="let cours of planning.planning_courses; let i = index"  [attr.data-index]="i" class="table_entreprise">
+    <table *ngFor="let cours of listCours; let i = index"  [attr.data-index]="i" class="table_entreprise">
       <tbody class="tbody_tableau_detail">
         <!-- détail de la ligne si en entreprise -->
         <tr *ngIf="isConsecutive(cours)" class="tr_detail">

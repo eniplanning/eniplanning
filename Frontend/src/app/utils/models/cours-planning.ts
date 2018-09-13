@@ -10,7 +10,7 @@ export class CoursPlanning {
 	short_label:				string
 	real_time_hour:				number
 	expected_time_hour:			number
-	date_to_be_define:			boolean
+	date_to_be_defined:			boolean
 	code_promotion:				string
 	module_id:					number
 	code_room:					string

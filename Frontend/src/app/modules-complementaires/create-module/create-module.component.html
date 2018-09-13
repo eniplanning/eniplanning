@@ -17,14 +17,14 @@
 
         <!-- label -->
         <div class="form-group">
-            <label for="label" class="form-label">Titre</label>  
+            <label for="label" class="form-label">Code du module</label>  
             <input id="label" class="form-control" type="texte" [(ngModel)]="label" required="true"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.label">{{ error.label }}</div>
   
         <!-- description -->
         <div class="form-group">
-            <label for="description" class="form-label">Description</label>  
+            <label for="description" class="form-label">Libellé du module</label>  
             <input id="description" class="form-control" type="texte" [(ngModel)]="description" required="true"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.description">{{ error.description }}</div>
@@ -32,7 +32,7 @@
   
         <!-- durée -->
         <div class="form-group">
-            <label for="duration" class="form-label" >Durée</label>  
+            <label for="duration" class="form-label" >Durée réelle (en heures)</label>  
             <input id="duration" type="text"  class="form-control" [(ngModel)]="duration" required="true"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.duration">{{ error.duration }}</div>

@@ -79,7 +79,7 @@ export class CreateModuleComponent implements OnInit  {
     });
   }
 
-  // Récupération des erreurs
+  // Traitement des erreurs
   handleError(error) {
     this.confirmMsg = null;
     if (error.status == '500') {
@@ -90,7 +90,7 @@ export class CreateModuleComponent implements OnInit  {
     }
   }
   
-  // Récupération des erreurs
+  // Traitement des données
   handleData(data) {
     this.errorMsg = null;
     this.error = [];

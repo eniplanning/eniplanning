@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbDateStruct, NgbCalendar, NgbModule, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { ComplementaryModule } from '../../../utils/models/complementary-module';
 import { ComplementaryModuleService} from '../../../utils/services/complementary-module.service';
@@ -18,19 +18,32 @@ export class CreateCourComponent implements OnInit  {
   // https://github.com/ng-bootstrap/ng-bootstrap/tree/master/demo/src/app/components
   // https://ng-bootstrap.github.io/#/components/datepicker/overview
 
+  @Output() closed = new EventEmitter<string>();  
+  sendMessageToLeftComponent() {
+    this.closed.emit('enregistrement');
+  }
+
+  receiveMessage($event) {
+    this.sendMessageToLeftComponent();
+  }
+  
   disabled : boolean = false;
-  knownDate: boolean = false;
+  dateToBeDefined: boolean = false;
   closeResult: string = null; 
   model: NgbDateStruct;
   value:any = {};
 
   complementaryModules:   ComplementaryModule[];
-  complementaryModule:    ComplementaryModule;
+  complementaryModule:    ComplementaryModule ;
   complementaryCours:     ComplementaryCours;
-  date_start:             Date;
-  date_end:               Date;
-  label:                  string;
+  date_start:             NgbDateStruct;
+  date_end:               NgbDateStruct;
   message:                string;
+  exist:                  false;
+
+  public error = [] ;
+  confirmMsg :string = null;
+  errorMsg : string = null; 
 
   constructor(
     private modalService: NgbModal,
@@ -39,15 +52,16 @@ export class CreateCourComponent implements OnInit  {
     private complementaryCoursService: ComplementaryCoursService,
     private data: DataService,
   ) {
-    this.getComplementaryModules();
+    registerLocaleData(localeFr);
   }
 
   ngOnInit() {
+    this.getComplementaryModules();
+    this.complementaryCours = new ComplementaryCours();
     this.data.currentMessage.subscribe(message => {
       this.message = message;
       this.refreshList();
     });
-    registerLocaleData(localeFr);
   }
 
   // Recherche des modules existants  
@@ -58,23 +72,53 @@ export class CreateCourComponent implements OnInit  {
     );
   }
 
-  // Enregistrer cours
+  // Enregistrer le cours complémentaire
   enregistrerCours() {
-    this.complementaryCours = new ComplementaryCours(this.date_start, this.date_end, 3, this.knownDate, this.complementaryCours.id);
-    console.log('this.complementaryCours:', this.complementaryCours)
+    this.createComplementaryCours();
+    this.sendMessageToLeftComponent();
     this.complementaryCoursService.enregistrerComplementaryCourses(this.complementaryCours).subscribe(
-      (data)=> { console.log('cours enregistré') },
-      (error)=> { console.log('erreur de communication avec le serveur:', error)}
+      (data)=> { this.handleData(data); },
+      (error)=> { this.handleError(error); }
     );
+  }
+
+  // Raffraichir la liste des modules
+  refreshList() {
+    this.getComplementaryModules(); 
   }
 
   isDisabled = (date: NgbDate, current: {month: number}) => date.month !== current.month;
   isWeekend = (date: NgbDate) => this.calendar.getWeekday(date) >= 6;
 
-  
-  refreshList() {
-    this.getComplementaryModules(); 
+  // Construction de l'objet cours complémentaire 
+  createComplementaryCours() {
+    var convertStartDate;
+    var convertEndDate;
+    convertStartDate= new Date(this.date_start.year +'-' + this.date_start.month +'-' + this.date_start.day + ' 06:06');
+    this.complementaryCours.date_start = convertStartDate;
+    convertEndDate= new Date(this.date_end.year +'-' + this.date_end.month +'-' + this.date_end.day + ' 06:06');
+    this.complementaryCours.date_end = convertEndDate;
+    this.complementaryCours.complementary_module_id = this.complementaryModule.id;
+    this.complementaryCours.expected_time_hour = this.complementaryModule.duration;
+    // this.existComplementaryCourses(this.complementaryCours.complementary_module_id, this.complementaryCours.date_start, this.complementaryCours.date_end);
+    if (!this.dateToBeDefined) {
+        var diff = Math.abs(convertEndDate.getTime() - convertStartDate.getTime());
+        var diffHours = (Math.round((diff) / (1000 * 3600 * 24)) *7)+7;
+        this.complementaryCours.real_time_hour = diffHours;
+        this.complementaryCours.expected_time_hour = this.complementaryModule.duration;
+    } else {
+        this.complementaryCours.real_time_hour = this.complementaryModule.duration;
+        this.complementaryCours.date_to_be_defined = this.dateToBeDefined;
+        this.complementaryCours.expected_time_hour = this.complementaryModule.duration;
+    }
   }
+
+  // existComplementaryCourses(idmodule: number, start: Date, end: Date) {
+  //   this.complementaryCoursService.existComplementaryCourse(idmodule, start, end).subscribe(
+  //     (data) => this.exist=data,
+  //     (error) => console.log('error:', error),
+  //   );
+  // }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -86,12 +130,10 @@ export class CreateCourComponent implements OnInit  {
     }
   }
   
-  
-  public selected(value:any):void {
-    console.log('Selected value is: ', value);
-    this.complementaryModule = value;
+  // Changement des dates à redéfinir
+  change(dateToBeDefined: boolean) {
+    this.dateToBeDefined = !this.dateToBeDefined;
   }
- 
   
   // Ouverture de la modal
   open(content) {
@@ -102,5 +144,24 @@ export class CreateCourComponent implements OnInit  {
       console.log('reason:', reason);
       this.closeResult = 'Dismissed ${this.getDismissReason(reason)}';
     });
+  }
+  
+
+  // Traitement des erreurs
+  handleError(error) {
+    this.confirmMsg = null;
+    if (error.status == '500') {
+      this.errorMsg = "Echec de connexion au serveur. Veuillez contacter l'administrateur du site !";
+    } else {
+      this.error=error.error.errors;
+      console.log('error:', this.error); 
+    }
+  }
+  
+  // Traitement des données
+  handleData(data) {
+    this.errorMsg = null;
+    this.error = [];
+    this.confirmMsg = "Cours complémentaire enregistré !";
   }
 }

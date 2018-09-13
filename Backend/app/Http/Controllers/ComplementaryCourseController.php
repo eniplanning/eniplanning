@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ComplementaryCourseRequest;
 use Illuminate\Http\Request;
 use App\Models\ComplementaryCourse;
 use Log;
@@ -25,7 +26,7 @@ class ComplementaryCourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComplementaryCourseRequest $request)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
         $complementaryCourse = ComplementaryCourse::create($request->all());

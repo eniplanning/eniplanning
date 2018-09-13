@@ -17,6 +17,10 @@ export class ComplementaryCoursService {
   }
   
   public enregistrerComplementaryCourses(complementaryCours: ComplementaryCours) {
-    return this.httpClient.put(API.complementaryCourse+ '/'+ complementaryCours.id, complementaryCours);
+    return this.httpClient.post(API.complementaryCourse, complementaryCours);
+  }
+  
+  public existComplementaryCourse(idModule:number, start:Date, end:Date) {
+    // TODO
   }
 }

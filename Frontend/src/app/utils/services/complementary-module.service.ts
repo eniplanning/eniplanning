@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ComplementaryModule } from '../models/complementary-module';
 import { API } from '../api';
+import { Planning } from '../models/planning';
 
 @Injectable({
   providedIn: 'root'
