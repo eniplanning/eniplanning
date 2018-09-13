@@ -72,6 +72,11 @@ export class CreateModuleComponent implements OnInit  {
   
   // Ouverture de la modal
   open(content) {
+    this.label = null;
+    this.description = null;
+    this.duration = null;
+    this.error = [];
+    this.confirmMsg = null;
     this.modalService.open(content, {ariaLabelledBy: 'app-create-module'}).result.then((result) => {
       console.log('result:', result);
     }, (reason) => {

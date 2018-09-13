@@ -16,30 +16,30 @@
         </div>
 
         <!-- label -->
-        <div class="form-group">
+        <div class="form-group" >
             <label for="label" class="form-label">Code du module</label>  
-            <input id="label" class="form-control" type="texte" [(ngModel)]="label" required="true"/>
+            <input id="label" class="form-control" type="texte" [(ngModel)]="label" required="true" [disabled]="confirmMsg != null"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.label">{{ error.label }}</div>
   
         <!-- description -->
-        <div class="form-group">
+        <div class="form-group" >
             <label for="description" class="form-label">Libellé du module</label>  
-            <input id="description" class="form-control" type="texte" [(ngModel)]="description" required="true"/>
+            <input id="description" class="form-control" type="texte" [(ngModel)]="description" required="true"   [disabled]="confirmMsg != null"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.description">{{ error.description }}</div>
 
   
         <!-- durée -->
-        <div class="form-group">
+        <div class="form-group"   [disabled]="confirmMsg != null">
             <label for="duration" class="form-label" >Durée réelle (en heures)</label>  
-            <input id="duration" type="text"  class="form-control" [(ngModel)]="duration" required="true"/>
+            <input id="duration" type="text"  class="form-control" [(ngModel)]="duration" required="true"   [disabled]="confirmMsg != null"/>
         </div>
         <div class="alert alert-danger" [hidden]="!error.duration">{{ error.duration }}</div>
 
     <!-- Enregistrer -->
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary btn-sm waves-light" 
+      <button type="button" class="btn btn-primary btn-sm waves-light"  [disabled]="confirmMsg != null"
       (click)="enregistrerModule(); sendMessage();">Enregistrer</button>
     </div>
   </div>

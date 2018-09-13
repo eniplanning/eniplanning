@@ -111,7 +111,9 @@
                     </tr>
                 </table>
             </td>
-            <td class="td_50">{{ cours.label }}</td>
+            <td class="td_50">{{ cours.label }}<span *ngIf="cours.date_to_be_defined"> (dates à confirmer)</span></td>
+        
+            <!-- <td class="td_50">{{ cours.label }} {{ cours.date_to_be_defined }}<span *ngIf="cours.date_to_be_defined"> (dates à confirmer)</span></td> -->
         </tr>
       </tbody>
     </table>

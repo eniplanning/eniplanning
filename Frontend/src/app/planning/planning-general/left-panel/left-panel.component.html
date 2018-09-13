@@ -64,10 +64,18 @@
                 <div *ngIf="formation" class="text-center libelle-formation">Lieu de formation : {{libelleLieuFormation | titlecase}}</div>
                 <ul class="module-list fa-ul" *ngIf="formation">
                     <li class="module" *ngFor="let module of formation.Modules">
-                        <div (click)="module.visible = !module.visible"><span *ngIf="module.cours.length > 0" class="fa-li"><fa name="{{module.visible ? 'minus' : 'plus'}}"></fa></span>{{ module.Libelle }}</div>
+                        <div (click)="module.visible = !module.visible">
+                            <span *ngIf="module.cours.length > 0" class="fa-li">
+                                <i [ngClass]="module.visible ? 'fa fa-minus-square-o' : 'fa fa-plus-square-o'"></i>
+                            </span>{{ module.Libelle }}
+                        </div>
                         <ul class="cours-list fa-ul" *ngIf="module.visible">
                             <li class="cours" *ngFor="let cours of module.cours">
-                                <span class="fa-li" (click)="cours.visible = !cours.visible"><fa name="{{cours.visible ? 'minus' : 'plus'}}"></fa></span><div (click)="onClickCours(cours, module.Libelle)">{{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}</div>
+                                <span class="fa-li" (click)="cours.visible = !cours.visible"></span>
+                                <div (click)="onClickCours(cours, module.Libelle)">
+                                    <i class="fa fa-calendar-o"></i>
+                                    {{ cours.Debut | date:'dd/MM/yyyy'}} - {{ cours.Fin | date:'dd/MM/yyyy'}}
+                                </div>
                             </li>
                         </ul>
                     </li>

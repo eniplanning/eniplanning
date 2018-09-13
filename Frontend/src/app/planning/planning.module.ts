@@ -13,15 +13,14 @@ import { RightPanelComponent } from './planning-general/right-panel/right-panel.
 import { HeaderComponent } from './header/header.component';
 import { MenuModule } from '../layout/menu/menu.module';
 import { ModalCreatePlanningComponent } from './planning-general/modal-create-planning/modal-create-planning.component';
-import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MAT_DATE_FORMATS } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { GenerateHtmlComponent } from './planning-general/generate-html/generate-html.component';
 import { CreateModuleComponent } from '../modules-complementaires/create-module/create-module.component';
 import { CreateCourComponent } from './planning-general/create-cour/create-cour.component';
 import { NgbModalModule, NgbModule, NgbDateParserFormatter, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateFRParserFormatter } from "../utils/dateformat"
-
-
+import { AlertPanelComponent } from './planning-general/alert-panel/alert-panel.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +33,7 @@ import { NgbDateFRParserFormatter } from "../utils/dateformat"
     GenerateHtmlComponent,
     CreateCourComponent,
     CreateModuleComponent,
+    AlertPanelComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +60,11 @@ import { NgbDateFRParserFormatter } from "../utils/dateformat"
         }
     },
     {
-      provide: LOCALE_ID,
+        provide: LOCALE_ID,
+        useValue: 'fr'
+    },
+    {
+      provide: MAT_DATE_LOCALE,
       useValue: 'fr'
     },
     {

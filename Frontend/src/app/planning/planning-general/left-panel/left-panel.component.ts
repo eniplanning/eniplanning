@@ -37,8 +37,9 @@ export class LeftPanelComponent implements OnInit {
 	selectedPlanning: 		Planning;
 	formation:				Formation;
 	libelleLieuFormation: 	String;
+    panelStates: 			{};	 //used to keep track of panels states : open or closed
+    alert_array:            Array<any>;
 	entreprise:				String;
-	panelStates: 			{};	 //used to keep track of panels states : open or closed
 	complementaryModules:	ComplementaryModule[];
 	closed:					string;
 	
@@ -83,10 +84,10 @@ export class LeftPanelComponent implements OnInit {
 			data => {
 				if (data != null) {
 					if (data == 'deletion') {
-						this.formation = null;
-					}
-					this.selectedPlanning = null;
-					this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
+                        this.formation = null;
+                        this.selectedPlanning = null;
+                    }
+                    this.getPlanningsByStagiaire(this.selectedStagiaire.CodeStagiaire);
 				}
 			},
 			error => console.error(error)
@@ -192,7 +193,7 @@ export class LeftPanelComponent implements OnInit {
 
 		this.selectedPlanning = null;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
-		
+
 		sessionStorage.removeItem('stagiaireParEntreprise');
 		this.getEntreprise();
 	}
@@ -229,7 +230,7 @@ export class LeftPanelComponent implements OnInit {
 		);
 	}
 
-	
+
   // Chargement de l'entreprise
   getEntrepriseName(codeEntreprise){
     return this.entrepriseService.getEntrepriseById(codeEntreprise).subscribe(
@@ -280,7 +281,7 @@ export class LeftPanelComponent implements OnInit {
 		this.selectedPlanning = planning;
 		this.planningService.setSelectedPlanning(this.selectedPlanning);
 		this.getLieu(this.selectedPlanning.code_lieu);
-		
+
 		//Loading formation with list of modules with list of cours
 		this.formationService.getFormation(this.selectedPlanning.formation_id, this.selectedPlanning.id).subscribe(
 			(formation: Formation) => {
@@ -313,18 +314,20 @@ export class LeftPanelComponent implements OnInit {
 			},
 			error => console.error(error)
 		);
-		
+
 		//Drawing courses on web page
 		let self = this;	//necessary because 'this' is not properly recognized inside array.forEach function
 		this.selectedPlanning.planning_courses.forEach(function(c) {
 			self.drawCoursOnPlanning(c);
-		});
+        });
+        this.checkAlertsPlanning();
 	}
 
 	onClickCours(cours: Cours, LibelleCours: string) {
 		let old_cours = this.selectedPlanning.planning_courses.find(function(c: CoursPlanning) {
 			return c.module_id == cours.IdModule;
-		})
+        })
+
 		// if a cours from this module is already in planning_courses
 		if (old_cours != undefined) {
 			// removes it from database
@@ -332,7 +335,8 @@ export class LeftPanelComponent implements OnInit {
 				//if successful, removes it from the planning_courses list
 				data => {
 					this.selectedPlanning.planning_courses.splice(this.selectedPlanning.planning_courses.indexOf(old_cours), 1);
-					this.drawCoursOnPlanning(old_cours);
+                    this.drawCoursOnPlanning(old_cours);
+                    this.checkAlertsPlanning();
 				},
 				error => console.error(error)
 			)
@@ -354,7 +358,8 @@ export class LeftPanelComponent implements OnInit {
 							//if successfull, add clicked cours in planning_courses list
 							this.selectedPlanning.planning_courses.push(cours);
 							//and draw it on the page
-							this.drawCoursOnPlanning(cours);
+                            this.drawCoursOnPlanning(cours);
+                            this.checkAlertsPlanning();
 						},
 						error => console.error(error)
 					);
@@ -404,7 +409,7 @@ export class LeftPanelComponent implements OnInit {
 			dateRange.push(new Date(start));
 			start.setDate(start.getDate() + 1);
 		}
-		
+
 		dateRange.forEach(function(d) {
 			let id = '' + d.getFullYear()
 						+ (d.getMonth()+1<10 ? '0'+(d.getMonth()+1) : d.getMonth()+1)
@@ -414,14 +419,15 @@ export class LeftPanelComponent implements OnInit {
 				td.parentElement.classList.remove('green-bg');
 				if(d.getDay() == 1) {
 					td.innerHTML=null;
-					td.className=null;
-				} 
+                    td.className=null;
+                    td.style.padding = '0';
+				}
 			} else {
 				td.parentElement.classList.add('green-bg');
 				if(d.getDay() == 1) {
 					td.innerHTML=cours.short_label;
 					td.className='label_cours';
-				} 
+				}
 			}
 		});
 	}
@@ -431,11 +437,46 @@ export class LeftPanelComponent implements OnInit {
 	}
 
 	deletePlanning() {
-		this.planningService.deletePlanning(this.selectedPlanning).subscribe(
-			data => {
-				this.planningService.setSelectedPlanning(null);
-				this.planningService.updatePlanningsList.next('deletion');
-			}
-		);
-	}
+        this.planningService.deletePlanning(this.selectedPlanning).subscribe(
+            data => {
+                this.planningService.setSelectedPlanning(null);
+                this.planningService.updatePlanningsList.next('deletion');
+                this.resetAlert();
+            }
+        );
+    }
+
+    checkAlertsPlanning()
+    {
+        // on vide la liste des erreurs
+        this.alert_array = new Array<any>();
+
+        //Pour chaques cours du planning, on check s'il est en conflict avec une contrainte
+        this.selectedPlanning.planning_courses.forEach(cours => {
+            console.log(cours);
+            //Si le cours choisis entre en conflit avec une contrainte de disponibilité
+            this.selectedPlanning.ctr_disponibilities.forEach(disponibility => {
+
+                //Test pour savoir si un cours chevauche une contrainte d'absence
+                if ((new Date(disponibility.date_start) <= new Date(cours.date_start) && new Date(disponibility.date_end) <= new Date(cours.date_end) && new Date(disponibility.date_end) > new Date(cours.date_start))
+                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end) && new Date(disponibility.date_start) < new Date(cours.date_end))
+                    || (new Date(disponibility.date_start) < new Date(cours.date_start) && new Date(disponibility.date_end) > new Date(cours.date_end))
+                    || (new Date(disponibility.date_start) > new Date(cours.date_start) && new Date(disponibility.date_end) < new Date(cours.date_end)))
+                {
+                    this.alert_array.push({ id: cours.module_id, message: 'Violation de la contrainte de disponibilité avec le cours ' + cours.label });
+                }
+
+            });
+
+            // Test pour les autres types d'alertes
+        });
+
+        //Envoi d'un évènement pour que le composant right panel puisse récupérer la liste des alertes
+        this.planningService.alertPlanningList.next(this.alert_array);
+    }
+
+    resetAlert()
+    {
+        this.planningService.alertPlanningList.next(null);
+    }
 }

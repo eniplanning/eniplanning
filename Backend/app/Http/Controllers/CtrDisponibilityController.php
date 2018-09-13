@@ -28,7 +28,7 @@ class CtrDisponibilityController extends Controller
     public function store(Request $request)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        CtrDisponibility::create($request->all());
+        return CtrDisponibility::create($request->all())->toJson();
     }
 
     /**
@@ -53,7 +53,8 @@ class CtrDisponibilityController extends Controller
     public function update(Request $request, CtrDisponibility $ctrDisponibility)
     {
         Log::info('=> ' . get_class($this) . ' :: ' . __FUNCTION__ .' ()');
-        return $ctrDisponibility->update($request->all());
+        $ctrDisponibility->update($request->all());
+        return $ctrDisponibility->toJson();
     }
 
     /**

@@ -18,7 +18,7 @@
       <!-- Liste des modules -->
       <div class="form-group">
         <label for="complementaryModulesControl">Module</label>
-        <select name="complementaryModules" [(ngModel)]="complementaryModule" class="form-control">
+        <select name="complementaryModules" [(ngModel)]="complementaryModule" class="form-control"   [disabled]="confirmMsg != null">
             <option class="dropdown" [value]="" disabled>Choisissez un module</option>
             <option class="dropdown" *ngFor="let complementaryModule of complementaryModules" [ngValue]="complementaryModule">  
               {{complementaryModule.description}}</option>
@@ -31,7 +31,7 @@
 
       <!-- date estimée -->
       <div class="form-group">
-        <input id="dates_a_definir" type="checkbox" [(ngModel)]="dateToBeDefined" (click)="change(dateToBeDefined)" class="text-center"/>
+        <input id="dates_a_definir" type="checkbox" [(ngModel)]="dateToBeDefined"  [disabled]="confirmMsg != null" (click)="change(dateToBeDefined)" class="text-center"/>
         <label for="dates_a_definir"><span class="label">Dates à redéfinir</span></label>  
       </div>
 
@@ -39,7 +39,7 @@
       <div class="form-group">
         <label for="date_debut">Date de début du cours</label>
         <div class="input-group">
-          <input id="date_debut" name="date_debut" class="form-control c-datepicker text-center"
+          <input id="date_debut" name="date_debut" class="form-control c-datepicker text-center"  [disabled]="confirmMsg != null"
               placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_debut" ngbDatepicker 
               [(ngModel)]="date_start" [dayTemplate]="customDay"  (click)="datePicker.toggle()"
               #datePicker="ngbDatepicker" value="{{ today | date: 'dd-MM-yyyy' }}" >
@@ -55,8 +55,8 @@
       <!-- date réelle de fin du cours -->
       <div class="form-group">
           <label for="date_fin">Date de fin du cours</label>
-          <div class="input-group">
-            <input id="date_fin" name="date_fin" class="form-control c-datepicker text-center"
+          <div class="input-group" >
+            <input id="date_fin" name="date_fin" class="form-control c-datepicker text-center"  [disabled]="confirmMsg != null"
                 placeholder="{{ today | date: 'dd-MM-yyyy' }}" name="dp_fin" ngbDatepicker 
                 [(ngModel)]="date_end" [dayTemplate]="customDay"  (click)="datePickerFin.toggle()"
                 #datePickerFin="ngbDatepicker" value="{{ today | date: 'dd-MM-yyyy' }}" >
@@ -70,8 +70,8 @@
   
   <!-- Enregistrer -->
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-sm waves-light" 
-    [disabled]="disabledSubmit" (click)="enregistrerCours()">Enregistrer</button>
+    <button type="button" class="btn btn-primary btn-sm waves-light" [disabled]="confirmMsg != null"
+     (click)="enregistrerCours()">Enregistrer</button>
   </div>
 
 </ng-template>

@@ -137,6 +137,12 @@ export class CreateCourComponent implements OnInit  {
   
   // Ouverture de la modal
   open(content) {
+    this.complementaryModule = null;
+    this.dateToBeDefined = false;
+    this.date_start = null;
+    this.date_end = null;
+    this.error = [];
+    this.confirmMsg = null;
     this.modalService.open(content, {ariaLabelledBy: 'app-create-cour'}).result.then((result) => {
       console.log('result:', result);
       this.closeResult = 'Closed with: ${result}';

@@ -95,3 +95,19 @@ ul {
     color: red;
     font-weight: 400;
 }
+
+.labelContrainte
+{
+    font-weight: bold;
+}
+div .contrainte
+{
+    padding-top: 2%;
+}
+
+div .scrollable
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 500px;
+}
